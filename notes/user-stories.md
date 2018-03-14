@@ -37,7 +37,8 @@
 # START GAME
 ## As a player, I want to...
 - Fake play -> visualize the strategy => don't let them actually do something wrong/tell them it's wrong. It won't be solid until the last play is performed: "Are you sure you want to do this?"
-- Not be able to make illegal moves- the game should prevent it from happening.
+- Not be able to make illegal moves- the game should prevent them from happening.
+  - All options that are AVAILABLE should become available on player turn, and all other options should be left hidden/blacked out.
 
 # MOVEMENT ACTIONS
 ## As a player, I want to be able to...

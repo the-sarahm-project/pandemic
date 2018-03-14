@@ -95,7 +95,7 @@
 - When doign the Share Knowledge action, the Researcher may give any City card from her hand to another palyer in teh same city as her, _without_ this card having to match her city. The transfer must be _from_ her hand to the other player's hand, but it can occur on either player's turn.
 
 ## As the Scientist, I want to be able to...
-- need only 4 (not 5) City cards of the same disease color to Discover a Cure for that disease.
+- Need only 4 (not 5) City cards of the same disease color to Discover a Cure for that disease.
 
 # EVENT CARDS
 - These cards do not require actions to be played and may be played at any time.
@@ -147,7 +147,7 @@
 # END GAME
 ## As a player, I want...
 - To win as as soon as cures to all 4 diseases are discovered.
-- To lose if;
-  - the outbreaks marker reaches the last space of the Outbreaks Track
+- To lose if:
+  - The outbreaks marker reaches the last space of the Outbreaks Track
   - I am unable to place the number of disease cubes _actually needed on the board_
-  - a player cannot draw 2 Player cards after doing his actions.
+  - A player cannot draw 2 Player cards after doing his actions.

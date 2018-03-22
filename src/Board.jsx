@@ -23,7 +23,6 @@ let iconContainer = {
 export default class Board extends Component {
   componentDidMount() {
     const leafletMap = this.leafletMap.leafletElement;
-    console.log('yay,', leafletMap)
     leafletMap.on('zoomend', () => {
       window.console.log('Current zoom level -> ', leafletMap.getZoom());
     })

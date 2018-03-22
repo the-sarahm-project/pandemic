@@ -16,7 +16,7 @@ let BallIcon = L.Icon.extend({
 let iconContainer = {
   redIcon: new BallIcon({iconUrl: 'https://lh5.ggpht.com/JUGn9I-kMM3LriNMpdUA6Z1_NZksTHCndCJ7SqSG0CkF6P-rBHUS91_aAiWfNpKSoQ=w300'}),
   blueIcon: new BallIcon({iconUrl: 'http://lobelpost.com/v17/files/stacks-image-12a7505.png'}),
-  yellowIcon: new BallIcon({iconUrl: 'https://jimmyryce.org/wp-content/uploads/2014/08/Orb_Icons_023.png'}),
+  yellowIcon: new BallIcon({iconUrl: 'https://lh3.googleusercontent.com/nmIfOaurHcAvlxd6OksvTYkF1thhsEnpxV2x0PvJ8zTxS-uAX0r7BWQxM20XTL6SrQ'}),
   blackIcon: new BallIcon({iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png'})
 };
 

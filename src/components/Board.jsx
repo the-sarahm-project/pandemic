@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { cities } from './utils/cities';
+import { cities } from '../utils/cities';
 import L from 'leaflet';
 
 const stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
@@ -31,7 +31,6 @@ export default class Board extends Component {
   render() {
     const center = [0,0];
     const zoomLevel = 1;
-    //let {redIcon, blueIcon, yellowIcon, blackIcon} = iconContainer;
     return (
       <div>
         <Map

@@ -16,14 +16,13 @@ let BallIcon = L.Icon.extend({
 let iconContainer = {
   redIcon: new BallIcon({iconUrl: 'https://lh5.ggpht.com/JUGn9I-kMM3LriNMpdUA6Z1_NZksTHCndCJ7SqSG0CkF6P-rBHUS91_aAiWfNpKSoQ=w300'}),
   blueIcon: new BallIcon({iconUrl: 'http://lobelpost.com/v17/files/stacks-image-12a7505.png'}),
-  yellowIcon: new BallIcon({iconUrl: 'https://cdn.pixabay.com/photo/2013/07/12/15/29/ball-149922_1280.png'}),
+  yellowIcon: new BallIcon({iconUrl: 'https://jimmyryce.org/wp-content/uploads/2014/08/Orb_Icons_023.png'}),
   blackIcon: new BallIcon({iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png'})
 };
 
 export default class Board extends Component {
   componentDidMount() {
     const leafletMap = this.leafletMap.leafletElement;
-    console.log('yay,', leafletMap)
     leafletMap.on('zoomend', () => {
       window.console.log('Current zoom level -> ', leafletMap.getZoom());
     })

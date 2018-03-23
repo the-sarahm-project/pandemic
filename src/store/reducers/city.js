@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { city } from '../../scripts/models'
 
 /**
  * ACTION TYPES
@@ -13,6 +13,16 @@ const getCities = cities => ({type: GET_CITIES, cities})
 /**
  * THUNK CREATORS
  */
+// export const getCitiesDB = () => {
+//   return database.ref('/').once('value')
+// }
+
+// // add new section
+// export const addCity = (name, coords, icon) => {
+//   let key = database.ref('/').push().key
+//   let model = sectionModel(key, name, firebase.database.ServerValue.TIMESTAMP)
+//   return database.ref('/'+ key).set(model)
+// }
 
 /**
  * REDUCER

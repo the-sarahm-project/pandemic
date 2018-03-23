@@ -1,8 +1,9 @@
 import { createStore, combineReducers, compose } from 'redux'
+import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
 import { reduxFirestore, firestoreReducer } from 'redux-firestore'
 import firebase from 'firebase'
 import 'firebase/firestore'
-import { city } from './reducer'
+import { city } from './reducers'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDjQCrS3fWOqGHgqAemooMPG4s2PsfBkhs",
@@ -21,11 +22,13 @@ firebase.firestore();
 
 // Add reduxFirestore store enhancer to store creator
 const createStoreWithFirebase = compose(
+  reactReduxFirebase(firebase, firebaseConfig),
   reduxFirestore(firebase) // firebase instance as first argument
 )(createStore)
 
 // Add Firebase to reducers
 const rootReducer = combineReducers({
+  firebase: firebaseReducer,
   firestore: firestoreReducer,
   city
 })

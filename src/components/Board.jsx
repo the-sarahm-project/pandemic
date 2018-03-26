@@ -24,7 +24,6 @@ const Board = (props) => {
   const center = [0,0];
   const zoomLevel = 1;
   const maxBounds = [[70,-100],[-60,120]];
-  //console.log('these are cities', props)
   return (
     <div>
       <Map
@@ -46,10 +45,8 @@ const Board = (props) => {
   );
 }
 
-//export default Board;
-
 const mapStateToProps = (state) => ({
-  cities: state.firestore.cities //I want to add cities to my store. Does it go in the 'order' object?
+  cities: state.firestore.ordered.cities //I want to add cities to my store. Does it go in the 'order' object?
 })
 
 export default compose(

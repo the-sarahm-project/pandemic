@@ -24,7 +24,7 @@ const Board = (props) => {
   const center = [0,0];
   const zoomLevel = 1;
   const maxBounds = [[70,-100],[-60,120]];
-  console.log('these are cities', props.cities)
+  //console.log('these are cities', props)
   return (
     <div>
       <Map

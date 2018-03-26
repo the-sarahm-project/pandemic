@@ -1,4 +1,5 @@
-import { city } from '../../scripts/models'
+import { city } from '../../models';
+import { db } from '../index';
 
 /**
  * ACTION TYPES
@@ -14,14 +15,14 @@ const getCities = cities => ({type: GET_CITIES, cities})
  * THUNK CREATORS
  */
 // export const getCitiesDB = () => {
-//   return database.ref('/').once('value')
+//   return db.ref('/').once('value')
 // }
 
 // // add new section
 // export const addCity = (name, coords, icon) => {
-//   let key = database.ref('/').push().key
-//   let model = sectionModel(key, name, firebase.database.ServerValue.TIMESTAMP)
-//   return database.ref('/'+ key).set(model)
+//   let key = db.ref('/').push().key
+//   let model = sectionModel(key, name, firebase.db.ServerValue.TIMESTAMP)
+//   return db.ref('/'+ key).set(model)
 // }
 
 /**

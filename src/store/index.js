@@ -16,9 +16,8 @@ const firebaseConfig = {
 
 // Initialize firebase instance
 firebase.initializeApp(firebaseConfig)
-firebase.database()
 // Initialize Cloud Firestore through Firebase
-firebase.firestore();
+export const db = firebase.firestore();
 
 // Add reduxFirestore store enhancer to store creator
 const createStoreWithFirebase = compose(

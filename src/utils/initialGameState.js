@@ -11,7 +11,8 @@ const gameState = {
         yellow: 0,
         black: 0
       },
-      researchStation: false
+      researchStation: false,
+      neighbors: []
     },
     Atlanta: {
       name: "Atlanta",
@@ -118,14 +119,23 @@ const gameState = {
     yellow: 24,
     black: 24
   }, //number of disease cubes left
-  unusedInfectionCards: 48,
-  trashedInfectionCards: 0,
+  unusedInfectionCards: {
+    //infectioncards
+  },
+  trashedInfectionCards: {},
   remainingCityCards: 48,
   remainingEpidemicCards: 6, //4 - 6 depending on level
   remainingEventCards: 5,
   users: {
+    1: {
+      active: false,
+      roll: '???',
+      currentCity: 'Atlanta',
 
-  }
+    }
+  },
+
+
 }
 
 //Will the player cards and infection cards be an array of cards?

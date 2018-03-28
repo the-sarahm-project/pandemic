@@ -699,8 +699,7 @@ const cities = {
 const unusedInfectionCards = {
   Algiers: {
     name: "Algiers",
-    color: "black",
-    neighbors: []
+    color: "black"
   },
   Atlanta: {
     name: "Atlanta",

@@ -445,7 +445,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Atlanta","Bogota","MexicoCity","Washington"]
   },
   Milan: {
     name: "Milan",
@@ -458,7 +458,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Essen","Istanbul","Paris"]
   },
   Montreal: {
     name: "Montreal",
@@ -471,7 +471,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Chicago","NewYork","Washington"]
   },
   Moscow: {
     name: "Moscow",
@@ -484,7 +484,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Istanbul","StPetersburg","Tehran"]
   },
   Mumbai: {
     name: "Mumbai",
@@ -497,7 +497,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Chennai","Delhi","Karachi"]
   },
   NewYork: {
     name: "New York",
@@ -510,7 +510,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["London","Madrid","Montreal","Washington"]
   },
   Osaka: {
     name: "Osaka",
@@ -523,7 +523,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Taipei","Tokyo"]
   },
   Paris: {
     name: "Paris",
@@ -536,7 +536,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Algiers","Essen","Madrid","Milan","London"]
   },
   Riyadh: {
     name: "Riyadh",
@@ -549,7 +549,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Baghdad","Cairo","Karachi"]
   },
   SanFrancisco: {
     name: "San Francisco",
@@ -562,7 +562,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["LosAngeles","Manila","Tokyo"]
   },
   Santiago: {
     name: "Santiago",
@@ -575,7 +575,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Lima"]
   },
   SaoPaulo: {
     name: "Sao Paulo",
@@ -588,7 +588,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["BuenosAires","Bogota","Lagos","Madrid"]
   },
   Seoul: {
     name: "Seoul",
@@ -601,7 +601,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Beijing","Shanghai","Tokyo"]
   },
   Shanghai: {
     name: "Shanghai",
@@ -614,7 +614,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Beijing","HongKong","Seoul","Taipei","Tokyo"]
   },
   StPetersburg: {
     name: "St. Petersburg",
@@ -627,7 +627,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Essen","Istanbul","Moscow"]
   },
   Sydney: {
     name: "Sydney",
@@ -640,7 +640,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Jakarta","LosAngeles","Manila"]
   },
   Taipei: {
     name: "Taipei",
@@ -653,7 +653,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["HongKong","Manila","Osaka","Shanghai"]
   },
   Tehran: {
     name: "Tehran",
@@ -666,7 +666,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Baghdad","Delhi","Karachi","Moscow"]
   },
   Tokyo: {
     name: "Tokyo",
@@ -679,7 +679,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["LosAngeles","Osaka","Seoul","Shanghai"]
   },
   Washington: {
     name: "Washington",
@@ -692,7 +692,7 @@ const cities = {
       black: 0
     },
     researchStation: false,
-    neighbors: []
+    neighbors: ["Atlanta","Miami","Montreal","NewYork"]
   }
 }
 

@@ -19,7 +19,7 @@ const gameState = {
   unusedInfectionCards,
   trashedInfectionCards: {},
   unusedCityCards,
-  remainingEpidemicCards: 6, //4 - 6 depending on level
+  remainingEpidemicCards: {}, //4 - 6 depending on level
   remainingEventCards: {
     ResilientPopulation: {
       name: 'Resilient Population'
@@ -66,7 +66,10 @@ const gameState = {
       currentCity: "Atlanta",
       currentHand: {}
     }
-  }
+  },
+  currentTurn: 1,
+  difficultyLevel: 0,
+  playerDeck: []
 }
 
 const cities = {

@@ -1,75 +1,58 @@
-//game state PER GAME. The root of Firestore is going to have a game ID key, and this will be its value.
-const gameState = {
-  cities,
-  infectionRate: 0, //the infection rate marker
-  numOutbreaks: 0, //the outbreak rate marker
-  curesMarker: { //whether or not you have a cure
-    red: false,
-    blue: false,
-    yellow: false,
-    black: false
-  },
-  remainingResearchStations: 6,
-  unusedDiseaseCubes: {
-    red: 24,
-    blue: 24,
-    yellow: 24,
-    black: 24
-  }, //number of disease cubes left
-  unusedInfectionCards,
-  trashedInfectionCards: {},
-  unusedCityCards,
-  remainingEpidemicCards: {}, //4 - 6 depending on level
-  remainingEventCards: {
-    ResilientPopulation: {
-      name: 'Resilient Population'
-    },
-    Airlift: {
-      name: 'Airlift'
-    },
-    Forecast: {
-      name: 'Forecast'
-    },
-    OneQuietNight: {
-      name: 'One Quiet Night'
-    },
-    GovernmentGrant: {
-      name: 'Government Grant'
-    }
-  },
-  players: {
-    1: {
-      name: "",
-      active: true,
-      roll: "",
-      currentCity: "Atlanta",
-      currentHand: {}
-    },
-    2: {
-      name: "",
-      active: false,
-      roll: "",
-      currentCity: "Atlanta",
-      currentHand: {}
-    },
-    3: {
-      name: "",
-      active: false,
-      roll: "",
-      currentCity: "Atlanta",
-      currentHand: {}
-    },
-    4: {
-      name: "",
-      active: false,
-      roll: "",
-      currentCity: "Atlanta",
-      currentHand: {}
-    }
-  },
-  currentTurn: 1,
-  difficultyLevel: 0,
-  playerDeck: []
+export const init = (db, gameState, collections) => {
+  const game = db.collection('games').doc()
+  game.set(gameState)
+  const cureMarkers = Object.keys(collections.cureMarkers)
+  const unusedDiseaseCubes = Object.keys(collections.unusedDiseaseCubes)
+  const remainingEventCards = Object.keys(collections.remainingEventCards)
+  const players = Object.keys(collections.players)
+  const cities = Object.keys(collections.cities)
+  const cubes = Object.keys(collections.cubes)
+  const unusedInfectionCards = Object.keys(collections.unusedInfectionCards)
+  const unusedCityCards = Object.keys(collections.unusedCityCards)
+
+  //add empty trashedInfectionCards collection
+  game.collection('trashedInfectionCards')
+  //add empty remainingEpidemicCards
+  game.collection('remainingEpidemicCards')
+
+  //add cureMarkers
+  cureMarkers.map(cureMarker => {
+    game.collection('cureMarkers').doc(cureMarker).set({[cureMarker]: collections.cureMarkers[cureMarker]})
+  })
+
+  //add unusedDiseaseCubes
+  unusedDiseaseCubes.map(unusedDiseaseCube => {
+    game.collection('unusedDiseaseCubes').doc(unusedDiseaseCube).set({[unusedDiseaseCube]: collections.unusedDiseaseCubes[unusedDiseaseCube]})
+  })
+
+  //add remainingEventCards
+  remainingEventCards.map(remainingEventCard => {
+    game.collection('remainingEventCards').doc(remainingEventCard).set({[remainingEventCard]: collections.remainingEventCards[remainingEventCard]})
+  })
+
+  //add players with empty collection for hand
+  players.map(player => {
+    game.collection('players').doc(player).set({[player]: collections.players[player]})
+    game.collection('players').doc(player).collection('currentHand')
+  })
+
+  //add cities with cube counters
+  cities.map(city => {
+    game.collection('cities').doc(city).set({[city]: collections.cities[city]})
+    cubes.map(cube => {
+      game.collection('cubes').doc(cube).set({[cube]: collections.cubes[cube]})
+    })
+  })
+
+  //add unusedInfectionCards
+  unusedInfectionCards.map(unusedInfectionCard => {
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({[unusedInfectionCard]: collections.unusedInfectionCards[unusedInfectionCard]})
+  })
+
+  //add unusedCityCards
+  unusedCityCards.map(unusedCityCard => {
+    game.collection('unusedCityCards').doc(unusedCityCard).set({[unusedCityCard]: collections.unusedCityCards[unusedCityCard]})
+  })
 }
 
 const cities = {
@@ -77,12 +60,6 @@ const cities = {
     name: "Algiers",
     coords: [36.7538, 3.0588],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Cairo", "Instanbul", "Madrid", "Paris"]
   },
@@ -90,12 +67,6 @@ const cities = {
     name: "Atlanta",
     coords: [33.7490, -84.3880],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chicago", "Miami", "Washington"]
   },
@@ -103,12 +74,6 @@ const cities = {
     name: "Baghdad",
     coords: [33.3128, 44.3615],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Cairo", "Istanbul", "Karachi", "Riyadh", "Tehran"]
   },
@@ -116,12 +81,6 @@ const cities = {
     name: "Bangkok",
     coords: [13.7563, 100.5018],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chennai", "HoChiMinhCity", "HongKong", "Jakarta", "Kolkata"]
   },
@@ -129,12 +88,6 @@ const cities = {
     name: "Beijing",
     coords: [39.9042, 116.4074],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Seoul", "Shanghai"]
   },
@@ -142,12 +95,6 @@ const cities = {
     name: "Bogota",
     coords: [4.7110, -74.0721],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["BuenosAires", "Lima", "MexicoCity", "Miami", "SaoPaulo"]
   },
@@ -155,12 +102,6 @@ const cities = {
     name: "Buenos Aries",
     coords: [-34.6037, -58.3816],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bogota", "SaoPaulo"]
   },
@@ -168,12 +109,6 @@ const cities = {
     name: "Cairo",
     coords: [30.0444, 31.2357],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Algiers", "Baghdad", "Istanbul", "Khartoum", "Riyadh"]
   },
@@ -181,12 +116,6 @@ const cities = {
     name: "Chennai",
     coords: [13.0827, 80.2707],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bangkok", "Delhi", "Jakarta", "Kolkata", "Mumbai"]
   },
@@ -194,12 +123,6 @@ const cities = {
     name: "Chicago",
     coords: [41.8781, -87.6298],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Atlanta", "LosAngeles", "MexicoCity", "Montreal", "SanFrancisco"]
   },
@@ -207,12 +130,6 @@ const cities = {
     name: "Delhi",
     coords: [28.644800, 77.216721],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chennai", "Karachi", "Kolkata", "Mumbai", "Tehran"]
   },
@@ -220,12 +137,6 @@ const cities = {
     name: "Essen",
     coords: [51.4556, 7.0116],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["London", "Milan", "Paris", "StPetersburg"]
   },
@@ -233,12 +144,6 @@ const cities = {
     name: "Ho Chi Minh City",
     coords: [10.8231, 106.6297],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bangkok", "HongKong", "Jakarta", "Manila"]
   },
@@ -246,12 +151,6 @@ const cities = {
     name: "Hong Kong",
     coords: [22.3964, 114.1095],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bangkok", "HoChiMinhCity", "Kolkata", "Manila", "Shanghai", "Taipei"]
   },
@@ -259,12 +158,6 @@ const cities = {
     name: "Istanbul",
     coords: [41.0082, 28.9784],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Algiers", "Baghdad", "Cairo", "Milan", "Moscow", "StPetersburg"]
   },
@@ -272,12 +165,6 @@ const cities = {
     name: "Jakarta",
     coords: [-6.1751, 106.8650],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "HoChiMinhCity", "Sydney"]
   },
@@ -285,12 +172,6 @@ const cities = {
     name: "Johannesburg",
     coords: [-26.2041, 28.0473],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa"]
   },
@@ -298,12 +179,6 @@ const cities = {
     name: "Karachi",
     coords: [25.0700, 67.2848],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Mumbai", "Riyadh", "Tehran"]
   },
@@ -311,12 +186,6 @@ const cities = {
     name: "Khartoum",
     coords: [15.5007, 32.5599],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Cairo", "Johannesburg", "Kinshasa", "Lagos"]
   },
@@ -324,12 +193,6 @@ const cities = {
     name: "Kinshasa",
     coords: [-4.4419, 15.2663],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Johannesburg", "Khartoum", "Lagos"]
   },
@@ -337,12 +200,6 @@ const cities = {
     name: "Kolkata",
     coords: [22.5726, 88.3639],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "Delhi", "HongKong"]
   },
@@ -350,12 +207,6 @@ const cities = {
     name: "Lagos",
     coords: [6.5244, 3.3792],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa", "SaoPaulo"]
   },
@@ -363,12 +214,6 @@ const cities = {
     name: "Lima",
     coords: [-12.0464, -77.0428],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bogota", "MexicoCity", "Santiago"]
   },
@@ -376,12 +221,6 @@ const cities = {
     name: "London",
     coords: [51.5074, -0.1278],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Essen", "Madrid", "NewYork", "Paris"]
   },
@@ -389,12 +228,6 @@ const cities = {
     name: "Los Angeles",
     coords: [34.0522, -118.2437],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chicago", "MexicoCity", "SanFrancisco", "Sydney"]
   },
@@ -402,12 +235,6 @@ const cities = {
     name: "Madrid",
     coords: [40.4168, -3.7038],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Algiers", "NewYork", "London", "Paris", "SaoPaulo"]
   },
@@ -415,12 +242,6 @@ const cities = {
     name: "Manila",
     coords: [14.5995, 120.9842],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["HoChiMinhCity", "HongKong", "SanFrancisco", "Sydney", "Taipei"]
   },
@@ -428,12 +249,6 @@ const cities = {
     name: "Mexico City",
     coords: [19.4326, -99.1332],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Bogota", "Chicago", "Lima", "LosAngeles", "Miami"]
   },
@@ -441,12 +256,6 @@ const cities = {
     name: "Miami",
     coords: [25.7617, -80.1918],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Atlanta", "Bogota", "MexicoCity", "Washington"]
   },
@@ -454,12 +263,6 @@ const cities = {
     name: "Milan",
     coords: [45.4642, 9.1900],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Paris"]
   },
@@ -467,12 +270,6 @@ const cities = {
     name: "Montreal",
     coords: [45.5017, -73.5673],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chicago", "NewYork", "Washington"]
   },
@@ -480,12 +277,6 @@ const cities = {
     name: "Moscow",
     coords: [55.7558, 37.6173],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Istanbul", "StPetersburg", "Tehran"]
   },
@@ -493,12 +284,6 @@ const cities = {
     name: "Mumbai",
     coords: [19.0760, 72.8777],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chennai", "Delhi", "Karachi"]
   },
@@ -506,12 +291,6 @@ const cities = {
     name: "New York",
     coords: [40.7128, -74.0060],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["London", "Madrid", "Montreal", "Washington"]
   },
@@ -519,12 +298,6 @@ const cities = {
     name: "Osaka",
     coords: [34.6937, 135.5022],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Taipei", "Tokyo"]
   },
@@ -532,12 +305,6 @@ const cities = {
     name: "Paris",
     coords: [48.8566, 2.3522],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Algiers", "Essen", "Madrid", "Milan", "London"]
   },
@@ -545,12 +312,6 @@ const cities = {
     name: "Riyadh",
     coords: [24.7136, 46.6753],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Baghdad", "Cairo", "Karachi"]
   },
@@ -558,12 +319,6 @@ const cities = {
     name: "San Francisco",
     coords: [37.7749, -122.4194],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Chicago", "LosAngeles", "Manila", "Tokyo"]
   },
@@ -571,12 +326,6 @@ const cities = {
     name: "Santiago",
     coords: [-33.4489, -70.6693],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Lima"]
   },
@@ -584,12 +333,6 @@ const cities = {
     name: "Sao Paulo",
     coords: [-23.5505, -46.6333],
     icon: "yellowIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["BuenosAires", "Bogota", "Lagos", "Madrid"]
   },
@@ -597,12 +340,6 @@ const cities = {
     name: "Seoul",
     coords: [37.5665, 126.9780],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Beijing", "Shanghai", "Tokyo"]
   },
@@ -610,12 +347,6 @@ const cities = {
     name: "Shanghai",
     coords: [31.2304, 121.4737],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Beijing", "HongKong", "Seoul", "Taipei", "Tokyo"]
   },
@@ -623,12 +354,6 @@ const cities = {
     name: "St. Petersburg",
     coords: [59.9343, 30.3351],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Moscow"]
   },
@@ -636,12 +361,6 @@ const cities = {
     name: "Sydney",
     coords: [-33.8688, 151.2093],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Jakarta", "LosAngeles", "Manila"]
   },
@@ -649,12 +368,6 @@ const cities = {
     name: "Taipei",
     coords: [25.0330, 121.5654],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["HongKong", "Manila", "Osaka", "Shanghai"]
   },
@@ -662,12 +375,6 @@ const cities = {
     name: "Tehran",
     coords: [35.6892, 51.3890],
     icon: "blackIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Karachi", "Moscow"]
   },
@@ -675,12 +382,6 @@ const cities = {
     name: "Tokyo",
     coords: [35.6895, 139.6917],
     icon: "redIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Osaka", "SanFrancisco", "Seoul", "Shanghai"]
   },
@@ -688,12 +389,6 @@ const cities = {
     name: "Washington",
     coords: [38.9072, -77.0369],
     icon: "blueIcon",
-    cubes: {
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
-    },
     researchStation: false,
     neighbors: ["Atlanta", "Miami", "Montreal", "NewYork"]
   }
@@ -1088,5 +783,85 @@ const unusedCityCards = {
     color: "blue"
   }
 }
+
+const cubes = {
+  red: 0,
+  blue: 0,
+  yellow: 0,
+  black: 0,
+}
+
+export const collections = {
+  cureMarkers: { //whether or not you have a cure
+    red: false,
+    blue: false,
+    yellow: false,
+    black: false
+  },
+  unusedDiseaseCubes: {
+    red: 24,
+    blue: 24,
+    yellow: 24,
+    black: 24
+  }, //number of disease cubes left
+  remainingEventCards: {
+    ResilientPopulation: {
+      name: 'Resilient Population'
+    },
+    Airlift: {
+      name: 'Airlift'
+    },
+    Forecast: {
+      name: 'Forecast'
+    },
+    OneQuietNight: {
+      name: 'One Quiet Night'
+    },
+    GovernmentGrant: {
+      name: 'Government Grant'
+    }
+  },
+  players: {
+    1: {
+      name: "",
+      active: true,
+      roll: "",
+      currentCity: "Atlanta"
+    },
+    2: {
+      name: "",
+      active: false,
+      roll: "",
+      currentCity: "Atlanta"
+    },
+    3: {
+      name: "",
+      active: false,
+      roll: "",
+      currentCity: "Atlanta"
+    },
+    4: {
+      name: "",
+      active: false,
+      roll: "",
+      currentCity: "Atlanta"
+    }
+  },
+  unusedInfectionCards,
+  unusedCityCards,
+  cubes,
+  cities,
+}
+
+//game state PER GAME. The root of Firestore is going to have a game ID key, and this will be its value.
+export const gameState = {
+  infectionRate: 0, //the infection rate marker
+  numOutbreaks: 0, //the outbreak rate marker
+  remainingResearchStations: 6,
+  currentTurn: 1,
+  difficultyLevel: 0,
+  playerDeck: []
+}
+
 //Will the player cards and infection cards be an array of cards?
 //Number of players will dictate number of cards per player.

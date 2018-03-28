@@ -5,6 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { db } from '../store';
+import { init, collections, gameState } from '../utils/initialGameState'
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +13,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.cities = db.collection('cities');
+    init(db, gameState, collections)
   }
+
   render() {
     return (
       <Board />

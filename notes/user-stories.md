@@ -11,7 +11,7 @@
 - Start the game (button is available after 1 person joins).
 - Kick people out.
 - Reserve spots.
-- Set difficulty level (infection marker starting point)
+- Set difficulty level (number of epidemic cards)
 - Choose whether cards should be played face up or not.
 
 ## As a user that joins a game, I want to...
@@ -25,7 +25,7 @@
 - Watch as outbreaks and cure markers are placed.
 - Watch as the infection rate marker is placed.
 - Watch as the Infection cards are flipped.
-- Watch as cities are infecte with disease cubes.
+- Watch as cities are infected with disease cubes.
 - Watch as each player receives a role.
 - Watch as the player pawns are placed in Atlanta.
 - Watch as the Epidemic cards are shuffled into the Player Deck.
@@ -52,9 +52,9 @@
   - The Medic also prevents placing disease cubes (and outbreaks) of _cured_ diseases in his location.
 
 ## As the Operations Expert, I want to be able to...
-- As an action, build a research stationin his current city without discarding (or using) a City card, or
+- As an action, build a research station in his current city without discarding (or using) a City card, or
 - As an action, once per turn, move from a research station to any city by discarding any City card.
-  - The Dispatcher may not use the Operations Expert's special move ability when moving the OPeration Expert's pawn.
+  - The Dispatcher may not use the Operations Expert's special move ability when moving the Operation Expert's pawn.
 
 ## As the Quarantine Specialist, I want to be able to...
 - Prevent both outbreaks and the placement of disease cubes in the city she is in _and_ all cities connected to that city. She does not affect cubes placed during setup.

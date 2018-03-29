@@ -13,8 +13,10 @@ class App extends Component {
 
   componentDidMount() {
     this.cities = db.collection('cities');
-    console.log(this.cities.doc('Atlanta').limit(3));
-
+    console.log(Object.keys(this.cities))
+    //this.cities.doc('Atlanta').collection('cubes').doc('black').update({count: 3})
+    //.then(console.log);
+  //gameState.collection('cities').doc(card.name).update(card.color, 3)
   }
   render() {
     return (

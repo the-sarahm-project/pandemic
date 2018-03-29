@@ -830,25 +830,25 @@ export const collections = {
     1: {
       name: "",
       active: true,
-      roll: "",
+      role: "",
       currentCity: "Atlanta"
     },
     2: {
       name: "",
       active: false,
-      roll: "",
+      role: "",
       currentCity: "Atlanta"
     },
     3: {
       name: "",
       active: false,
-      roll: "",
+      role: "",
       currentCity: "Atlanta"
     },
     4: {
       name: "",
       active: false,
-      roll: "",
+      role: "",
       currentCity: "Atlanta"
     }
   },

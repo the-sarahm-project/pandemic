@@ -1,3 +1,10 @@
+/*
+Certain collections will still need to be added in later:
+trashedInfectionCards
+remainingEpidemicCards
+player: currentHand
+*/
+
 export const init = (db, gameState, collections) => {
   const game = db.collection('games').doc()
   game.set(gameState)
@@ -10,47 +17,41 @@ export const init = (db, gameState, collections) => {
   const unusedInfectionCards = Object.keys(collections.unusedInfectionCards)
   const unusedCityCards = Object.keys(collections.unusedCityCards)
 
-  //add empty trashedInfectionCards collection
-  game.collection('trashedInfectionCards')
-  //add empty remainingEpidemicCards
-  game.collection('remainingEpidemicCards')
-
   //add cureMarkers
-  cureMarkers.map(cureMarker => {
+  cureMarkers.forEach(cureMarker => {
     game.collection('cureMarkers').doc(cureMarker).set({[cureMarker]: collections.cureMarkers[cureMarker]})
   })
 
   //add unusedDiseaseCubes
-  unusedDiseaseCubes.map(unusedDiseaseCube => {
+  unusedDiseaseCubes.forEach(unusedDiseaseCube => {
     game.collection('unusedDiseaseCubes').doc(unusedDiseaseCube).set({[unusedDiseaseCube]: collections.unusedDiseaseCubes[unusedDiseaseCube]})
   })
 
   //add remainingEventCards
-  remainingEventCards.map(remainingEventCard => {
+  remainingEventCards.forEach(remainingEventCard => {
     game.collection('remainingEventCards').doc(remainingEventCard).set({[remainingEventCard]: collections.remainingEventCards[remainingEventCard]})
   })
 
-  //add players with empty collection for hand
-  players.map(player => {
+  //add players
+  players.forEach(player => {
     game.collection('players').doc(player).set({[player]: collections.players[player]})
-    game.collection('players').doc(player).collection('currentHand')
   })
 
   //add cities with cube counters
-  cities.map(city => {
+  cities.forEach(city => {
     game.collection('cities').doc(city).set({[city]: collections.cities[city]})
-    cubes.map(cube => {
-      game.collection('cubes').doc(cube).set({[cube]: collections.cubes[cube]})
+    cubes.forEach(cube => {
+      game.collection('cities').doc(city).collection('cubes').doc(cube).set({[cube]: 0})
     })
   })
 
   //add unusedInfectionCards
-  unusedInfectionCards.map(unusedInfectionCard => {
+  unusedInfectionCards.forEach(unusedInfectionCard => {
     game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({[unusedInfectionCard]: collections.unusedInfectionCards[unusedInfectionCard]})
   })
 
   //add unusedCityCards
-  unusedCityCards.map(unusedCityCard => {
+  unusedCityCards.forEach(unusedCityCard => {
     game.collection('unusedCityCards').doc(unusedCityCard).set({[unusedCityCard]: collections.unusedCityCards[unusedCityCard]})
   })
 }
@@ -862,6 +863,3 @@ export const gameState = {
   difficultyLevel: 0,
   playerDeck: []
 }
-
-//Will the player cards and infection cards be an array of cards?
-//Number of players will dictate number of cards per player.

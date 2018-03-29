@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { db } from '../store';
-import { init, collections, gameState } from '../utils/initialGameState'
+import { init, collections } from '../utils'
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +13,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // init(db, gameState, collections)
+    // let numPlayers = 4
+    // let difficultyLevel = 4
+    // init(db, collections, numPlayers, difficultyLevel)
   }
 
   render() {

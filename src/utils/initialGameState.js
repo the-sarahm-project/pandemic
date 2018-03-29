@@ -5,7 +5,8 @@ remainingEpidemicCards
 player: currentHand
 
 Certain fields need to be added:
-difficultyLevel
+difficultyLevel: integer
+playerDeck: array
 */
 
 export const init = (db, gameState, collections) => {
@@ -22,40 +23,40 @@ export const init = (db, gameState, collections) => {
 
   //add cureMarkers
   cureMarkers.forEach(cureMarker => {
-    game.collection('cureMarkers').doc(cureMarker).set({[cureMarker]: collections.cureMarkers[cureMarker]})
+    game.collection('cureMarkers').doc(cureMarker).set({cured: false})
   })
 
   //add unusedDiseaseCubes
   unusedDiseaseCubes.forEach(unusedDiseaseCube => {
-    game.collection('unusedDiseaseCubes').doc(unusedDiseaseCube).set({[unusedDiseaseCube]: collections.unusedDiseaseCubes[unusedDiseaseCube]})
+    game.collection('unusedDiseaseCubes').doc(unusedDiseaseCube).set({count: collections.unusedDiseaseCubes[unusedDiseaseCube]})
   })
 
   //add remainingEventCards
   remainingEventCards.forEach(remainingEventCard => {
-    game.collection('remainingEventCards').doc(remainingEventCard).set({[remainingEventCard]: collections.remainingEventCards[remainingEventCard]})
+    game.collection('remainingEventCards').doc(remainingEventCard).set(collections.remainingEventCards[remainingEventCard])
   })
 
   //add players
   players.forEach(player => {
-    game.collection('players').doc(player).set({[player]: collections.players[player]})
+    game.collection('players').doc(player).set(collections.players[player])
   })
 
   //add cities with cube counters
   cities.forEach(city => {
-    game.collection('cities').doc(city).set({[city]: collections.cities[city]})
+    game.collection('cities').doc(city).set(collections.cities[city])
     cubes.forEach(cube => {
-      game.collection('cities').doc(city).collection('cubes').doc(cube).set({[cube]: 0})
+      game.collection('cities').doc(city).collection('cubes').doc(cube).set({count: 0})
     })
   })
 
   //add unusedInfectionCards
   unusedInfectionCards.forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({[unusedInfectionCard]: collections.unusedInfectionCards[unusedInfectionCard]})
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set(collections.unusedInfectionCards[unusedInfectionCard])
   })
 
   //add unusedCityCards
   unusedCityCards.forEach(unusedCityCard => {
-    game.collection('unusedCityCards').doc(unusedCityCard).set({[unusedCityCard]: collections.unusedCityCards[unusedCityCard]})
+    game.collection('unusedCityCards').doc(unusedCityCard).set(collections.unusedCityCards[unusedCityCard])
   })
 }
 

@@ -1,8 +1,9 @@
 import shuffle from 'lodash.shuffle';
 
-let gameState = db.collection('gameId').doc('gameState');
+let gameState = db.collection('games').doc('gameState');
 
-function async setupLogic() {
+//pass in the game state, the number of players, the difficulty level
+function async setupLogic(gameState, numPlayers, difficultyLevel) {
   //Watch as one research station is placed in Atlanta.
   gameState.collection('cities').doc('Atlanta').update(
   "researchStation", true);
@@ -10,7 +11,7 @@ function async setupLogic() {
   //Watch as outbreaks and cure markers are placed (automatic)
 
   //Watch as the infection rate marker is placed.
-  gameState.infectionRate.set(2);
+  gameState.update('infectionRate', 2);
 
   //Watch as the Infection cards are flipped. & Watch as cities are infected with disease cubes.
   await flipInfectionCards(gameState, 3);
@@ -21,6 +22,7 @@ function async setupLogic() {
   await locationAndRolePlacement(gameState);
 
   //Watch as the Epidemic cards are shuffled into the Player Deck.
+  await createPlayerDeck(gameState, difficultyLevel);
 
   //Watch as cards are distributed according to the number of players.
 
@@ -69,4 +71,29 @@ const roles = ["Contingency Planner", "Dispatcher", "Medic", "Operations Expert"
 
 function assignRole(role, player) {
   gameState.collection('players').doc(player.name).update('role', role);
+}
+
+function createPlayerDeck(gameState, numPlayers) {
+  var numEpidemicCards = 4;
+  if (difficultyLevel === 'Introductory') {
+    numEpidemicCards = 4;
+  }
+  else if (difficultyLevel === 'Standard') {
+    numEpidemicCards = 5;
+  }
+  else if (difficultyLevel === 'Heroic') {
+    numEpidemicCards = 6;
+  }
+  //separate the cards in numEpidemicCards pile.
+  //shuffle those cards with the epidemic card.
+  //put them back together as your new deck.
+  const cities = gameState.collection('unusedCityCards').get();
+  const events = gameState.collection('unusedEventCards').get();
+  const epidemics = gameState.collection('epidemicCards').get();
+  Promise.all([cities, events, epidemics])
+  .then(arr => Promise.all(arr.map(cardSnapshots => cardSnapshots.docs)))
+  .then(snapshotsArr => {
+
+  })
+
 }

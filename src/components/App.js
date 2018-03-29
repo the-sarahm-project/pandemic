@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    init(db, gameState, collections)
+    // init(db, gameState, collections)
   }
 
   render() {

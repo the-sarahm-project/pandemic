@@ -13,6 +13,8 @@ class App extends Component {
 
   componentDidMount() {
     this.cities = db.collection('cities');
+    console.log(this.cities.doc('Atlanta').limit(3));
+
   }
   render() {
     return (

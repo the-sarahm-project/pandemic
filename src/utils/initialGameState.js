@@ -863,6 +863,5 @@ export const gameState = {
   infectionRate: 0, //the infection rate marker
   numOutbreaks: 0, //the outbreak rate marker
   remainingResearchStations: 6,
-  currentTurn: 1,
-  playerDeck: []
+  currentTurn: 1
 }

@@ -3,6 +3,9 @@ Certain collections will still need to be added in later:
 trashedInfectionCards
 remainingEpidemicCards
 player: currentHand
+
+Certain fields need to be added:
+difficultyLevel
 */
 
 export const init = (db, gameState, collections) => {
@@ -860,6 +863,5 @@ export const gameState = {
   numOutbreaks: 0, //the outbreak rate marker
   remainingResearchStations: 6,
   currentTurn: 1,
-  difficultyLevel: 0,
   playerDeck: []
 }

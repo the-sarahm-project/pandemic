@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.cities = db.collection('cities').get().then(({docs}) => console.log(docs));
+    this.cities = db.collection('cities').get().then(({docs}) => console.log(docs[0].ref));
     //console.log(Object.keys(this.cities))
     //this.cities.doc('Atlanta').collection('cubes').doc('black').update({count: 3})
     //.then(console.log);

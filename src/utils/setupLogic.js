@@ -18,13 +18,11 @@ function async setupLogic(gameState, numPlayers, difficultyLevel) {
   await flipInfectionCards(gameState, 2);
   await flipInfectionCards(gameState, 1);
 
-  //Watch as each player receives a role. & Watch as the player pawns are placed in Atlanta.
-  await locationAndRolePlacement(gameState);
-
   //Watch as the Epidemic cards are shuffled into the Player Deck.
   await createPlayerDeck(gameState, difficultyLevel);
 
-  //Watch as cards are distributed according to the number of players.
+  //Watch as cards are distributed according to the number of players. && Watch as each player receives a role. & Watch as the player pawns are placed in Atlanta.
+  await locationAndRolePlacement(gameState, numPlayers);
 
   //See my own hand and if host chooses, everyone else's current hand.
 
@@ -52,7 +50,7 @@ async function flipInfectionCards(gameState, num) {
   .catch(console.error);
 }
 
-async function locationAndRolePlacement(gameState) {
+async function locationAndRolePlacement(gameState, numPlayers) {
   gameState.collection('players').get()
   .then(playerSnapshots => playerSnapshots.docs.map(player => player.data()))
   .tap(players => {
@@ -60,9 +58,12 @@ async function locationAndRolePlacement(gameState) {
       gameState.collection('players').doc(player.name).update('currentCity', 'Atlanta');
     }))
   })
-  .then(players => {
+  .tap(players => {
     const gameRoles = shuffle(roles);
     return players.map((player, i) => assignRole(gameRoles[i], player))
+  })
+  .tap(players => {
+
   })
   .catch(console.error);
 }
@@ -75,6 +76,7 @@ function assignRole(role, player) {
 
 function createPlayerDeck(gameState, numPlayers) {
   var numEpidemicCards = 4;
+  var playerDeck = [];
   if (difficultyLevel === 'Introductory') {
     numEpidemicCards = 4;
   }
@@ -92,8 +94,23 @@ function createPlayerDeck(gameState, numPlayers) {
   const epidemics = gameState.collection('epidemicCards').get();
   Promise.all([cities, events, epidemics])
   .then(arr => Promise.all(arr.map(cardSnapshots => cardSnapshots.docs)))
-  .then(snapshotsArr => {
+  .spread((cities, events, epidemics) => {
+    cities.forEach(city => playerDeck.push(city.ref));
+    events.forEach(event => playerDeck.push(event.ref));
 
+    const epCards = epidemics.splice(numEpidemicCards, 6 - numEpidemicCards).map(epidemic => epidemic.ref);
+
+    playerDeck = splitShuffle(playerDeck, numEpidemicCards, epCards);
+    return gameState.set({playerDeck}, {merge: true});
   })
+  .catch(console.error);
+}
 
+function splitShuffle(playerDeck, numPiles, epCards) {
+  playerDeck = shuffle(playerDeck);
+  const separatePiles = [];
+  playerDeck.forEach((card, i) => {
+    separatePiles[i % numPiles].push(card);
+  })
+  return separatePiles.map((pile, i) => playerDeck = shuffle(pile.push(epCards[i]))).reduce((accum, curr) => accum.concat(curr), []);
 }

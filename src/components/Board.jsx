@@ -10,9 +10,16 @@ const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}
 const lightTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
   options: {
-      iconSize: [30, 30],
+      iconSize: [30, 30]
   }
 });
+
+const ResearchStationIcon = L.Icon.extend({
+  options: {
+    iconSize: [50, 50]
+  }
+})
+
 const iconContainer = {
   redIcon: new BallIcon({iconUrl: 'https://lh5.ggpht.com/JUGn9I-kMM3LriNMpdUA6Z1_NZksTHCndCJ7SqSG0CkF6P-rBHUS91_aAiWfNpKSoQ=w300'}),
   blueIcon: new BallIcon({iconUrl: 'http://lobelpost.com/v17/files/stacks-image-12a7505.png'}),
@@ -24,6 +31,8 @@ const Board = (props) => {
   const center = [0,0];
   const zoomLevel = 1;
   const maxBounds = [[70,-100],[-60,120]];
+  const atlantaCoords = [33.7490, -84.3880];
+  const researchStationUrl = 'https://vignette.wikia.nocookie.net/sqmegapolis/images/8/82/Nuclear_Research_Center_%28Old%29.png/revision/latest?cb=20130515084457'
   return (
     <div>
       <Map
@@ -40,6 +49,7 @@ const Board = (props) => {
         {
           cities.map((city, index) => <Marker position={city.coords} key={index} icon={iconContainer[city.icon]}/>)
         }
+        <Marker position={atlantaCoords} icon={new ResearchStationIcon({iconUrl: researchStationUrl})} />
       </Map>
     </div>
   );

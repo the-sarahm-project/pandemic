@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { db } from '../store';
-import { init, collections } from '../utils'
+import { init, collections, setupLogic } from '../utils'
 
 class App extends Component {
   constructor(props) {
@@ -13,15 +13,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    db.collection('cities').limit(3).get().then(snapshots =>
-      console.log(snapshots.docs))
-    //.then(({docs}) => console.log(docs[0].ref));
-    //console.log(Object.keys(this.cities))
+    let numPlayers = 4, difficultyLevel = 4;
+    setupLogic(db.collection('games').doc('yI53OJgWAYaUk7RVn4nf'), numPlayers, difficultyLevel);
+
     //this.cities.doc('Atlanta').collection('cubes').doc('black').update({count: 3})
     //.then(console.log);
   //gameState.collection('cities').doc(card.name).update(card.color, 3)
-    // let numPlayers = 4
-    // let difficultyLevel = 4
+
     // init(db, collections, numPlayers, difficultyLevel)
   }
 

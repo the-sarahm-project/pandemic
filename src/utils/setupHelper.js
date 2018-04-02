@@ -1,3 +1,4 @@
+import shuffle from 'lodash.shuffle';
 /*--------- MISC HELPER FUNCTIONS ----------------------*/
 //get data from a snapshot
 export function getSnapshotData(snapshots) {
@@ -10,9 +11,19 @@ export function getCollectionDocs(gameState, collectionName) {
 }
 
 //add a research station to a city
-function addResearchStation(cityName) {
+export function addResearchStation(gameState, cityName) {
   gameState.collection('cities').doc(cityName).update(
     "researchStation", true);
+}
+
+//move the document to a collection
+function addTo(gameState, cityData, collection) {
+  return gameState.collection(collection).doc(cityData.name).set(cityData);
+}
+
+//delete the document from a collection
+function removeFrom(gameState, cityData, collection) {
+  return gameState.collection(collection).doc(cityData.name).delete();
 }
 
 /*------------INFECT FIRST 9 CITIES ---------------------*/
@@ -22,21 +33,11 @@ function addCubes(gameState, cityData, num) {
   return gameState.collection('cities').doc(cityData.name).collection('cubes').doc(cityData.color).update('count', num);
 }
 
-//move the card to the trashed Infection Cards pile
-function addToTrashed(gameState, cityData) {
-  return gameState.collection('trashedInfectionCards').doc(cityData.name).set(cityData);
-}
-
-//delete the card from unused
-function removeFromUnused(gameState, cityData) {
-  return gameState.collection('unusedCityCards').doc(cityData.name).delete();
-}
-
 //infect one city
 async function infectOne(gameState, cityData, num) {
   await addCubes(gameState, cityData, num);
-  await addToTrashed(gameState, cityData);
-  await removeFromUnused(gameState, cityData);
+  await addTo(gameState, cityData, 'trashedInfectionCards');
+  await removeFrom(gameState, cityData, 'unusedCityCards');
 }
 
 export async function flipInfectionCards(gameState, num) {
@@ -65,12 +66,12 @@ export function getNumCards(difficultyLevel) {
 const roles = ["Contingency Planner", "Dispatcher", "Medic", "Operations Expert", "Quarantine Specialist", "Researcher", "Scientist"];
 
 //assign a role to a player
-function assignRole(role, player) {
+function assignRole(gameState, role, player) {
   gameState.collection('players').doc(player.name).update('role', role);
 }
 
 //Place players in Atlanta and add their roles
-async function locationAndRolePlacement(gameState, numPlayers) {
+export async function locationAndRolePlacement(gameState, numPlayers) {
   //get the data for the players in the game
   let players = await gameState.collection('players').get().then(getSnapshotData);
 
@@ -79,13 +80,13 @@ async function locationAndRolePlacement(gameState, numPlayers) {
 
   //shuffle the roles & assign them
   const gameRoles = shuffle(roles);
-  await players.forEach((player, i) => assignRole(gameRoles[i], player));
+  await players.forEach((player, i) => assignRole(gameState, gameRoles[i], player));
 
   return players;
 }
 
 //distribute cards to each player depending on the number of players
-export async function distributeCards(playerDeck, players) {
+export async function distributeCards(gameState, playerDeck, players) {
   const numPlayers = Object.keys(players);
   const numCards = cardsPerPlayer(numPlayers);
 
@@ -94,7 +95,7 @@ export async function distributeCards(playerDeck, players) {
     for (let j = 0; i < numCards; j++) {
       currentHand.push(playerDeck.pop());
     }
-    await gameState.collection('players').doc(player.name).set({currentHand}, {merge: true})
+    await gameState.collection('players').doc(players[numPlayers[i]].name).set({currentHand}, {merge: true})
   }
 }
 
@@ -103,4 +104,39 @@ function cardsPerPlayer(numPlayers) {
   if (numPlayers === 2 ) return 4;
   if (numPlayers === 3) return 3;
   if (numPlayers === 4) return 2;
+}
+
+/*---------------CREATE PLAYER DECK --------------------*/
+export async function createPlayerDeck(gameState, players, difficultyLevel) {
+  const numEpidemicCards = getNumCards(difficultyLevel);
+  let playerDeck = [];
+
+  //get the docs to get their references
+  const cities = await getCollectionDocs(gameState, 'unusedCityCards');
+  const events = await getCollectionDocs(gameState, 'unusedEventCards');
+
+  //add the city and event cards into the deck, and shuffle the deck.
+  cities.forEach(city => playerDeck.push(city.ref));
+  events.forEach(event => playerDeck.push(event.ref));
+  playerDeck = shuffle(playerDeck);
+
+  //distribute x number of cards to each player
+  await distributeCards(gameState, playerDeck, players);
+
+  const epidemics = await getCollectionDocs(gameState, 'epidemicCards');
+  const epCards = epidemics.slice(0, numEpidemicCards).map(epidemic => epidemic.ref);
+
+  playerDeck = splitShuffle(playerDeck, numEpidemicCards, epCards);
+  return gameState.set({playerDeck}, {merge: true});
+}
+
+//separate the cards in numEpidemicCards pile.
+//shuffle those cards with the epidemic card.
+//put them back together as your new deck.
+function splitShuffle(playerDeck, numPiles, epCards) {
+  const separatePiles = [];
+  playerDeck.forEach((card, i) => {
+    separatePiles[i % numPiles].push(card);
+  })
+  return separatePiles.map((pile, i) => playerDeck = shuffle(pile.push(epCards[i]))).reduce((accum, curr) => accum.concat(curr), []);
 }

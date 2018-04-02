@@ -114,3 +114,9 @@ function splitShuffle(playerDeck, numPiles, epCards) {
   })
   return separatePiles.map((pile, i) => playerDeck = shuffle(pile.push(epCards[i]))).reduce((accum, curr) => accum.concat(curr), []);
 }
+
+//reduce the call to 1 card and then i can just call it a number of times
+// change refs to '/cities/Atlanta/...etc'
+//'move to' function
+//helper function getData
+//add cubes as fields, like black: 0, etc. directly on the city.

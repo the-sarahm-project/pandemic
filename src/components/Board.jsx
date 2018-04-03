@@ -1,7 +1,6 @@
 import React from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { cities } from '../utils/cities';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';

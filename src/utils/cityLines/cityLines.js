@@ -4,8 +4,8 @@ import { Polyline } from 'react-leaflet';
 
 const drawLines = (cities) => {
   const lines = [];
-  for (city of cities) {
-    for (neighbor of city.neigbors) {
+  for (let city of cities) {
+    for (let neighbor of city.neigbors) {
       let cityA = new L.LatLng(city.coords);
       let cityB = new L.LatLng(neighbor.coords);
       lines.push(

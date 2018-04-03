@@ -2,7 +2,8 @@ import React from 'react';
 import L from 'leaflet';
 import { Marker } from 'react-leaflet';
 
-const addResearchStation = (coords) => {
+const ResearchStation = (props) => {
+  const coords = props.coords
   const ResearchStationIcon = L.Icon.extend({
     options: {
       iconSize: [50, 50]
@@ -12,4 +13,4 @@ const addResearchStation = (coords) => {
   return <Marker position={coords} icon={new ResearchStationIcon({iconUrl: researchStationUrl})} />
 }
 
-export default addResearchStation
+export default ResearchStation

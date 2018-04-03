@@ -4,7 +4,7 @@ const cities = {
     coords: [36.7538, 3.0588],
     icon: "blackIcon",
     researchStation: false,
-    neighbors: ["Cairo", "Instanbul", "Madrid", "Paris"]
+    neighbors: ["Cairo", "Istanbul", "Madrid", "Paris"]
   },
   Atlanta: {
     name: "Atlanta",

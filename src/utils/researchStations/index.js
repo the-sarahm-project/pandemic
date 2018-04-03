@@ -1,1 +1,1 @@
-export { default as addResearchStation } from './addResearchStation';
+export { default as ResearchStation } from './ResearchStation';

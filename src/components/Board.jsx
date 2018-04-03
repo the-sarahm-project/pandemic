@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { cities } from '../utils/cities';
-import { addResearchStation } from '../utils'
+import { ResearchStation, CityLines } from '../utils'
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const lightTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -43,7 +43,8 @@ const Board = (props) => {
         {
           cities.map((city, index) => <Marker position={city.coords} key={index} icon={iconContainer[city.icon]} />)
         }
-        {addResearchStation(atlantaCoords)}
+        <ResearchStation coords={atlantaCoords}/>
+        <CityLines />
       </Map>
     </div>
   );

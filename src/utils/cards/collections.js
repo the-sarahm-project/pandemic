@@ -56,12 +56,6 @@ const collections = {
       currentCity: "Atlanta"
     }
   },
-  cubes: {
-    red: 0,
-    blue: 0,
-    yellow: 0,
-    black: 0,
-  },
   unusedInfectionCards,
   unusedCityCards,
   cities,

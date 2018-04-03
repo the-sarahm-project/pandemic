@@ -24,7 +24,6 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   const unusedDiseaseCubes = Object.keys(collections.unusedDiseaseCubes)
   const unusedEventCards = Object.keys(collections.unusedEventCards)
   const players = Object.keys(collections.players)
-  const cubes = Object.keys(collections.cubes)
   const cities = Object.keys(collections.cities)
   const unusedInfectionCards = Object.keys(collections.unusedInfectionCards)
   const unusedCityCards = Object.keys(collections.unusedCityCards)
@@ -55,10 +54,7 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
 
   //add cities with cube counters
   cities.forEach(city => {
-    game.collection('cities').doc(city).set(collections.cities[city])
-    cubes.forEach(cube => {
-      game.collection('cities').doc(city).collection('cubes').doc(cube).set({count: 0})
-    })
+    game.collection('cities').doc(city).set({...collections.cities[city], red: 0, blue: 0, yellow: 0, black: 0})
   })
 
   //add unusedInfectionCards

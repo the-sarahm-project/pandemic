@@ -1,10 +1,11 @@
 import React from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { cities } from '../utils/cities';
 import L from 'leaflet';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { cities } from '../utils/cities';
+import { addResearchStation } from '../utils'
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const lightTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -13,12 +14,6 @@ const BallIcon = L.Icon.extend({
       iconSize: [30, 30]
   }
 });
-
-const ResearchStationIcon = L.Icon.extend({
-  options: {
-    iconSize: [50, 50]
-  }
-})
 
 const iconContainer = {
   redIcon: new BallIcon({iconUrl: 'https://lh5.ggpht.com/JUGn9I-kMM3LriNMpdUA6Z1_NZksTHCndCJ7SqSG0CkF6P-rBHUS91_aAiWfNpKSoQ=w300'}),
@@ -32,7 +27,6 @@ const Board = (props) => {
   const zoomLevel = 1;
   const maxBounds = [[70,-100],[-60,120]];
   const atlantaCoords = [33.7490, -84.3880];
-  const researchStationUrl = 'https://vignette.wikia.nocookie.net/sqmegapolis/images/8/82/Nuclear_Research_Center_%28Old%29.png/revision/latest?cb=20130515084457'
   return (
     <div>
       <Map
@@ -49,7 +43,7 @@ const Board = (props) => {
         {
           cities.map((city, index) => <Marker position={city.coords} key={index} icon={iconContainer[city.icon]}/>)
         }
-        <Marker position={atlantaCoords} icon={new ResearchStationIcon({iconUrl: researchStationUrl})} />
+        {addResearchStation(atlantaCoords)}
       </Map>
     </div>
   );

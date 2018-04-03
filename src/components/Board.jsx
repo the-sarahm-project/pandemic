@@ -1,7 +1,7 @@
 import React from 'react';
-import { Map, TileLayer, Marker } from 'react-leaflet';
-import { cities } from '../utils/cities';
 import L from 'leaflet';
+import { Map, TileLayer, Marker, Polyline } from 'react-leaflet';
+import { cities } from '../utils/cities';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -22,7 +22,7 @@ const iconContainer = {
 
 const Board = (props) => {
   const center = [0,0];
-  const zoomLevel = 1;
+  const zoomLevel = 2.5;
   const maxBounds = [[70,-100],[-60,120]];
   return (
     <div>
@@ -30,8 +30,8 @@ const Board = (props) => {
         ref={m => {this.leafletMap = m;}}
         center={center}
         zoom={zoomLevel}
-        minZoom={2}
-        maxZoom={2}
+        minZoom={zoomLevel}
+        maxZoom={zoomLevel}
         maxBounds={maxBounds}
       >
         <TileLayer

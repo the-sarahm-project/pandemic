@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines } from '../utils'
+import { ResearchStation, CityLines } from './index'
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const lightTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';

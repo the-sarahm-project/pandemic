@@ -1,7 +1,7 @@
 import React from 'react';
 import L from 'leaflet';
 import { Polyline } from 'react-leaflet';
-import { cities } from '../cards';
+import { cities } from '../utils/cards';
 
 const CityLines = () => {
   let cityKeys = Object.keys(cities)

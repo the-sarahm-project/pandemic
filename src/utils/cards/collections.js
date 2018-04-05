@@ -1,4 +1,4 @@
-import { unusedInfectionCards, unusedCityCards, cities, cubes } from './index'
+import { unusedInfectionCards, unusedCityCards, cities, cubes } from './index';
 
 const collections = {
   cureMarkers: { //whether or not you have a cure
@@ -59,6 +59,6 @@ const collections = {
   unusedInfectionCards,
   unusedCityCards,
   cities,
-}
+};
 
-export default collections
+export default collections;

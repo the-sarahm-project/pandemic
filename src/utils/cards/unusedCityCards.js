@@ -24,7 +24,7 @@ const unusedCityCards = {
     color: "yellow"
   },
   BuenosAires: {
-    name: "Buenos Aries",
+    name: "Buenos Aires",
     color: "yellow"
   },
   Cairo: {
@@ -191,6 +191,6 @@ const unusedCityCards = {
     name: "Washington",
     color: "blue"
   }
-}
+};
 
-export default unusedCityCards
+export default unusedCityCards;

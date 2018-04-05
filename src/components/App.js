@@ -12,15 +12,11 @@ class App extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let numPlayers = 4, difficultyLevel = 4;
-    setupLogic(db.collection('games').doc('yI53OJgWAYaUk7RVn4nf'), numPlayers, difficultyLevel);
 
-    //this.cities.doc('Atlanta').collection('cubes').doc('black').update({count: 3})
-    //.then(console.log);
-  //gameState.collection('cities').doc(card.name).update(card.color, 3)
-
-    // init(db, collections, numPlayers, difficultyLevel)
+    setupLogic(db.collection('games').doc('QJob3DS3qRtAcAZ4z3nz'), numPlayers, difficultyLevel);
+    //init(db, collections, numPlayers, difficultyLevel)
   }
 
   render() {

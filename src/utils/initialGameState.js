@@ -57,7 +57,8 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   cities.forEach(city => {
     game.collection('cities').doc(city).set(collections.cities[city])
     cubes.forEach(cube => {
-      game.collection('cities').doc(city).collection('cubes').doc(cube).set({count: 0})
+      //game.collection('cities').doc(city).collection('cubes').doc(cube).set({count: 0})
+      game.collection('cities').doc(city).set({[cube]: 0}, {merge: true});
     })
   })
 

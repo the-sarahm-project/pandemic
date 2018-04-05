@@ -42,7 +42,7 @@ const cities = {
     neighbors: ["BuenosAires", "Lima", "MexicoCity", "Miami", "SaoPaulo"]
   },
   BuenosAires: {
-    name: "Buenos Aries",
+    name: "Buenos Aires",
     coords: [-34.6037, -58.3816],
     icon: "yellowIcon",
     researchStation: false,

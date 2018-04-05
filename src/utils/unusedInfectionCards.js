@@ -24,7 +24,7 @@ const unusedInfectionCards = {
     color: "yellow"
   },
   BuenosAires: {
-    name: "Buenos Aries",
+    name: "Buenos Aires",
     color: "yellow"
   },
   Cairo: {

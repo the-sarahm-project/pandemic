@@ -5,7 +5,7 @@ export const cities = [
   {name: "Bangkok", coords: [13.7563, 100.5018], icon: "redIcon"},
   {name: "Beijing", coords: [39.9042, 116.4074], icon: "redIcon"},
   {name: "Bogota", coords: [4.7110, -74.0721], icon: "yellowIcon"},
-  {name: "Buenos Aries", coords: [-34.6037, -58.3816], icon: "yellowIcon"},
+  {name: "Buenos Aires", coords: [-34.6037, -58.3816], icon: "yellowIcon"},
   {name: "Cairo", coords: [30.0444, 31.2357], icon: "blackIcon"},
   {name: "Chennai", coords: [13.0827, 80.2707], icon: "blackIcon"},
   {name: "Chicago", coords: [41.8781, -87.6298], icon: "blueIcon"},

@@ -10,6 +10,8 @@ Certain fields need to be added:
 playerDeck: array
 */
 
+import shuffle from 'lodash.shuffle';
+
 const init = (db, collections, numPlayers, difficultyLevel) => {
   const game = db.collection('games').doc();
   game.set({
@@ -58,7 +60,7 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   });
 
   //add unusedInfectionCards
-  unusedInfectionCards.forEach(unusedInfectionCard => {
+  shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
     game.collection('unusedInfectionCards').doc(unusedInfectionCard).set(collections.unusedInfectionCards[unusedInfectionCard]);
   });
 

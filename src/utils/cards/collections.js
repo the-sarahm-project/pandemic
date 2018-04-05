@@ -1,4 +1,4 @@
-import { unusedInfectionCards, unusedCityCards, cities, cubes } from './index';
+import { unusedInfectionCards, unusedCityCards, cities } from './index';
 
 const collections = {
   cureMarkers: { //whether or not you have a cure

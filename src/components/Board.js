@@ -5,10 +5,9 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines } from './index'
+import { ResearchStation, CityLines } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
-const lightTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
   options: {
     iconSize: [30, 30]
@@ -22,7 +21,7 @@ const iconContainer = {
   blackIcon: new BallIcon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' })
 };
 
-const Board = (props) => {
+const Board = () => {
   const center = [0, 0];
   const zoomLevel = 2.5;
   const maxBounds = [[70, -100], [-60, 120]];
@@ -30,7 +29,6 @@ const Board = (props) => {
   return (
     <div>
       <Map
-        ref={m => { this.leafletMap = m; }}
         center={center}
         zoom={zoomLevel}
         minZoom={zoomLevel}
@@ -41,18 +39,18 @@ const Board = (props) => {
           url={darkTiles}
         />
         {
-          cities.map((city, index) => <Marker position={city.coords} key={index} icon={iconContainer[city.icon]} />)
+          cities.map((city) => <Marker position={city.coords} key={city.coords} icon={iconContainer[city.icon]} />)
         }
-        <ResearchStation coords={atlantaCoords}/>
+        <ResearchStation coords={atlantaCoords} />
         <CityLines />
       </Map>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   cities: state.firestore.ordered.cities //I want to add cities to my store. Does it go in the 'order' object?
-})
+});
 
 export default compose(
   firestoreConnect(),

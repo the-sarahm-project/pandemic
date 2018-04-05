@@ -5,12 +5,10 @@ import { cities } from '../utils/cards';
 
 const CityLines = () => {
   const boundaryCities = ['Sydney','Manila','Tokyo','SanFrancisco','LosAngeles'];
-  let cityKeys = Object.keys(cities);
   const visitedCities = {};
   let lines = [];
-  for (let cityKey of cityKeys) {
+  for (let [cityKey, city] of Object.entries(cities)) {
     if (boundaryCities.includes(cityKey)) continue;
-    let city = cities[cityKey];
     visitedCities[cityKey] = true;
     for (let neighbor of city.neighbors) {
       if (visitedCities[neighbor]) continue; //prevent double lines

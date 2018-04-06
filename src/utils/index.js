@@ -1,2 +1,2 @@
 export * from './cards';
-export * from './gameLogicFcns';
+export * from './gameLogic';

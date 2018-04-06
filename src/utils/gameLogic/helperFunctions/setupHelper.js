@@ -1,5 +1,6 @@
-import {shuffle} from 'lodash';
+import { shuffle } from 'lodash';
 /*--------------- MISC HELPER FUNCTIONS ----------------------*/
+
 //get data (object) from a snapshot (object) through its docs (array)
 export function getSnapshotData(snapshots) {
   return snapshots.docs.map(card => card.data());
@@ -50,6 +51,7 @@ export async function flipInfectionCards(gameState, num) {
 }
 
 /*-------------  PLAYER: LOCATION, ROLE, CURRENT HAND ---------------*/
+
 //existing roles in the game (7 total)
 const roles = ["Contingency Planner", "Dispatcher", "Medic", "Operations Expert", "Quarantine Specialist", "Researcher", "Scientist"];
 

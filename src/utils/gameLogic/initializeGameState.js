@@ -1,14 +1,8 @@
-import firebase from 'firebase';
 /*
 Certain collections will still need to be added in later:
-usedInfectionCards
 usedCityCards
 usedDiseaseCubes
 usedEventCards
-player: currentHand
-
-Certain fields need to be added:
-playerDeck: array
 */
 
 import { shuffle } from 'lodash';

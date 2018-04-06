@@ -1,4 +1,4 @@
-import {flipInfectionCards, getSnapshotData, addResearchStation, locationAndRolePlacement, getCollectionDocs, distributeCards, createPlayerDeck} from './helperFcns';
+import {flipInfectionCards, getSnapshotData, addResearchStation, locationAndRolePlacement, getCollectionDocs, distributeCards, createPlayerDeck} from './helperFunctions';
 
 //pass in the game state, the number of players, the difficulty level
 async function setupLogic(gameState, numPlayers, difficultyLevel) {

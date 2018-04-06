@@ -61,8 +61,9 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   });
 
   //add unusedInfectionCards
+  let insertOrder = 1;
   shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({...collections.unusedInfectionCards[unusedInfectionCard], timestamp: firebase.firestore.FieldValue.serverTimestamp()});
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({...collections.unusedInfectionCards[unusedInfectionCard], insertOrder: insertOrder++});
   });
 
   //add unusedCityCards

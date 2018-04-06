@@ -44,7 +44,7 @@ async function infectOne(gameState, cityData, num) {
 
 //container function to flip a number of infection cards. Obtain the first 3 that were inputted.
 export async function flipInfectionCards(gameState, num) {
-  let snapshots = await gameState.collection('unusedInfectionCards').orderBy("timestamp", "desc").limit(3).get();
+  let snapshots = await gameState.collection('unusedInfectionCards').orderBy("insertOrder", "desc").limit(3).get();
   let data = await getSnapshotData(snapshots);
   await Promise.all(data.map(data => infectOne(gameState, data, num)));
 }

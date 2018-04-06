@@ -15,7 +15,7 @@ class App extends Component {
   componentDidMount() {
     let numPlayers = 4, difficultyLevel = 4;
 
-    setupLogic(db.collection('games').doc('PtbXqQRI8e04gShnJUJI'), numPlayers, difficultyLevel);
+    setupLogic(db.collection('games').doc('ytQnw2I0gonsoYXo6M02'), numPlayers, difficultyLevel);
     //init(db, collections, numPlayers, difficultyLevel);
   }
 

@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 /*
 Certain collections will still need to be added in later:
 usedInfectionCards
@@ -61,7 +62,7 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
 
   //add unusedInfectionCards
   shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set(collections.unusedInfectionCards[unusedInfectionCard]);
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({...collections.unusedInfectionCards[unusedInfectionCard], timestamp: firebase.firestore.FieldValue.serverTimestamp()});
   });
 
   //add unusedCityCards

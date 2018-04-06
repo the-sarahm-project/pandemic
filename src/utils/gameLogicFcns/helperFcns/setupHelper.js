@@ -7,9 +7,7 @@ export function getSnapshotData(snapshots) {
 
 //get docs (array) from a collection's snapshots (object)
 export function getCollectionDocs(gameState, collectionName) {
-  return gameState.collection(collectionName).get()
-          .then(snapshots => snapshots.docs)
-          .catch(console.error);
+  return gameState.collection(collectionName).get().then(snapshots => snapshots.docs).catch(console.error);
 }
 
 //add a research station to a city & subtract number of stations
@@ -21,8 +19,6 @@ export async function addResearchStation(gameState, cityName) {
 
 //move the document to a collection
 function addTo(gameState, cityRef, cityData, collection) {
-  //You can't create a new collection and set the document at the same time. You need to create the document first.
-  //let collectionRef = gameState.collection(collection).doc(cityRef);
   return gameState.collection(collection).doc(cityRef).set(cityData);
 }
 
@@ -40,7 +36,7 @@ function addCubes(gameState, docName, cityData, num) {
 
 //infect one city - obtain the reference name. Add the cubes to that city, add the card to the trashed pile and remove the card from the unused pile.
 async function infectOne(gameState, cityData, num) {
-  const docName = cityData.name.replace(/\s/g, "");
+  const docName = cityData.name.replace(/\W/g, "");
   await addCubes(gameState, docName, cityData, num);
   await addTo(gameState, docName, cityData, 'trashedInfectionCards');
   await removeFrom(gameState, docName, 'unusedInfectionCards');
@@ -48,7 +44,7 @@ async function infectOne(gameState, cityData, num) {
 
 //container function to flip a number of infection cards. Obtain the first 3 that were inputted.
 export async function flipInfectionCards(gameState, num) {
-  let snapshots = await gameState.collection('unusedInfectionCards').limit(3).get();
+  let snapshots = await gameState.collection('unusedInfectionCards').orderBy("timestamp", "desc").limit(3).get();
   let data = await getSnapshotData(snapshots);
   await Promise.all(data.map(data => infectOne(gameState, data, num)));
 }
@@ -125,7 +121,8 @@ export async function createPlayerDeck(gameState, players, difficultyLevel, play
 function splitShuffle(playerDeck, numPiles, epCards) {
   const separatePiles = [];
   playerDeck.forEach((card, i) => {
-    separatePiles[i % numPiles] = separatePiles[i % numPiles] ? separatePiles[i % numPiles].push(card) : [card];
+    separatePiles[i % numPiles] = separatePiles[i % numPiles] || [];
+    separatePiles[i % numPiles].push(card);
   });
 
   return separatePiles.map((pile, i) => {

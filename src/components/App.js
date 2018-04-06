@@ -12,12 +12,11 @@ class App extends Component {
     super(props);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let numPlayers = 4, difficultyLevel = 4;
 
-    setupLogic(db.collection('games').doc('JJCmPuF5ubNTaGJG7tgU'), numPlayers, difficultyLevel);
+    setupLogic(db.collection('games').doc('PtbXqQRI8e04gShnJUJI'), numPlayers, difficultyLevel);
     //init(db, collections, numPlayers, difficultyLevel);
-    console.log('i think we got here');
   }
 
   render() {

@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { db } from '../store';
-import { init, collections, setupLogic } from '../utils'
+import { init, collections, setupLogic } from '../utils';
 
 class App extends Component {
   constructor(props) {
@@ -15,8 +15,9 @@ class App extends Component {
   async componentDidMount() {
     let numPlayers = 4, difficultyLevel = 4;
 
-    setupLogic(db.collection('games').doc('zgYhVRG8J9LWNPaAWIkp'), numPlayers, difficultyLevel);
-    //init(db, collections, numPlayers, difficultyLevel)
+    setupLogic(db.collection('games').doc('JJCmPuF5ubNTaGJG7tgU'), numPlayers, difficultyLevel);
+    //init(db, collections, numPlayers, difficultyLevel);
+    console.log('i think we got here');
   }
 
   render() {

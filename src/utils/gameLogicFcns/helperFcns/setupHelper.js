@@ -1,4 +1,4 @@
-import shuffle from 'lodash.shuffle';
+import {shuffle} from 'lodash';
 /*--------------- MISC HELPER FUNCTIONS ----------------------*/
 //get data (object) from a snapshot (object) through its docs (array)
 export function getSnapshotData(snapshots) {
@@ -7,7 +7,9 @@ export function getSnapshotData(snapshots) {
 
 //get docs (array) from a collection's snapshots (object)
 export function getCollectionDocs(gameState, collectionName) {
-  return gameState.collection(collectionName).get().then(snapshots => snapshots.docs)
+  return gameState.collection(collectionName).get()
+          .then(snapshots => snapshots.docs)
+          .catch(console.error);
 }
 
 //add a research station to a city & subtract number of stations
@@ -20,8 +22,8 @@ export async function addResearchStation(gameState, cityName) {
 //move the document to a collection
 function addTo(gameState, cityRef, cityData, collection) {
   //You can't create a new collection and set the document at the same time. You need to create the document first.
-  let collectionRef = gameState.collection(collection).doc(cityRef);
-  return collectionRef.set(cityData);
+  //let collectionRef = gameState.collection(collection).doc(cityRef);
+  return gameState.collection(collection).doc(cityRef).set(cityData);
 }
 
 //delete the document from a collection
@@ -81,7 +83,7 @@ export async function distributeCards(gameState, playerDeck, players, playersDoc
     for (let j = 0; j < numCards; j++) {
       currentHand.push(playerDeck.pop());
     }
-    await playersDocs[i].ref.set({currentHand}, {merge: true})
+    await playersDocs[i].ref.set({currentHand}, {merge: true});
   }
 }
 
@@ -93,21 +95,8 @@ function cardsPerPlayer(numPlayers) {
 }
 
 /*-------------------CREATE PLAYER DECK ----------------------*/
-//decide on number of cards -> initial difficulty Level was a string of "Beginner", "Intermediate", and "Heroic".
-export function getNumCards(difficultyLevel) {
-  if (difficultyLevel === 4) {
-    return 4;
-  }
-  else if (difficultyLevel === 5) {
-    return 5;
-  }
-  else if (difficultyLevel === 6) {
-    return 6;
-  }
-}
 
 export async function createPlayerDeck(gameState, players, difficultyLevel, playersDocs) {
-  const numEpidemicCards = getNumCards(difficultyLevel);
   let playerDeck = [];
 
   //get the docs to get their references
@@ -123,9 +112,10 @@ export async function createPlayerDeck(gameState, players, difficultyLevel, play
   await distributeCards(gameState, playerDeck, players, playersDocs);
 
   const epidemics = await getCollectionDocs(gameState, 'epidemicCards');
-  const epCards = epidemics.slice(0, numEpidemicCards).map(epidemic => epidemic.ref);
+  //difficulty level is 4, 5, 6 to represent number of epidemic cards
+  const epCards = epidemics.slice(0, difficultyLevel).map(epidemic => epidemic.ref);
 
-  playerDeck = splitShuffle(playerDeck, numEpidemicCards, epCards);
+  playerDeck = splitShuffle(playerDeck, difficultyLevel, epCards);
   await gameState.set({playerDeck}, {merge: true});
 }
 
@@ -135,9 +125,8 @@ export async function createPlayerDeck(gameState, players, difficultyLevel, play
 function splitShuffle(playerDeck, numPiles, epCards) {
   const separatePiles = [];
   playerDeck.forEach((card, i) => {
-    separatePiles[i % numPiles] = separatePiles[i % numPiles] || [];
-    separatePiles[i % numPiles].push(card);
-  })
+    separatePiles[i % numPiles] = separatePiles[i % numPiles] ? separatePiles[i % numPiles].push(card) : [card];
+  });
 
   return separatePiles.map((pile, i) => {
     pile.push(epCards[i]);

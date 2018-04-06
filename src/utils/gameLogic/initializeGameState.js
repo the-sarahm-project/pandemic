@@ -1,13 +1,8 @@
 /*
 Certain collections will still need to be added in later:
-usedInfectionCards
 usedCityCards
 usedDiseaseCubes
 usedEventCards
-player: currentHand
-
-Certain fields need to be added:
-playerDeck: array
 */
 
 import { shuffle } from 'lodash';
@@ -60,8 +55,9 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   });
 
   //add unusedInfectionCards
+  let insertOrder = 1;
   shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set(collections.unusedInfectionCards[unusedInfectionCard]);
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({...collections.unusedInfectionCards[unusedInfectionCard], insertOrder: insertOrder++});
   });
 
   //add unusedCityCards

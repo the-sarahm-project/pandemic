@@ -24,7 +24,7 @@ const unusedInfectionCards = {
     color: "yellow"
   },
   BuenosAires: {
-    name: "Buenos Aries",
+    name: "Buenos Aires",
     color: "yellow"
   },
   Cairo: {
@@ -191,6 +191,6 @@ const unusedInfectionCards = {
     name: "Washington",
     color: "blue"
   }
-}
+};
 
-export default unusedInfectionCards
+export default unusedInfectionCards;

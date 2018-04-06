@@ -4,7 +4,7 @@ const cities = {
     coords: [36.7538, 3.0588],
     icon: "blackIcon",
     researchStation: false,
-    neighbors: ["Cairo", "Instanbul", "Madrid", "Paris"]
+    neighbors: ["Cairo", "Istanbul", "Madrid", "Paris"]
   },
   Atlanta: {
     name: "Atlanta",
@@ -42,7 +42,7 @@ const cities = {
     neighbors: ["BuenosAires", "Lima", "MexicoCity", "Miami", "SaoPaulo"]
   },
   BuenosAires: {
-    name: "Buenos Aries",
+    name: "Buenos Aires",
     coords: [-34.6037, -58.3816],
     icon: "yellowIcon",
     researchStation: false,
@@ -335,6 +335,6 @@ const cities = {
     researchStation: false,
     neighbors: ["Atlanta", "Miami", "Montreal", "NewYork"]
   }
-}
+};
 
-export default cities
+export default cities;

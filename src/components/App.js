@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { db } from '../store';
-import { init, collections } from '../utils'
+import { init, collections } from '../utils';
 
 class App extends Component {
   constructor(props) {
@@ -27,6 +27,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   cities: state.firestore.ordered.cities
-})
+});
 
 export default compose(firestoreConnect((props) => [{collection: 'cities'}]), connect(mapStateToProps))(App);

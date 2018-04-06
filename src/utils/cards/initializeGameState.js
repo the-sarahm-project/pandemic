@@ -10,7 +10,7 @@ Certain fields need to be added:
 playerDeck: array
 */
 
-import shuffle from 'lodash.shuffle';
+import { shuffle } from 'lodash';
 
 const init = (db, collections, numPlayers, difficultyLevel) => {
   const game = db.collection('games').doc();

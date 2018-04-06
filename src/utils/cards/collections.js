@@ -1,4 +1,4 @@
-import { unusedInfectionCards, unusedCityCards, cities, cubes } from './index'
+import { unusedInfectionCards, unusedCityCards, cities } from './index';
 
 const collections = {
   cureMarkers: { //whether or not you have a cure
@@ -56,15 +56,9 @@ const collections = {
       currentCity: "Atlanta"
     }
   },
-  cubes: {
-    red: 0,
-    blue: 0,
-    yellow: 0,
-    black: 0,
-  },
   unusedInfectionCards,
   unusedCityCards,
   cities,
-}
+};
 
-export default collections
+export default collections;

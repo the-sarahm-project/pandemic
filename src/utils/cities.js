@@ -47,4 +47,4 @@ export const cities = [
   {name: "Tehran", coords: [35.6892, 51.3890], icon: "blackIcon"},
   {name: "Tokyo", coords: [35.6895, 139.6917], icon: "redIcon"},
   {name: "Washington", coords: [38.9072, -77.0369], icon: "blueIcon"}
-]
+];

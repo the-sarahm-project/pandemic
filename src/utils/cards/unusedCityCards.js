@@ -191,6 +191,6 @@ const unusedCityCards = {
     name: "Washington",
     color: "blue"
   }
-}
+};
 
-export default unusedCityCards
+export default unusedCityCards;

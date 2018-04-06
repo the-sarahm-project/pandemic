@@ -191,6 +191,6 @@ const unusedInfectionCards = {
     name: "Washington",
     color: "blue"
   }
-}
+};
 
-export default unusedInfectionCards
+export default unusedInfectionCards;

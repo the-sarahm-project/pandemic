@@ -28,6 +28,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   cities: state.firestore.ordered.cities
-})
+});
 
 export default compose(firestoreConnect((props) => [{collection: 'cities'}]), connect(mapStateToProps))(App);

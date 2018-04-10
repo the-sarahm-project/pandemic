@@ -23,9 +23,9 @@ const iconContainer = {
 
 const Board = () => {
   const center = [0, 0];
-  const zoomLevel = 2.5;
+  const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
-  const atlantaCoords = [33.7490, -84.3880];
+  const atlantaCoords = [36.7322, -96.0644];
   return (
     <div>
       <Map

@@ -21,7 +21,9 @@ class App extends Component {
 
   render() {
     return (
-      <Board />
+      <div>
+        <Board />
+      </div>
     );
   }
 }

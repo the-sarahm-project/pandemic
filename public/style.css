@@ -18,7 +18,13 @@ img.ui.small.image.hand-card {
 }
 
 .ui.bottom.very.wide.visible.sidebar.action-footer {
-  background-color: midnightblue;
+  background-color: white;
   min-height: 7em;
+}
+
+.action-container {
+  margin: auto;
+  width: 50%;
   display: flex;
+  justify-content: space-around;
 }

@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+  margin: auto 0;
+}
+
+.game {
+  height: -webkit-fill-available;
+}
+
+.cards-container {
+  display: flex;
+  height: -webkit-fill-available;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cards-segment.ui.raised.segment {
+  position: absolute;
+}
+
+.map {
+  position: absolute;
+}
+

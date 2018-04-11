@@ -27,24 +27,23 @@ const Board = () => {
   const maxBounds = [[70, -100], [-60, 120]];
   const atlantaCoords = [36.7322, -96.0644];
   return (
-    <div>
-      <Map
-        center={center}
-        zoom={zoomLevel}
-        minZoom={zoomLevel}
-        maxZoom={zoomLevel}
-        maxBounds={maxBounds}
-      >
-        <TileLayer
-          url={darkTiles}
-        />
-        {
-          cities.map((city) => <Marker position={city.coords} key={city.coords} icon={iconContainer[city.icon]} />)
-        }
-        <ResearchStation coords={atlantaCoords} />
-        <CityLines />
-      </Map>
-    </div>
+    <Map
+      center={center}
+      zoom={zoomLevel}
+      minZoom={zoomLevel}
+      maxZoom={zoomLevel}
+      maxBounds={maxBounds}
+      className="map"
+    >
+      <TileLayer
+        url={darkTiles}
+      />
+      {
+        cities.map((city) => <Marker position={city.coords} key={city.coords} icon={iconContainer[city.icon]} />)
+      }
+      <ResearchStation coords={atlantaCoords} />
+      <CityLines />
+    </Map>
   );
 };
 

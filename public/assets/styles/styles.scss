@@ -1,0 +1,1528 @@
+$citySize: 32px;
+$stationSize: 24px;
+$selSize: 40px;
+$cubeSize: 24px;
+$outbrSize: 40px;
+$playerSize: 40px;
+$topIconSize: 20px;
+$cubeFlashColor: #ebebeb;
+$cardWidth: 144px;
+$cardHeight: 200px;
+$bottomBarMinHeight: 110px;
+$crossHairSize: 76px;
+$smallEventWidth: 36px;
+$smallEventHeight: 50px;
+$diseaseIconWidth: 15px;
+$diseaseIconHeight: 20px;
+$largeDiseaseSize: 300px;
+
+$contPlannerColor: #35acb3;
+$dispatcherColor: #b86291;
+$medicColor: darkorange;
+$opsExpertColor: #5fa73f;
+$quarSpecColor: #26734f;
+$researcherColor: #ad7457;
+$scientistColor: #c7c7c7;
+
+$role-colors-map: (cont_planner: $contPlannerColor, dispatcher: $dispatcherColor, medic: $medicColor,
+  ops_expert: $opsExpertColor, quar_spec: $quarSpecColor, researcher: $researcherColor, scientist: $scientistColor);
+
+$events-list: airlift forecast gov_grant res_pop one_quiet_night;
+$diseases-list: 'yellow' 'red' 'blue' 'black';
+$roles-list: cont_planner dispatcher medic ops_expert quar_spec researcher scientist;
+
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+.btn:focus, a:focus {
+  outline: none;
+}
+
+@font-face {
+  font-family: Phage;
+  src: url(../fonts/Phage.otf) format("opentype");
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cube {
+  0% {
+    transform: rotate(0deg)
+               translate(20px)
+               rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg)
+               translate(20px)
+               rotate(-720deg);
+  }
+}
+
+@keyframes cube-flash {
+  0%, 100% {
+    box-shadow: initial;
+  }
+
+  50% {
+    box-shadow: 0 0 50px 20px $cubeFlashColor;
+  }
+}
+
+@keyframes outbreak-warning {
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes cur-player {
+  0% {
+    transform: translate(-50%, -20px);
+  }
+
+  100% {
+    transform: translate(-50%, -15px);
+  }
+}
+
+@keyframes header-shadow {
+  0%, 100% {
+    color: #d9534f;
+    text-shadow: 0 0 0;
+  }
+
+  50% {
+    color: lighten(#d9534f, 5%);
+    text-shadow: 0 0 7px rgba(255, 160, 160, 0.9);
+  }
+}
+
+@keyframes crosshair-rotate {
+  0% {
+    transform: rotate(0deg) scale(4);
+    opacity: 0;
+  }
+
+  33% {
+    transform: rotate(120deg) scale(1);
+    opacity: 1;
+  }
+
+  66% {
+    transform: rotate(240deg) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes banner-text {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+@keyframes banner-fold {
+  0% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes disease-fade {
+  95% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes light-flash {
+  40%, 60% {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  100% {
+    background-color: initial;
+  }
+}
+
+.game {
+  display: flex;
+
+  &.epidemic {
+    .map {
+      background-image: url(../images/map_epidemic.png);
+
+      .path {
+        background: #02940a;
+        box-shadow: 0 0 2px 1px #efefef;
+      }
+    }
+  }
+
+  .top-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 500px;
+    top: 0;
+    margin: 0 auto;
+    z-index: 10000;
+
+    .panel-body {
+      padding: 2px;
+      font-size: 0.8em;
+      display: flex;
+      justify-content: center;
+
+      > span, > .rates span {
+        padding: 0 3px;
+      }
+
+      span {
+        vertical-align: middle;
+      }
+
+      .top-icon {
+        background-size: $topIconSize $topIconSize;
+        width: $topIconSize;
+        height: $topIconSize;
+        display: inline-block;
+        margin-right: 2px;
+      }
+
+      @each $disease in $diseases-list {
+        .cube-icon-#{$disease} {
+          background-image: url('../images/cube_#{$disease}.png');
+        }
+
+        .cured-icon-#{$disease} {
+          background-size: $diseaseIconWidth $diseaseIconHeight;
+          background-repeat: no-repeat;
+          background-image: url('../images/#{$disease}_cured.png');
+        }
+
+        .eradicated-icon-#{$disease} {
+          background-size: $diseaseIconWidth $diseaseIconHeight;
+          background-repeat: no-repeat;
+          background-image: url('../images/#{$disease}_eradicated.png');
+        }
+      }
+
+      .stations-icon {
+        background-image: url(../images/station.png);
+      }
+
+      .infection-rate-icon {
+        background-image: url(../images/infection_rate.png);
+      }
+
+      .outbreaks-icon {
+        background-image: url(../images/outbreaks.png);
+      }
+    }
+  }
+
+  .bottom-bar {
+    bottom: 0;
+    margin-bottom: 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    min-height: $bottomBarMinHeight;
+    border-top: 3px solid #485563;
+    z-index: 50000;
+
+    .panel-body {
+      padding: 0;
+    }
+
+    .panel-heading {
+      font-size: 1.4em;
+    }
+
+    .card:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+
+  .actions {
+    @extend .bottom-bar;
+
+    .panel-body {
+      .btn {
+        font-size: 1.2em;
+
+        .fa-car {
+          font-size: 0.9em;
+        }
+
+        .fa-plane {
+          font-size: 1.1em;
+        }
+      }
+
+      .event-icon {
+        width: $smallEventWidth;
+        height: $smallEventHeight;
+        background-size: $smallEventWidth $smallEventHeight;
+        background-repeat: no-repeat;
+        margin: 0 7px;
+
+        &:hover {
+          box-shadow: 0 0 1px 1px white;
+          transition: all 0.2s;
+        }
+      }
+
+      .play-event {
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        width: 36px;
+        height: 50px;
+        padding: 0;
+        border: none;
+        border-radius: 1px;
+        z-index: 10001;
+
+        &:not[disabled]:hover {
+          box-shadow: 0 0 1px 1px white;
+          transition: all 0.2s;
+        }
+
+        img {
+          content: url(../images/event.png);
+        }
+      }
+    }
+
+    .panel-footer {
+      text-align: center;
+    }
+  }
+
+  .card-picker {
+    @extend .bottom-bar;
+    z-index: 10001;
+
+    .panel-body {
+      padding: 10px;
+    }
+
+    .card {
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        box-shadow: 0 0 2px 2px white;
+        transition: all 0.2s;
+      }
+    }
+
+    &.multi-card-picker {
+      .card.selected {
+        box-shadow: 0 0 2px 2px orange;
+      }
+    }
+  }
+
+  .disease-picker {
+    @extend .bottom-bar;
+
+    .btn {
+      padding: 4px 8px;
+
+      img {
+        width: 60px;
+        height: 60px;
+
+        @each $disease in $diseases-list {
+          &.disease-#{$disease} {
+            content: url('../images/disease_large_#{$disease}.png');
+          }
+        }
+      }
+    }
+  }
+
+  .player-picker {
+    @extend .bottom-bar;
+
+    .btn {
+      height: 70px;
+    }
+  }
+
+  .forecast-bar {
+    @extend .bottom-bar;
+
+    .panel-body {
+      display: flex;
+      justify-content: center;
+
+      > div {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .card-list {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-left: 3px solid #485563;
+
+    .list-group-item {
+      padding: 0 5px;
+      font-size: 0.9em;
+
+      .event {
+        color: darkorange;
+
+        .event-name {
+          cursor: help;
+          border-bottom: 1px dotted darkorange;
+        }
+      }
+
+      .epidemic {
+        color: #37c400;
+
+        .e {
+          font-family: 'Phage';
+        }
+      }
+    }
+  }
+
+  .team-panel {
+    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 110px;
+    margin-bottom: 0;
+    min-width: 170px;
+    overflow-y: scroll;
+
+    > .panel-body {
+      padding: 0;
+    }
+
+    .team-player {
+      margin-bottom: 0;
+
+      .panel-heading {
+        padding: 1px 9px;
+        color: black;
+
+        h5 {
+          font-weight: bold;
+          margin-top: 2px;
+        }
+
+        h5, h6 {
+          margin-bottom: 2px;
+        }
+
+        h6 {
+          display: inline;
+          cursor: help;
+          border-bottom: 1px dotted black;
+        }
+      }
+
+      @each $role, $color in $role-colors-map {
+        &.team-player-#{$role} {
+          .panel-heading {
+            background: $color;
+          }
+        }
+      }
+    }
+  }
+
+  .discard-drawer {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 200px;
+    height: 100%;
+    z-index: 1;
+
+    &.open {
+      z-index: 10000;
+    }
+
+    .btn {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      transform: rotate(270deg);
+      transform-origin: 50% 100%;
+      line-height: 1;
+      padding: 9px 16px 2px;
+      z-index: 1;
+    }
+
+    .discard-tabs {
+      border: 2px solid #485563;
+
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+
+        background: #4e5d6c;
+
+        > li {
+          > a {
+            padding: 8px 8px 4px;
+            border: 0;
+
+            > span {
+              display: inline-block;
+              width: 25px;
+              height: 35px;
+              background-size: 25px 35px;
+            }
+
+            .player-discard {
+              background-image: url(../images/player_card.png);
+            }
+
+            .infection-discard {
+              background-image: url(../images/infection_card.png);
+            }
+          }
+
+          &.active > a {
+            background: rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+
+      .tab-content {
+        max-height: 200px;
+        overflow-y: scroll;
+
+        .empty {
+          padding: 5px 0 5px 30px;
+        }
+
+        .card-list {
+          padding-top: 0;
+          padding-bottom: 0;
+          margin-bottom: 0;
+
+          .list-group-item {
+            padding-left: 30px;
+            background: #485563;
+          }
+        }
+      }
+    }
+  }
+
+  .map {
+    position: relative;
+    flex: 1;
+    background: url(../images/map.png) #011533 no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    min-width: 1024px;
+    min-height: 768px;
+
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20000;
+      cursor: not-allowed;
+    }
+
+    .city, .player, .station {
+      position: absolute;
+    }
+
+    .city {
+      .icon {
+        position: relative;
+        z-index: 50;
+        display: block;
+        background: no-repeat center;
+        background-size: $citySize $citySize;
+        width: $citySize;
+        height: $citySize;
+        cursor: pointer;
+
+        @each $disease in $diseases-list {
+          &.#{$disease} {
+            background-image: url('../images/disease_large_#{$disease}.png');
+          }
+        }
+      }
+
+      .name {
+        position: absolute;
+        left: $citySize / 2;
+        transform: translate(-50%, 0);
+        font-family: 'Phage';
+        font-size: 11px;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        white-space: nowrap;
+        user-select: none;
+        cursor: default;
+        z-index: 1;
+      }
+
+      .selection-container {
+        width: $selSize;
+        height: $selSize;
+        position: absolute;
+        left: ($citySize - $selSize) / 2;
+        top: ($citySize - $selSize) / 2;
+        z-index: 1;
+
+        .selection {
+          width: 100%;
+          height: 100%;
+          display: block;
+          float: left;
+          background: url(../images/city_sel.png);
+          background-size: $selSize $selSize;
+          animation-name: rotate;
+          animation-duration: 7s;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+        }
+
+        .selection-bg {
+          width: 100%;
+          height: 100%;
+          display: none;
+          background: lightblue;
+          opacity: 0.5;
+          border-radius: $selSize / 2;
+        }
+      }
+
+      &:hover .selection-container .selection-bg {
+        display: block;
+      }
+
+      .outbreak-warning {
+        width: $outbrSize;
+        height: $outbrSize;
+        display: block;
+        position: absolute;
+        left: ($citySize - $outbrSize) / 2;
+        top: ($citySize - $outbrSize) / 2;
+        border-radius: $outbrSize / 2;
+        background: darkred;
+        animation-name: outbreak-warning;
+        animation-duration: 0.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-direction: alternate;
+        z-index: 1;
+      }
+    }
+
+    .station {
+      background: url(../images/station.png);
+      background-size: $stationSize $stationSize;
+      width: $stationSize;
+      height: $stationSize;
+      top: 10px;
+      left: ($citySize - $stationSize) / 2;
+      z-index: 100;
+      cursor: pointer;
+    }
+
+    .player {
+      width: $playerSize;
+      height: $playerSize;
+      background-size: cover;
+      text-align: center;
+      transform: translate(($citySize - $playerSize) / 2, -($citySize / 2));
+      -webkit-transform: translate(($citySize - $playerSize) / 2, -($citySize / 2));
+      z-index: 50;
+
+      @each $role in $roles-list {
+        &.#{$role} {
+          background-image: url(../images/#{$role}.png);
+        }
+      }
+
+      .cur-player {
+        position: absolute;
+        font-size: 1.4em;
+        animation-name: cur-player;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease;
+        animation-direction: alternate;
+      }
+    }
+
+    .path {
+      position: absolute;
+      height: 1px;
+      box-shadow: 0px 0px 2px 1px #ccffff;
+      transform-origin: 0 100%;
+      -webkit-transform-origin: 0 100%;
+      background: #ccffff;
+    }
+
+    .cube {
+      position: absolute;
+      width: $cubeSize;
+      height: $cubeSize;
+      background-size: $cubeSize $cubeSize;
+      animation-name: cube;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      z-index: 1;
+
+      @each $disease in $diseases-list {
+        &.#{$disease} {
+          background-image: url('../images/cube_#{$disease}.png');
+        }
+      }
+
+      &.cubes-1 {
+        animation-duration: 9s;
+      }
+
+      &.cubes-2 {
+        animation-duration: 6s;
+      }
+
+      &.cubes-3 {
+        animation-duration: 3s;
+      }
+
+      &-flash::after {
+        content: "";
+        position: absolute;
+        border-radius: $cubeSize / 2;
+        z-index: 10050;
+        width: 0;
+        height: 0;
+        top: $cubeSize / 2;
+        left: $cubeSize / 2;
+
+        animation-name: cube-flash;
+        animation-timing-function: ease-in;
+        animation-duration: 0.4s;
+        animation-iteration-count: 1;
+      }
+
+      &-neighbor {
+        border-radius: $cubeSize / 2;
+        box-shadow: 0 0 4px 3px $cubeFlashColor;
+      }
+    }
+
+    .cube-group {
+      position: absolute;
+    }
+  }
+
+  .card {
+    width: $cardWidth;
+    height: $cardHeight;
+    background-size: $cardWidth $cardHeight;
+    border: none;
+    border-radius: 4px;
+    transform-origin: 0% 0%;
+
+    @for $id from 0 through 47 {
+      &.city-#{$id} {
+        background-image: url('../images/city-#{$id}.png');
+      }
+    }
+
+    @each $event in $events-list {
+      &.event-#{$event} {
+        background-image: url('../images/event-#{$event}.png');
+      }
+    }
+
+    &.epidemic {
+      background-image: url('../images/epidemic.png');
+    }
+  }
+
+  .card-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 11000;
+
+    &.empty {
+      height: 0;
+    }
+
+    &.is-epidemic {
+      .card-drawer {
+        display: none;
+      }
+    }
+
+    .hand {
+      position: fixed;
+      height: $cardHeight;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+
+      .card {
+        z-index: 0;
+      }
+
+      .card:not(:first-child) {
+        margin-left: -$cardWidth / 2;
+      }
+    }
+
+    .deck-icon {
+      transform: scale(0.2);
+      transform-origin: 0% 0%;
+      position: absolute;
+
+      &.player-deck {
+        top: 0;
+        left: calc((100vw - 500px) / 2 + 65px);
+      }
+
+      &.player-discard {
+        top: 0;
+        left: calc((100vw - 500px) / 2 + 30px);
+      }
+
+      &.infection-deck {
+        top: 0;
+        left: calc((100vw + 500px) / 2 - 95px);
+      }
+
+      &.infection-discard {
+        top: 0;
+        left: calc((100vw + 500px) / 2 - 60px);
+      }
+
+      &.empty {
+        background-image: none;
+        border-radius: 16px;
+        box-shadow: inset 0 0 20px white;
+      }
+    }
+
+    .dealing-deck-container {
+      z-index: 1;
+    }
+
+    .player-deck {
+      background-image: url(../images/player_card.png);
+
+      &.dealing-deck {
+        position: static;
+
+        &::before {
+          @extend .high-deck;
+          top: 14px;
+          display: block;
+          content: '';
+        }
+      }
+    }
+
+    .infection-deck {
+      background-image: url(../images/infection_card.png);
+    }
+
+    .card-drawer {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      &.infection-drawer {
+        display: block;
+      }
+
+      .flash {
+        animation-iteration-count: 2;
+      }
+
+      .flipper {
+        position: relative;
+        transform-style: preserve-3d;
+        transform-origin: 0% 0%;
+
+        &.absolute {
+          position: absolute;
+        }
+
+        div, span {
+          backface-visibility: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          &.front {
+            z-index: 1;
+            transform: scale(1);
+          }
+
+          &.back {
+            transform: rotateY(180deg);
+          }
+        }
+
+        &.deck-copy {
+          .flipper {
+            &.back {
+              transform: rotateY(0deg);
+            }
+          }
+        }
+      }
+
+      .shuffle-card {
+        position: absolute;
+        z-index: 10000;
+      }
+
+      .result-deck {
+        margin-left: 100px;
+        margin-right: 100px;
+      }
+
+      .high-deck-container {
+        position: relative;
+
+        @for $i from 0 through 7 {
+          &.high-#{$i} {
+            top: -$i * 2px;
+          }
+        }
+      }
+
+      .high-deck {
+        position: relative;
+        width: $cardWidth;
+        height: $cardHeight;
+        background: linear-gradient(90deg, black, gray, black);
+        border-radius: 4px;
+        z-index: -1;
+
+        @for $i from 0 through 7 {
+          &.high-#{$i} {
+            top: $i * 2px;
+          }
+        }
+      }
+
+
+      > .card {
+        &:not(:last-child):not(.result-deck):not(.dealing-deck-container) {
+          margin-right: 10px;
+        }
+
+        &.player-deck {
+          background-size: $cardWidth $cardHeight;
+          background-image: url(../images/player_card.png);
+          margin-right: 0;
+          transform-origin: 0% 0%;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+
+          &.dealing {
+            position: absolute;
+            opacity: 0.6;
+          }
+        }
+
+        &.epidemic {
+          z-index: -1;
+        }
+
+        &.infection {
+          position: absolute;
+        }
+      }
+
+      .epidemics {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .locations-layer {
+    .crosshair {
+      display: block;
+      position: absolute;
+      left: ($citySize - $crossHairSize) / 2;
+      top: ($citySize - $crossHairSize) / 2;
+      width: $crossHairSize;
+      height: $crossHairSize;
+      background: url(../images/crosshair.png);
+      background-size: 76px 76px;
+      border-radius: 38px;
+      animation: crosshair-rotate 2s linear;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  .state-reporter {
+    position: fixed;
+    left: 3px;
+    bottom: 3px;
+    z-index: 999999;
+
+    .reporter-button {
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      font-size: 1.1em;
+    }
+  }
+
+  .double-click-hint {
+    .arrow {
+      display: none;
+    }
+
+    .popover-title {
+      .btn {
+        float: right;
+        padding: 0;
+        line-height: 0.8em;
+      }
+    }
+  }
+
+  .intro-dialog {
+    top: 100px;
+
+    .modal-header {
+      font-size: 1.4em;
+      text-align: center;
+    }
+
+    .intro-players {
+      display: flex;
+
+      > div {
+        flex-grow: 1;
+      }
+
+      .player-name {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+    }
+
+    .modal-footer {
+      text-align: center;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .new-turn-overlay {
+    @each $role, $color in $role-colors-map {
+      .banner-#{$role} {
+        background: $color;
+      }
+    }
+  }
+
+  .continue-overlay {
+    z-index: 20000;
+
+    .btn {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .epidemic-overlay {
+    animation: light-flash 0.5s linear;
+
+    .banner {
+      background: darkgreen;
+    }
+  }
+
+  .defeat-overlay {
+    mix-blend-mode: hard-light;
+    background: darkred;
+    z-index: 99999;
+    animation-name: fadeIn;
+    animation-duration: 12s;
+  }
+
+  .victory-message, .defeat-message {
+    z-index: 100000;
+
+    .header-container {
+      margin: 200px auto;
+      position: relative;
+      width: 400px;
+      transform-origin: 50% 30px;
+
+      .shadow {
+        float: left;
+        width: 100%;
+        height: 300px;
+        transform: translateY(-118px) scale(1, 0.2);
+        border-radius: 50%;
+        -webkit-filter: blur(20px);
+      }
+
+      .header {
+        position: absolute;
+        width: 100%;
+        font-family: 'Phage';
+        font-size: 3em;
+        color: black;
+        text-align: center;
+      }
+    }
+
+    .message {
+      position: absolute;
+      top: 400px;
+      width: 100%;
+      text-align: center;
+
+      span {
+        background: black;
+        padding: 10px;
+      }
+    }
+
+    .btn {
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+    }
+  }
+
+  .defeat-message {
+    .header-container {
+      animation-name: zoomIn;
+      animation-duration: 6s;
+      animation-timing-function: ease-out;
+
+      .shadow {
+        background: lighten(darkred, 10%);
+      }
+    }
+
+    .message {
+      animation-name: fadeIn;
+      animation-duration: 10s;
+
+      span {
+        box-shadow: 0 0 3px white;
+      }
+    }
+  }
+
+  .victory-message {
+    .header-container {
+      animation-name: zoomIn;
+      animation-duration: 2s;
+      animation-timing-function: ease-out;
+
+      .shadow {
+        background: white;
+      }
+    }
+
+    .message {
+      animation-name: fadeIn;
+      animation-duration: 2s;
+
+      span {
+        box-shadow: 0 0 3px green;
+      }
+    }
+  }
+
+  .banner {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    background: white;
+    font-family: 'Phage';
+    font-size: 2.5em;
+    text-align: center;
+    color: black;
+    z-index: 10000;
+    animation: banner-fold 0.1s 2s linear forwards;
+    transform: translateY(-50%);
+    transform-origin: 0% 50%;
+
+    .text {
+      animation: banner-text 2s linear forwards;
+      transform-origin: 50% 50%;
+    }
+  }
+
+  .disease-status-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .banner {
+      animation-delay: 4s;
+      background: darkgreen;
+
+      .text {
+        animation-duration: 4s;
+      }
+    }
+
+    .disease-image {
+      width: $largeDiseaseSize;
+      height: $largeDiseaseSize;
+      background-size: $largeDiseaseSize $largeDiseaseSize;
+      animation: disease-fade 4s linear forwards;
+      transform-origin: 50% 50%;
+      z-index: 9999;
+
+      @each $disease in $diseases-list {
+        &.disease-#{$disease} {
+          background-image: url(../images/disease_large_#{$disease}.png);
+        }
+      }
+    }
+  }
+}
+
+.setup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    flex: 1;
+  }
+
+  .container > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer {
+    bottom: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+      margin-bottom: 4px;
+    }
+
+    .github, .twitter {
+      img {
+        width: 21px;
+        height: 21px;
+      }
+    }
+
+    .github {
+      padding-left: 12px;
+    }
+
+    a {
+      padding: 0 4px;
+    }
+  }
+
+  h1 {
+    font-family: "Phage";
+    font-size: 4em;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 50px;
+    -webkit-background-clip: text;
+    animation: header-shadow 3s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  h2 {
+    margin: 5px 0 0;
+  }
+
+  h5 {
+    margin-bottom: 35px;
+    font-size: 0.9em;
+  }
+
+  .dropdown {
+    button, .dropdown-menu {
+      width: 100%;
+    }
+  }
+
+  .menu {
+    .btn {
+      width: 200px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .quick-game {
+    .number-container {
+      margin-bottom: 20px;
+
+      button:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .custom-game {
+    .difficulty {
+      margin-bottom: 20px;
+
+      > span {
+        margin-right: 10px;
+      }
+
+      .dropdown {
+        width: 150px;
+        text-align: center;
+      }
+    }
+
+    .player-container {
+      position: relative;
+      height: 170px;
+      display: flex;
+      align-items: stretch;
+
+      .player {
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 0;
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+
+        .player-name {
+          font-weight: bold;
+          font-size: 1.2em;
+        }
+      }
+
+      .spacer {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .add-player {
+    font-size: 19px;
+  }
+
+  .button-container {
+    position: relative;
+    margin-top: 20px;
+
+    .btn-primary {
+      width: 150px;
+    }
+
+    .btn-link {
+      position: absolute;
+      top: 5px;
+    }
+  }
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.rates-popover {
+  max-width: 400px;
+  z-index: 20000;
+  font-family: 'Phage';
+
+  h4 {
+    margin: 0 0 5px;
+
+    span {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  ul {
+    margin: 0;
+
+    li {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+    }
+  }
+
+  .infection-rate {
+    margin-bottom: 10px;
+    text-align: center;
+
+    li {
+      border-radius: 15px;
+      line-height: 30px;
+
+      &:not(:first-child) {
+        margin-left: 4px;
+      }
+
+      &:not(.current) {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      &.past {
+        opacity: 0.65;
+      }
+    }
+  }
+
+  .outbreaks {
+    li {
+      background-size: 30px 30px;
+      background-image: url(../images/outbreaks_shape.png);
+
+      &:not(:first-child) {
+        margin-left: 2px;
+      }
+
+      &.past {
+        background-image: url(../images/outbreaks_filled.png);
+      }
+    }
+  }
+
+  .flash {
+    animation-iteration-count: 2;
+  }
+}
+
+.reporter-popover {
+  font-size: 0.8em;
+  z-index: 999999;
+}
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  h1 {
+    font-family: 'Phage';
+    font-size: 3em;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    animation: rotate 1.5s linear infinite;
+  }
+}
+
+.credits {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -22,7 +22,17 @@ const iconContainer = {
   blackIcon: new BallIcon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' })
 };
 
-const Board = () => {
+const Board = (props) => {
+  let game;
+  let player;
+  let currentHand;
+  let eventCards;
+  if (props.game) {
+    game = props.game['ytQnw2I0gonsoYXo6M02'];
+    eventCards = game.unusedEventCards;
+    player = game.players[1];
+    currentHand = player.currentHand;
+  }
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
@@ -37,15 +47,11 @@ const Board = () => {
       className="map"
     >
       <Container className="cards-container">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {
+          props.game && currentHand.map(cardRef => {
+            return <Card key={cardRef.id} cardRef={cardRef} eventCards={eventCards} />;
+          })
+        }
       </Container>
       <TileLayer
         url={darkTiles}
@@ -60,7 +66,7 @@ const Board = () => {
 };
 
 const mapStateToProps = (state) => ({
-  cities: state.firestore.ordered.cities //I want to add cities to my store. Does it go in the 'order' object?
+  game: state.firestore.data.games,
 });
 
 export default compose(

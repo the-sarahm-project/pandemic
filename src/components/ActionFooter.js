@@ -3,7 +3,7 @@ import { Sidebar } from 'semantic-ui-react';
 
 const ActionFooter = () => {
   return (
-    <Sidebar direction="bottom" />
+    <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide" />
   );
 };
 

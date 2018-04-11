@@ -1,91 +1,91 @@
 const cities = {
   Algiers: {
     name: "Algiers",
-    coords: [36.7538, 3.0588],
+    coords: [31.4966, 9.0527],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Cairo", "Istanbul", "Madrid", "Paris"]
   },
   Atlanta: {
     name: "Atlanta",
-    coords: [33.7490, -84.3880],
+    coords: [36.7322, -96.0644],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Chicago", "Miami", "Washington"]
   },
   Baghdad: {
     name: "Baghdad",
-    coords: [33.3128, 44.3615],
+    coords: [37.5728, 48.7793],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Cairo", "Istanbul", "Karachi", "Riyadh", "Tehran"]
   },
   Bangkok: {
     name: "Bangkok",
-    coords: [13.7563, 100.5018],
+    coords: [13.0607, 101.5137],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Chennai", "HoChiMinhCity", "HongKong", "Jakarta", "Kolkata"]
   },
   Beijing: {
     name: "Beijing",
-    coords: [39.9042, 116.4074],
+    coords: [55.2744, 118.3887],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Seoul", "Shanghai"]
   },
   Bogota: {
     name: "Bogota",
-    coords: [4.7110, -74.0721],
+    coords: [0.8706, -77.7832],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["BuenosAires", "Lima", "MexicoCity", "Miami", "SaoPaulo"]
   },
   BuenosAires: {
     name: "Buenos Aires",
-    coords: [-34.6037, -58.3816],
+    coords: [-36.7455, -59.5020],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Bogota", "SaoPaulo"]
   },
   Cairo: {
     name: "Cairo",
-    coords: [30.0444, 31.2357],
+    coords: [28.4518, 29.4434],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Algiers", "Baghdad", "Istanbul", "Khartoum", "Riyadh"]
   },
   Chennai: {
     name: "Chennai",
-    coords: [13.0827, 80.2707],
+    coords: [3.3297, 89.2090],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Bangkok", "Delhi", "Jakarta", "Kolkata", "Mumbai"]
   },
   Chicago: {
     name: "Chicago",
-    coords: [41.8781, -87.6298],
+    coords: [48.8691, -110.3033],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Atlanta", "LosAngeles", "MexicoCity", "Montreal", "SanFrancisco"]
   },
   Delhi: {
     name: "Delhi",
-    coords: [28.644800, 77.216721],
+    coords: [44.9260, 82.4193],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Chennai", "Karachi", "Kolkata", "Mumbai", "Tehran"]
   },
   Essen: {
     name: "Essen",
-    coords: [51.4556, 7.0116],
+    coords: [61.2903, 5.3608],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["London", "Milan", "Paris", "StPetersburg"]
   },
   HoChiMinhCity: {
     name: "Ho Chi Minh City",
-    coords: [10.8231, 106.6297],
+    coords: [0.0418, 117.1576],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Bangkok", "HongKong", "Jakarta", "Manila"]
@@ -106,7 +106,7 @@ const cities = {
   },
   Jakarta: {
     name: "Jakarta",
-    coords: [-6.1751, 106.8650],
+    coords: [-11.3934, 105.7319],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "HoChiMinhCity", "Sydney"]
@@ -120,217 +120,217 @@ const cities = {
   },
   Karachi: {
     name: "Karachi",
-    coords: [25.0700, 67.2848],
+    coords: [29.6503, 67.2848],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Mumbai", "Riyadh", "Tehran"]
   },
   Khartoum: {
     name: "Khartoum",
-    coords: [15.5007, 32.5599],
+    coords: [7.6679, 29.0912],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Cairo", "Johannesburg", "Kinshasa", "Lagos"]
   },
   Kinshasa: {
     name: "Kinshasa",
-    coords: [-4.4419, 15.2663],
+    coords: [-12.3052, 14.5459],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Johannesburg", "Khartoum", "Lagos"]
   },
   Kolkata: {
     name: "Kolkata",
-    coords: [22.5726, 88.3639],
+    coords: [36.4527, 99.0967],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "Delhi", "HongKong"]
   },
   Lagos: {
     name: "Lagos",
-    coords: [6.5244, 3.3792],
+    coords: [8.4103, 6.6357],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa", "SaoPaulo"]
   },
   Lima: {
     name: "Lima",
-    coords: [-12.0464, -77.0428],
+    coords: [-19.9703, -87.2149],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Bogota", "MexicoCity", "Santiago"]
   },
   London: {
     name: "London",
-    coords: [51.5074, -0.1278],
+    coords: [58.4870, -16.9024],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Essen", "Madrid", "NewYork", "Paris"]
   },
   LosAngeles: {
     name: "Los Angeles",
-    coords: [34.0522, -118.2437],
+    coords: [34.7027, -127.0877],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Chicago", "MexicoCity", "SanFrancisco", "Sydney"]
   },
   Madrid: {
     name: "Madrid",
-    coords: [40.4168, -3.7038],
+    coords: [40.9442, -16.5213],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Algiers", "NewYork", "London", "Paris", "SaoPaulo"]
   },
   Manila: {
     name: "Manila",
-    coords: [14.5995, 120.9842],
+    coords: [2.4662, 141.3303],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["HoChiMinhCity", "HongKong", "SanFrancisco", "Sydney", "Taipei"]
   },
   MexicoCity: {
     name: "Mexico City",
-    coords: [19.4326, -99.1332],
+    coords: [14.0998, -106.8728],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Bogota", "Chicago", "Lima", "LosAngeles", "Miami"]
   },
   Miami: {
     name: "Miami",
-    coords: [25.7617, -80.1918],
+    coords: [24.3726, -81.7361],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Atlanta", "Bogota", "MexicoCity", "Washington"]
   },
   Milan: {
     name: "Milan",
-    coords: [45.4642, 9.1900],
+    coords: [53.3709, 19.3381],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Paris"]
   },
   Montreal: {
     name: "Montreal",
-    coords: [45.5017, -73.5673],
+    coords: [52.3361, -81.9119],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Chicago", "NewYork", "Washington"]
   },
   Moscow: {
     name: "Moscow",
-    coords: [55.7558, 37.6173],
+    coords: [58.0669, 44.8264],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Istanbul", "StPetersburg", "Tehran"]
   },
   Mumbai: {
     name: "Mumbai",
-    coords: [19.0760, 72.8777],
+    coords: [14.2443, 74.3576],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Chennai", "Delhi", "Karachi"]
   },
   NewYork: {
     name: "New York",
-    coords: [40.7128, -74.0060],
+    coords: [51.3620, -58.0056],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["London", "Madrid", "Montreal", "Washington"]
   },
   Osaka: {
     name: "Osaka",
-    coords: [34.6937, 135.5022],
+    coords: [33.6748, 153.1076],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Taipei", "Tokyo"]
   },
   Paris: {
     name: "Paris",
-    coords: [48.8566, 2.3522],
+    coords: [48.7676, 0.5295],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Algiers", "Essen", "Madrid", "Milan", "London"]
   },
   Riyadh: {
     name: "Riyadh",
-    coords: [24.7136, 46.6753],
+    coords: [19.2549, 51.5061],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Baghdad", "Cairo", "Karachi"]
   },
   SanFrancisco: {
     name: "San Francisco",
-    coords: [37.7749, -122.4194],
+    coords: [48.0722, -133.4158],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Chicago", "LosAngeles", "Manila", "Tokyo"]
   },
   Santiago: {
     name: "Santiago",
-    coords: [-33.4489, -70.6693],
+    coords: [-47.0188, -87.5369],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Lima"]
   },
   SaoPaulo: {
     name: "Sao Paulo",
-    coords: [-23.5505, -46.6333],
+    coords: [-24.0178, -48.5135],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["BuenosAires", "Bogota", "Lagos", "Madrid"]
   },
   Seoul: {
     name: "Seoul",
-    coords: [37.5665, 126.9780],
+    coords: [55.1968, 137.1115],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Beijing", "Shanghai", "Tokyo"]
   },
   Shanghai: {
     name: "Shanghai",
-    coords: [31.2304, 121.4737],
+    coords: [41.0036, 123.2248],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Beijing", "HongKong", "Seoul", "Taipei", "Tokyo"]
   },
   StPetersburg: {
     name: "St. Petersburg",
-    coords: [59.9343, 30.3351],
+    coords: [62.4456, 29.1819],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Moscow"]
   },
   Sydney: {
     name: "Sydney",
-    coords: [-33.8688, 151.2093],
+    coords: [-34.4263, 154.3381],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Jakarta", "LosAngeles", "Manila"]
   },
   Taipei: {
     name: "Taipei",
-    coords: [25.0330, 121.5654],
+    coords: [25.8282, 134.8264],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["HongKong", "Manila", "Osaka", "Shanghai"]
   },
   Tehran: {
     name: "Tehran",
-    coords: [35.6892, 51.3890],
+    coords: [53.8713, 64.8529],
     icon: "blackIcon",
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Karachi", "Moscow"]
   },
   Tokyo: {
     name: "Tokyo",
-    coords: [35.6895, 139.6917],
+    coords: [47.0154, 156.9748],
     icon: "redIcon",
     researchStation: false,
     neighbors: ["Osaka", "SanFrancisco", "Seoul", "Shanghai"]
   },
   Washington: {
     name: "Washington",
-    coords: [38.9072, -77.0369],
+    coords: [37.5973, -71.0260],
     icon: "blueIcon",
     researchStation: false,
     neighbors: ["Atlanta", "Miami", "Montreal", "NewYork"]

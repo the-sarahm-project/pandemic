@@ -4,8 +4,9 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Container } from 'semantic-ui-react';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines } from './index';
+import { ResearchStation, CityLines, Card } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
@@ -35,6 +36,17 @@ const Board = () => {
       maxBounds={maxBounds}
       className="map"
     >
+      <Container className="cards-container">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </Container>
       <TileLayer
         url={darkTiles}
       />

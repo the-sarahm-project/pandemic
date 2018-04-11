@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Segment } from 'semantic-ui-react';
 import '../App.css';
-import { Board, Card } from './index';
+import { Board } from './index';
 import { db } from '../store';
 import { init, collections, setupLogic } from '../utils';
 
@@ -24,11 +23,6 @@ class App extends Component {
     return (
       <div className="game">
         <Board />
-        <div className="cards-container">
-          <Segment className="cards-segment" raised>
-            <Card />
-          </Segment>
-        </div>
       </div>
     );
   }

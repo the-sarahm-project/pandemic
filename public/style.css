@@ -27,4 +27,14 @@ img.ui.small.image.hand-card {
   width: 50%;
   display: flex;
   justify-content: space-around;
+  padding-top: .5em;
+}
+
+.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
+  margin: 0em;
+}
+
+.action-text {
+  font-size: x-large;
+  padding-top: .5em;
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../App.css';
-import {Sidebar, Board} from './index';
 import { firestoreConnect } from 'react-redux-firebase';
 // import { connect } from 'react-redux';
 import { compose } from 'redux';
+import '../App.css';
+import { Sidebar, Board, ActionFooter } from './index';
 // import { db } from '../store';
 // import { init, collections, setupLogic } from '../utils';
 
@@ -20,6 +20,7 @@ class App extends Component {
       <div className="game">
         <Sidebar />
         <Board />
+        <ActionFooter />
       </div>
     );
   }

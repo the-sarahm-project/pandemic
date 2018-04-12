@@ -4,8 +4,9 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Container } from 'semantic-ui-react';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines } from './index';
+import { ResearchStation, CityLines, Card } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
@@ -21,35 +22,48 @@ const iconContainer = {
   blackIcon: new BallIcon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' })
 };
 
-const Board = () => {
+const Board = (props) => {
+  let game, player, currentHand, eventCards;
+  if (props.game) {
+    game = props.game['ytQnw2I0gonsoYXo6M02'];
+    eventCards = game.unusedEventCards;
+    player = game.players[1];
+    currentHand = player.currentHand;
+  }
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
   const atlantaCoords = [36.7322, -96.0644];
   return (
-    <div>
-      <Map
-        center={center}
-        zoom={zoomLevel}
-        minZoom={zoomLevel}
-        maxZoom={zoomLevel}
-        maxBounds={maxBounds}
-      >
-        <TileLayer
-          url={darkTiles}
-        />
+    <Map
+      center={center}
+      zoom={zoomLevel}
+      minZoom={zoomLevel}
+      maxZoom={zoomLevel}
+      maxBounds={maxBounds}
+      className="map"
+    >
+      <Container className="cards-container">
         {
-          cities.map((city) => <Marker position={city.coords} key={city.coords} icon={iconContainer[city.icon]} />)
+          props.game && currentHand.map(cardRef => {
+            return <Card key={cardRef.id} cardRef={cardRef} eventCards={eventCards} />;
+          })
         }
-        <ResearchStation coords={atlantaCoords} />
-        <CityLines />
-      </Map>
-    </div>
+      </Container>
+      <TileLayer
+        url={darkTiles}
+      />
+      {
+        cities.map((city) => <Marker position={city.coords} key={city.coords} icon={iconContainer[city.icon]} />)
+      }
+      <ResearchStation coords={atlantaCoords} />
+      <CityLines />
+    </Map>
   );
 };
 
 const mapStateToProps = (state) => ({
-  cities: state.firestore.ordered.cities //I want to add cities to my store. Does it go in the 'order' object?
+  game: state.firestore.data.games,
 });
 
 export default compose(

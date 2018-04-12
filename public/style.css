@@ -1,0 +1,19 @@
+.game {
+  height: -webkit-fill-available;
+}
+
+.ui.container.cards-container {
+  display: flex;
+  height: -webkit-fill-available;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+img.ui.small.image.hand-card {
+  width: 125px;
+}
+
+.map {
+  position: absolute;
+}
+

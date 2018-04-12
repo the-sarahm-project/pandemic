@@ -23,10 +23,7 @@ const iconContainer = {
 };
 
 const Board = (props) => {
-  let game;
-  let player;
-  let currentHand;
-  let eventCards;
+  let game, player, currentHand, eventCards;
   if (props.game) {
     game = props.game['ytQnw2I0gonsoYXo6M02'];
     eventCards = game.unusedEventCards;

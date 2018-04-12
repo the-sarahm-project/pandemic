@@ -8,7 +8,7 @@ export default function CurrentHandMenu(props) {
   return (
     <div>
       <Menu.Item className="menu-player-hand">
-        <Icon className="menu-player-hand-icon" name="square" color={color} />
+        <Icon className="menu-player-hand-icon" name={color ? 'square' : 'content'} color={color || 'olive'} />
           {name}
       </Menu.Item>
     </div>

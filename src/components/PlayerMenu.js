@@ -4,7 +4,7 @@ import CurrentHandMenu from './CurrentHandMenu';
 
 //this is each player's information on the sidebar
 export default function PlayerMenu (props) {
-  const { players, unusedCityCards, playerKey } = props;
+  const { players, unusedCityCards, unusedEventCards, playerKey } = props;
 
   return (
     <Menu
@@ -22,7 +22,7 @@ export default function PlayerMenu (props) {
         </Menu.Item>
         <Menu.Item className="menu-player">
           {players[playerKey].currentHand.map(cardRef => {
-            const {name, color} = unusedCityCards[cardRef.id];
+            const {name, color} = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
             return (
               <CurrentHandMenu key={cardRef.id} name={name} color={color} />
             )

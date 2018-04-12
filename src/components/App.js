@@ -29,5 +29,6 @@ export default compose(
   firestoreConnect(() => [
     {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'players' }]},
     {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedEventCards' }]},
+    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedCityCards' }]},
   ])
 )(App);

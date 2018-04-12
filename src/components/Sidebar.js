@@ -1,6 +1,9 @@
 import React from 'react';
 import { Sidebar, Menu } from 'semantic-ui-react';
 import PlayerMenu from './PlayerMenu';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 
 const unusedCityCards = {
   Istanbul: {
@@ -82,7 +85,9 @@ const players = {
 
 
 const SidebarCards = (props) => {
-  //const { players } = props;
+  //const { games: {players, unusedCityCards}, games } = props;
+  const { games } = props;
+  console.log(games)
   const playerKeys = Object.keys(players);
   return (
     <Sidebar
@@ -106,4 +111,11 @@ const SidebarCards = (props) => {
     </Sidebar>
 )};
 
-export default SidebarCards;
+const mapStateToProps = (state) => ({
+  games: state.firestore.data.games
+});
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(SidebarCards);

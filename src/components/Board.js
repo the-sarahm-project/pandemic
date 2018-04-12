@@ -1,12 +1,8 @@
 import React from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { firestoreConnect } from 'react-redux-firebase';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { Container } from 'semantic-ui-react';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines, Card } from './index';
+import { ResearchStation, CityLines, PlayerHand } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
@@ -22,14 +18,7 @@ const iconContainer = {
   blackIcon: new BallIcon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' })
 };
 
-const Board = (props) => {
-  let game, player, currentHand, eventCards;
-  if (props.game) {
-    game = props.game['ytQnw2I0gonsoYXo6M02'];
-    eventCards = game.unusedEventCards;
-    player = game.players[1];
-    currentHand = player.currentHand;
-  }
+const Board = () => {
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
@@ -43,13 +32,7 @@ const Board = (props) => {
       maxBounds={maxBounds}
       className="map"
     >
-      <Container className="cards-container">
-        {
-          props.game && currentHand.map(cardRef => {
-            return <Card key={cardRef.id} cardRef={cardRef} eventCards={eventCards} />;
-          })
-        }
-      </Container>
+      <PlayerHand />
       <TileLayer
         url={darkTiles}
       />
@@ -62,11 +45,4 @@ const Board = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  game: state.firestore.data.games,
-});
-
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps)
-)(Board);
+export default Board;

@@ -3,7 +3,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 // import { connect } from 'react-redux';
 import { compose } from 'redux';
 import '../App.css';
-import { Board, ActionFooter, GameHeader } from './index';
+import { Board, ActionFooter } from './index';
 // import { db } from '../store';
 // import { init, collections, setupLogic } from '../utils';
 

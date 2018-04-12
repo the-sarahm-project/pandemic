@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidebar, Icon, Button } from 'semantic-ui-react';
+import { Sidebar } from 'semantic-ui-react';
 
 const GameHeader = () => {
   return (

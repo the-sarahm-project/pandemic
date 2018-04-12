@@ -2,6 +2,7 @@
   height: -webkit-fill-available;
 }
 
+/* Player Hand */
 .ui.container.cards-container {
   display: flex;
   height: -webkit-fill-available;
@@ -13,10 +14,12 @@ img.ui.small.image.hand-card {
   width: 125px;
 }
 
+/* Map */
 .map {
   position: absolute;
 }
 
+/* Action Footer */
 .ui.bottom.very.wide.visible.sidebar.action-footer {
   background-color: white;
   min-height: 7em;
@@ -38,3 +41,9 @@ img.ui.small.image.hand-card {
   font-size: x-large;
   padding-top: .5em;
 }
+
+/* Game Header */
+.ui.top.very.wide.visible.sidebar.game-header {
+  min-height: 4em;
+}
+

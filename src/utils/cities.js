@@ -37,7 +37,7 @@ export const cities = [
   {name: "Paris", coords: [48.7676, 0.5295], icon: "blueIcon"},
   {name: "Riyadh", coords: [19.2549, 51.5061], icon: "blackIcon"},
   {name: "San Francisco", coords: [48.0722, -133.4158], icon: "blueIcon"},
-  {name: "Santiago", coords: [-47.0188, -87.5369], icon: "yellowIcon"},
+  {name: "Santiago", coords: [-40.0188, -87.5369], icon: "yellowIcon"},
   {name: "Sao Paulo", coords: [-24.0178, -48.5135], icon: "yellowIcon"},
   {name: "Seoul", coords: [55.1968, 137.1115], icon: "redIcon"},
   {name: "Shanghai", coords: [41.0036, 123.2248], icon: "redIcon"},

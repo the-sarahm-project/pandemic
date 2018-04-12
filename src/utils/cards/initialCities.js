@@ -267,7 +267,7 @@ const cities = {
   },
   Santiago: {
     name: "Santiago",
-    coords: [-47.0188, -87.5369],
+    coords: [-40.0188, -87.5369],
     icon: "yellowIcon",
     researchStation: false,
     neighbors: ["Lima"]

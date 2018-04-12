@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 
-const unusedCityCards = {
+const xunusedCityCards = {
   Istanbul: {
     color: 'black',
     name: 'Istanbul'
@@ -40,7 +40,7 @@ const unusedCityCards = {
   }
 }
 
-const players = {
+const xplayers = {
   1: {
     active: true,
     currentCity: 'Atlanta',
@@ -87,7 +87,12 @@ const players = {
 const SidebarCards = (props) => {
   //const { games: {players, unusedCityCards}, games } = props;
   const { games } = props;
-  console.log(games)
+  let unusedCityCards = {}, players = {};
+  if (games) {
+    unusedCityCards = games.ytQnw2I0gonsoYXo6M02.unusedCityCards;
+    players = games.ytQnw2I0gonsoYXo6M02.players;
+  }
+  console.log(unusedCityCards, players)
   const playerKeys = Object.keys(players);
   return (
     <Sidebar
@@ -99,7 +104,7 @@ const SidebarCards = (props) => {
     vertical
     width="wide"
     > {
-        playerKeys.map(playerKey => (
+        games && unusedCityCards && playerKeys.map(playerKey => (
           <PlayerMenu
           key={playerKey}
           playerKey = {playerKey}

@@ -38,3 +38,9 @@ img.ui.small.image.hand-card {
   font-size: x-large;
   padding-top: .5em;
 }
+
+.item.menu-player {
+  font-size: 1.3em;
+  font-family: fantasy;
+  text-align: left;
+}

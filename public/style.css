@@ -39,8 +39,23 @@ img.ui.small.image.hand-card {
   padding-top: .5em;
 }
 
-.item.menu-player {
+.ui.fluid.inverted.vertical.tabular.menu > .menu-player {
   font-size: 1.3em;
   font-family: fantasy;
   text-align: left;
+}
+
+.ui.fluid.inverted.vertical.tabular.menu > .menu-player > .menu-player-icon {
+  display: inline;
+  padding-right: 5px;
+}
+
+.ui.fluid.inverted.vertical.tabular.menu > .menu-player > div > .item.menu-player-hand {
+  text-align: left;
+  padding-left: 0;
+}
+
+.ui.fluid.inverted.vertical.tabular.menu > .menu-player > div > .item.menu-player-hand > i.menu-player-hand-icon {
+  display: inline;
+  padding-right: 5px;
 }

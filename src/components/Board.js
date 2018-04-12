@@ -2,7 +2,7 @@ import React from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { cities } from '../utils/cities';
-import { ResearchStation, CityLines, PlayerHand } from './index';
+import { ResearchStation, CityLines, PlayerHand, GameHeader } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const BallIcon = L.Icon.extend({
@@ -32,6 +32,7 @@ const Board = () => {
       maxBounds={maxBounds}
       className="map"
     >
+      <GameHeader />
       <PlayerHand />
       <TileLayer
         url={darkTiles}

@@ -1,10 +1,17 @@
 import React from 'react';
-import { Sidebar } from 'semantic-ui-react';
+import { Container, Image } from 'semantic-ui-react';
 
 const GameHeader = () => {
   return (
-    <Sidebar className="game-header" direction="top" visible={true} width="very wide">aweorjieiajrioeajr
-    </Sidebar>
+    <Container className="game-header">
+      <Image className="game-header" src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+      <Image src="/assets/images/player_card.png" size="small" />
+    </Container>
   );
 };
 

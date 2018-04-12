@@ -5,7 +5,7 @@
 /* Player Hand */
 .ui.container.cards-container {
   display: flex;
-  height: -webkit-fill-available;
+  height: inherit;
   align-items: flex-end;
   justify-content: center;
 }
@@ -43,7 +43,11 @@ img.ui.small.image.hand-card {
 }
 
 /* Game Header */
-.ui.top.very.wide.visible.sidebar.game-header {
-  min-height: 4em;
+.ui.container.game-header {
+  display: flex;
+  justify-content: center;
+  min-height: 5em;
+  max-height: 5em;
+  width: inherit;
+  position: absolute;
 }
-

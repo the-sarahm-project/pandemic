@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sidebar, Menu, Icon } from 'semantic-ui-react';
+import PlayerMenu from './PlayerMenu';
 
 const unusedCityCards = {
   Istanbul: {
@@ -83,31 +84,28 @@ const players = {
 const SidebarCards = (props) => {
   //const { players } = props;
   const playerKeys = Object.keys(players);
-  const unusedCityKeys = Object.keys(unusedCityCards);
   return (
     <Sidebar
     as={Menu}
-    animation="overlay"
-    width="thin"
     direction="right"
     visible={true}
     icon="labeled"
-    vertical
     inverted
-    >
-      <Menu.Item name="home">
-        <Icon name="home" />
-        Home
-      </Menu.Item>
-      <Menu.Item name="gamepad">
-        <Icon name="gamepad" />
-        Games
-      </Menu.Item>
-      <Menu.Item name="camera">
-        <Icon name="camera" />
-        Channels
-      </Menu.Item>
+    vertical
+    width="wide"
+    > {
+        playerKeys.map(playerKey => (
+          <PlayerMenu
+          key={playerKey}
+          playerKey = {playerKey}
+          players={players}
+          unusedCityCards={unusedCityCards}
+          />
+        ))
+      }
     </Sidebar>
 )};
 
 export default SidebarCards;
+
+//add tab pointer to menu item

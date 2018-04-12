@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidebar, Menu, Icon } from 'semantic-ui-react';
+import { Sidebar, Menu } from 'semantic-ui-react';
 import PlayerMenu from './PlayerMenu';
 
 const unusedCityCards = {
@@ -107,5 +107,3 @@ const SidebarCards = (props) => {
 )};
 
 export default SidebarCards;
-
-//add tab pointer to menu item

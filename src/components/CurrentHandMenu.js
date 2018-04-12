@@ -7,10 +7,10 @@ export default function CurrentHandMenu(props) {
   color = (color === 'black') ? 'grey' : color;
   return (
     <div>
-    <Menu.Item className="menu-player-hand">
-      <Icon className="menu-player-hand-icon" name="square" color={color} />
-        {name}
-    </Menu.Item>
+      <Menu.Item className="menu-player-hand">
+        <Icon className="menu-player-hand-icon" name="square" color={color} />
+          {name}
+      </Menu.Item>
     </div>
   )
 }

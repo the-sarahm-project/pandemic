@@ -26,7 +26,7 @@ const SidebarCards = (props) => {
         games && unusedCityCards && playerKeys.map(playerKey => (
           <PlayerMenu
           key={playerKey}
-          playerKey = {playerKey}
+          playerKey={playerKey}
           players={players}
           unusedCityCards={unusedCityCards}
           />

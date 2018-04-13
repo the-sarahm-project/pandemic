@@ -72,11 +72,13 @@ const Board = (props) => {
         url={darkTiles}
       />
       {
-        Object.keys(cities).map(city => <Marker position={cities[city].coords} key={cities[city].coords} icon={iconContainer[cities[city].icon]} />)
+        Object.keys(players).map(playerKey => {
+          const [latitude, longitude] = cities[players[playerKey].currentCity].coords;
+          return <Marker position={[latitude + 3, longitude]} key={playerKey} icon={playerIconContainer[players[playerKey].role]} />
+        })
       }
       {
-        Object.keys(players).map(playerKey => <Marker position={cities[players[playerKey].currentCity].coords} key={playerKey} icon={playerIconContainer[players[playerKey].role]} />)
-        })
+        Object.keys(cities).map(city => <Marker position={cities[city].coords} key={cities[city].coords} icon={iconContainer[cities[city].icon]} />)
       }
       <ResearchStation coords={atlantaCoords} />
       <CityLines />

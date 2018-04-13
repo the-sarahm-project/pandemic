@@ -17,6 +17,7 @@ const SidebarCards = (props) => {
   return (
     <Sidebar
       as={Menu}
+      animation="overlay"
       direction="right"
       visible={true}
       icon="labeled"

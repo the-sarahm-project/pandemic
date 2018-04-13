@@ -59,3 +59,11 @@ img.ui.small.image.hand-card {
   display: inline;
   padding-right: 5px;
 }
+
+.ui.overlay.sidebar {
+  z-index: 103;
+}
+
+.ui.bottom.very.wide.visible.sidebar.action-footer {
+  max-width: calc(100% - 350px);
+}

@@ -2,6 +2,16 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import CurrentHandMenu from './CurrentHandMenu';
 
+const playerColors = {
+  'Contingency Planner': 'teal',
+  Dispatcher: 'purple',
+  Medic: 'orange',
+  'Operations Expert': 'olive',
+  'Quarantine Specialist': 'green',
+  Researcher: 'brown',
+  Scientist: 'grey',
+}
+
 //this is each player's information on the sidebar
 export default function PlayerMenu (props) {
   const { players, unusedCityCards, unusedEventCards, playerKey } = props;
@@ -17,7 +27,7 @@ export default function PlayerMenu (props) {
         className="menu-player"
         style={{background: (players[playerKey].active) ? 'red' : 'black'}}
       >
-        <Icon className="menu-player-icon" name="user outline" />
+        <Icon className="menu-player-icon" name="user" color={playerColors[players[playerKey].role]} />
         {`${players[playerKey].name} - ${players[playerKey].role}`}
       </Menu.Item>
       <Menu.Item className="menu-player">

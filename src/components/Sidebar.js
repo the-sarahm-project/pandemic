@@ -16,21 +16,22 @@ const SidebarCards = (props) => {
   const playerKeys = Object.keys(players);
   return (
     <Sidebar
-    as={Menu}
-    direction="right"
-    visible={true}
-    icon="labeled"
-    inverted
-    vertical
-    width="wide"
-    > {
+      as={Menu}
+      direction="right"
+      visible={true}
+      icon="labeled"
+      inverted
+      vertical
+      width="wide"
+    >
+      {
         games && unusedCityCards && playerKeys.map(playerKey => (
           <PlayerMenu
-          key={playerKey}
-          playerKey={playerKey}
-          players={players}
-          unusedCityCards={unusedCityCards}
-          unusedEventCards={unusedEventCards}
+            key={playerKey}
+            playerKey={playerKey}
+            players={players}
+            unusedCityCards={unusedCityCards}
+            unusedEventCards={unusedEventCards}
           />
         ))
       }

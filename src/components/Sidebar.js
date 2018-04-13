@@ -23,7 +23,6 @@ const SidebarCards = (props) => {
       icon="labeled"
       inverted
       vertical
-      width="wide"
     >
       {
         games && unusedCityCards && playerKeys.map(playerKey => (

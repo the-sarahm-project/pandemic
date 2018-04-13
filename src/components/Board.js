@@ -83,7 +83,7 @@ const Board = (props) => {
         })
       }
       {
-        Object.keys(cities).map(city => <Marker opacity={0.8} position={cities[city].coords} key={cities[city].coords} icon={iconContainer[cities[city].icon]} />)
+        Object.keys(cities).map(city => <Marker position={cities[city].coords} key={cities[city].coords} icon={iconContainer[cities[city].icon]} />)
       }
       <ResearchStation coords={atlantaCoords} />
       <CityLines />

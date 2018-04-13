@@ -7,7 +7,6 @@ import { compose } from 'redux';
 import { Container } from 'semantic-ui-react';
 import { cities } from '../utils/cards';
 import { ResearchStation, CityLines, Card } from './index';
-import path from 'path';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const Icon = L.Icon.extend({

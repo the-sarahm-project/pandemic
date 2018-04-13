@@ -51,3 +51,12 @@ img.ui.small.image.hand-card {
   width: inherit;
   position: absolute;
 }
+
+.ui.container.game-header-container {
+  color: white;
+  width: 50%;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

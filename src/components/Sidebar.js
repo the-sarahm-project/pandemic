@@ -7,28 +7,31 @@ import { connect } from 'react-redux';
 
 const SidebarCards = (props) => {
   const { games } = props;
-  let unusedCityCards = {}, players = {};
+  let unusedCityCards = {}, players = {}, unusedEventCards = {};
   if (games) {
     unusedCityCards = games.ytQnw2I0gonsoYXo6M02.unusedCityCards;
     players = games.ytQnw2I0gonsoYXo6M02.players;
+    unusedEventCards = games.ytQnw2I0gonsoYXo6M02.unusedEventCards;
   }
   const playerKeys = Object.keys(players);
   return (
     <Sidebar
-    as={Menu}
-    direction="right"
-    visible={true}
-    icon="labeled"
-    inverted
-    vertical
-    width="wide"
-    > {
+      as={Menu}
+      direction="right"
+      visible={true}
+      icon="labeled"
+      inverted
+      vertical
+      width="wide"
+    >
+      {
         games && unusedCityCards && playerKeys.map(playerKey => (
           <PlayerMenu
-          key={playerKey}
-          playerKey={playerKey}
-          players={players}
-          unusedCityCards={unusedCityCards}
+            key={playerKey}
+            playerKey={playerKey}
+            players={players}
+            unusedCityCards={unusedCityCards}
+            unusedEventCards={unusedEventCards}
           />
         ))
       }

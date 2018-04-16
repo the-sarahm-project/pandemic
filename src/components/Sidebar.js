@@ -13,6 +13,7 @@ const SidebarCards = (props) => {
     players = games.ytQnw2I0gonsoYXo6M02.players;
     unusedEventCards = games.ytQnw2I0gonsoYXo6M02.unusedEventCards;
   }
+
   const playerKeys = Object.keys(players);
   return (
     <Sidebar

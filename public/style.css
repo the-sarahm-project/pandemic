@@ -57,6 +57,6 @@ img.ui.small.image.hand-card {
   width: 50%;
   background-color: grey;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }

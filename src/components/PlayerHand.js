@@ -23,9 +23,7 @@ const PlayerHand = (props) => {
 const mapStateToProps = (state) => {
   const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
   const eventCards = game && game.unusedEventCards;
-  console.log(game);
   const player = game && game.players[1];
-  console.log('player', player);
   const currentHand = player && player.currentHand;
   return {
     game,

@@ -1,11 +1,18 @@
 import React from 'react';
 import { Sidebar, Icon, Button } from 'semantic-ui-react';
+//HOC composition
+import { compose } from 'redux';
+//import { withHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import { withFirestore, firestoreConnect } from 'react-redux-firebase';
 
-const ActionFooter = () => {
+const ActionFooter = (props) => {
+  const { currentTurn, neighbors } = props;
+  console.log('this is current turn', props)
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
-        <Button className="action-button move-button">
+        <Button className="action-button move-button" onClick={() => currentTurn.set({currentCity: neighbors[Math.floor(Math.random() * neighbors.length)]}, {merge: true})}>
           <div className="move-icons">
             <Icon className="car-icon action-icon" name="car" size="big" />/
             <Icon className="plane-icon action-icon" name="plane" size="big" />
@@ -33,4 +40,26 @@ const ActionFooter = () => {
   );
 };
 
-export default ActionFooter;
+const mapStateToProps = (state) => {
+  const game = state.firestore.data.games && state.firestore.data.games.ytQnw2I0gonsoYXo6M02;
+  const {currentTurn, cities, players} = game || {};
+  const neighbors = currentTurn && cities[players[currentTurn.id].currentCity].neighbors;
+  console.log(cities)
+  return {
+    currentTurn,
+    neighbors
+  };
+}
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(ActionFooter);
+
+
+// export default compose(
+//   withFirestore,
+//   withHandlers({
+//     actionClick: (props) => (event) => props.store.firestore.add(`/games/ytQnw2I0gonsoYXo6M02/players/1`, {prop: 'i\'ve been added'})
+//   })
+// );

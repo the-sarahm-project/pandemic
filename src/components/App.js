@@ -31,5 +31,7 @@ export default compose(
     {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'players' }]},
     {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedEventCards' }]},
     {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedCityCards' }]},
+    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'cities' }]},
+    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02'},
   ])
 )(App);

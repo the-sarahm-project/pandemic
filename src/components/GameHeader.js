@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 
-const GameHeader = (props) => {
-  const { game, playerDeck } = props;
+const GameHeader = ({ game, playerDeck }) => {
   return (
     isLoaded(game) && isLoaded(playerDeck) && (
       <Container className="game-header">

@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 
-const PlayerHand = (props) => {
-  const { game, currentHand, eventCards } = props;
+const PlayerHand = ({ game, currentHand, eventCards } ) => {
   return (
     isLoaded(game) && isLoaded(eventCards) && isLoaded(currentHand) &&
     <Container className="cards-container">

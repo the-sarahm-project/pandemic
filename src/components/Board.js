@@ -37,8 +37,7 @@ const playerIconContainer = {
   Scientist: new PlayerIcon({iconUrl: 'assets/images/scientist.png'}),
 };
 
-const Board = (props) => {
-  const { players } = props;
+const Board = ({ players }) => {
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];

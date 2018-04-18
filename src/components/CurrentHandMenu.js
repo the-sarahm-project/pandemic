@@ -2,8 +2,7 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 
 //this is each item in the current hand on the sidebar
-export default function CurrentHandMenu(props) {
-  let {name, color} = props;
+export default function CurrentHandMenu({ name, color }) {
   color = (color === 'black') ? 'grey' : color;
   return (
     <div>

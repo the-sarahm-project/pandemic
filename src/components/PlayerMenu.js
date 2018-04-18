@@ -13,9 +13,7 @@ const playerColors = {
 };
 
 //this is each player's information on the sidebar
-export default function PlayerMenu (props) {
-  const { players, unusedCityCards, unusedEventCards, playerKey } = props;
-
+export default function PlayerMenu ({ players, unusedCityCards, unusedEventCards, playerKey }) {
   return (
     <Menu
       vertical

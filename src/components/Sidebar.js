@@ -5,8 +5,7 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 
-const SidebarCards = (props) => {
-  const { games } = props;
+const SidebarCards = ({ games }) => {
   let unusedCityCards = {}, players = {}, unusedEventCards = {};
   if (games) {
     unusedCityCards = games['9irA2eJaPOcagTs53dkV'].unusedCityCards;

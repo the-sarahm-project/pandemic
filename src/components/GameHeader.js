@@ -3,6 +3,7 @@ import { Container, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { doc } from './App';
 
 const GameHeader = ({ game, playerDeck }) => {
   return (
@@ -27,7 +28,7 @@ const GameHeader = ({ game, playerDeck }) => {
 };
 
 const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
   const playerDeck = game && game.playerDeck;
   return {
     game,

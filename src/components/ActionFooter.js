@@ -1,11 +1,15 @@
 import React from 'react';
 import { Sidebar, Icon, Button } from 'semantic-ui-react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { doc } from './App';
 
-const ActionFooter = () => {
+const ActionFooter = ({ currentTurn, neighbors }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
-        <Button className="action-button move-button">
+        <Button className="action-button move-button" onClick={() => currentTurn.set({currentCity: neighbors[Math.floor(Math.random() * neighbors.length)]}, {merge: true})}>
           <div className="move-icons">
             <Icon className="car-icon action-icon" name="car" size="big" />/
             <Icon className="plane-icon action-icon" name="plane" size="big" />
@@ -33,4 +37,19 @@ const ActionFooter = () => {
   );
 };
 
-export default ActionFooter;
+const mapStateToProps = (state) => {
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
+  const currentTurn = game && game.currentTurn;
+  const cities = game && game.cities;
+  const players = game && game.players;
+  const neighbors = currentTurn && cities[players[currentTurn.id].currentCity].neighbors;
+  return {
+    currentTurn,
+    neighbors
+  };
+}
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(ActionFooter);

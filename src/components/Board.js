@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { cities } from '../utils/cards';
 import { ResearchStation, CityLines, PlayerHand, GameHeader } from './index';
+import { doc } from './App';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const Icon = L.Icon.extend({
@@ -79,7 +80,7 @@ const Board = ({ players }) => {
 };
 
 const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
   const players = game && game.players;
   return {
     players

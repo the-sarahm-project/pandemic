@@ -2,17 +2,11 @@ import React from 'react';
 import { Sidebar, Menu } from 'semantic-ui-react';
 import PlayerMenu from './PlayerMenu';
 import { compose } from 'redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import { doc } from './App';
 
-const SidebarCards = ({ games }) => {
-  let unusedCityCards = {}, players = {}, unusedEventCards = {};
-  if (games) {
-    unusedCityCards = games['9irA2eJaPOcagTs53dkV'].unusedCityCards;
-    players = games['9irA2eJaPOcagTs53dkV'].players;
-    unusedEventCards = games['9irA2eJaPOcagTs53dkV'].unusedEventCards;
-  }
-  const playerKeys = Object.keys(players);
+const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
   return (
     <Sidebar
       as={Menu}
@@ -24,7 +18,7 @@ const SidebarCards = ({ games }) => {
       vertical
     >
       {
-        games && unusedCityCards && playerKeys.map(playerKey => (
+        isLoaded(unusedCityCards) && isLoaded(players) && isLoaded(unusedEventCards) && Object.keys(players).map(playerKey => (
           <PlayerMenu
             key={playerKey}
             playerKey={playerKey}
@@ -38,9 +32,17 @@ const SidebarCards = ({ games }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  games: state.firestore.data.games
-});
+const mapStateToProps = (state) => {
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
+  const unusedCityCards = game && game.unusedCityCards;
+  const players = game && game.players;
+  const unusedEventCards = game && game.unusedEventCards;
+  return {
+    unusedCityCards,
+    players,
+    unusedEventCards
+  }
+}
 
 export default compose(
   firestoreConnect(),

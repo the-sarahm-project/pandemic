@@ -1,12 +1,11 @@
 import React from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Container } from 'semantic-ui-react';
 import { cities } from '../utils/cards';
-import { ResearchStation, CityLines, Card } from './index';
+import { ResearchStation, CityLines, PlayerHand, GameHeader } from './index';
 
 const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 const Icon = L.Icon.extend({
@@ -36,17 +35,9 @@ const playerIconContainer = {
   'Quarantine Specialist': new PlayerIcon({iconUrl: 'assets/images/quar_spec.png'}),
   Researcher: new PlayerIcon({iconUrl: 'assets/images/researcher.png'}),
   Scientist: new PlayerIcon({iconUrl: 'assets/images/scientist.png'}),
-}
+};
 
-const Board = (props) => {
-  let game, player, currentHand, eventCards, players = {};
-  if (props.game) {
-    game = props.game.ytQnw2I0gonsoYXo6M02;
-    eventCards = game.unusedEventCards;
-    player = game.players[1];
-    currentHand = player.currentHand;
-    players = game.players;
-  }
+const Board = ({ players }) => {
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
@@ -60,25 +51,22 @@ const Board = (props) => {
       maxBounds={maxBounds}
       className="map"
     >
-      <Container className="cards-container">
-        {
-          props.game && currentHand.map(cardRef => {
-            return <Card key={cardRef.id} cardRef={cardRef} eventCards={eventCards} />;
-          })
-        }
-      </Container>
+      <GameHeader />
+      <PlayerHand />
       <TileLayer
         url={darkTiles}
       />
       {
-        Object.keys(players).map(playerKey => {
+        isLoaded(players) && Object.keys(players).map(playerKey => {
           const [latitude, longitude] = cities[players[playerKey].currentCity].coords;
-          return (<Marker
-                    position={[latitude + 3, longitude]}
-                    key={playerKey}
-                    icon={playerIconContainer[players[playerKey].role]}
-                    zIndexOffset={1000}
-                  />)
+          return (
+            <Marker
+              position={[latitude + 3, longitude]}
+              key={playerKey}
+              icon={playerIconContainer[players[playerKey].role]}
+              zIndexOffset={1000}
+            />
+          );
         })
       }
       {
@@ -90,9 +78,13 @@ const Board = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  game: state.firestore.data.games,
-});
+const mapStateToProps = (state) => {
+  const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
+  const players = game && game.players;
+  return {
+    players
+  };
+};
 
 export default compose(
   firestoreConnect(),

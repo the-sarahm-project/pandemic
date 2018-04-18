@@ -2,21 +2,26 @@
   height: -webkit-fill-available;
 }
 
+/* Player Hand */
 .ui.container.cards-container {
   display: flex;
-  height: -webkit-fill-available;
   align-items: flex-end;
   justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: inherit;
 }
 
 img.ui.small.image.hand-card {
   width: 125px;
 }
 
+/* Map */
 .map {
   position: absolute;
 }
 
+/* Action Footer */
 .ui.bottom.very.wide.visible.sidebar.action-footer {
   background-color: white;
   min-height: 7em;
@@ -39,6 +44,26 @@ img.ui.small.image.hand-card {
   padding-top: .5em;
 }
 
+/* Game Header */
+.ui.container.game-header {
+  display: flex;
+  justify-content: center;
+  min-height: 5em;
+  max-height: 5em;
+  width: inherit;
+  position: fixed;
+}
+
+.ui.container.game-header-container {
+  color: white;
+  width: 50%;
+  background-color: grey;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Sidebar */
 .ui.fluid.inverted.vertical.tabular.menu > .menu-player {
   font-size: 1.3em;
   font-family: fantasy;

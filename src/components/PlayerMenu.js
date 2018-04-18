@@ -10,12 +10,10 @@ const playerColors = {
   'Quarantine Specialist': 'green',
   Researcher: 'brown',
   Scientist: 'grey',
-}
+};
 
 //this is each player's information on the sidebar
-export default function PlayerMenu (props) {
-  const { players, unusedCityCards, unusedEventCards, playerKey } = props;
-
+export default function PlayerMenu ({ players, unusedCityCards, unusedEventCards, playerKey }) {
   return (
     <Menu
       vertical
@@ -35,9 +33,9 @@ export default function PlayerMenu (props) {
           const {name, color} = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
           return (
             <CurrentHandMenu key={cardRef.id} name={name} color={color} />
-          )
+          );
         })}
       </Menu.Item>
     </Menu>
-  )
+  );
 }

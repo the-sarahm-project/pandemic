@@ -9,9 +9,9 @@ import { Sidebar, Board, ActionFooter } from './index';
 
 class App extends Component {
   componentDidMount() {
-    // let numPlayers = 4, difficultyLevel = 4;
+    // const numPlayers = 4, difficultyLevel = 4;
 
-    // setupLogic(db.collection('games').doc('ytQnw2I0gonsoYXo6M02'), numPlayers, difficultyLevel);
+    // setupLogic(db.collection('games').doc('9irA2eJaPOcagTs53dkV'), numPlayers, difficultyLevel);
     // init(db, collections, numPlayers, difficultyLevel);
   }
 
@@ -28,10 +28,10 @@ class App extends Component {
 
 export default compose(
   firestoreConnect(() => [
-    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'players' }]},
-    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedEventCards' }]},
-    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'unusedCityCards' }]},
-    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02', subcollections: [{ collection: 'cities' }]},
-    {collection: 'games', doc: 'ytQnw2I0gonsoYXo6M02'},
+    {collection: 'games', doc: '9irA2eJaPOcagTs53dkV', subcollections: [{ collection: 'players' }]},
+    {collection: 'games', doc: '9irA2eJaPOcagTs53dkV', subcollections: [{ collection: 'unusedEventCards' }]},
+    {collection: 'games', doc: '9irA2eJaPOcagTs53dkV', subcollections: [{ collection: 'unusedCityCards' }]},
+    {collection: 'games', doc: '9irA2eJaPOcagTs53dkV', subcollections: [{ collection: 'cities' }]},
+    {collection: 'games', doc: '9irA2eJaPOcagTs53dkV'}
   ])
 )(App);

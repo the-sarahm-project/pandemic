@@ -15,10 +15,16 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
     remainingResearchStations: 6,
     currentTurn: Math.floor(Math.random() * numPlayers) + 1,
     numPlayers,
-    difficultyLevel
+    difficultyLevel,
+    redDiseaseCubes: 24,
+    blueDiseaseCubes: 24,
+    yellowDiseaseCubes: 24,
+    blackDiseaseCubes: 24,
+    redCureMarker: false,
+    blueCureMarker: false,
+    yellowCureMarker: false,
+    blackCureMarker: false,
   });
-  const cureMarkers = Object.keys(collections.cureMarkers);
-  const unusedDiseaseCubes = Object.keys(collections.unusedDiseaseCubes);
   const unusedEventCards = Object.keys(collections.unusedEventCards);
   const players = Object.keys(collections.players);
   const cities = Object.keys(collections.cities);
@@ -29,15 +35,6 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
   for (let i=0;i<difficultyLevel;i++) {
     game.collection('epidemicCards').add({name: 'Epidemic'});
   }
-  //add cureMarkers
-  cureMarkers.forEach(cureMarker => {
-    game.collection('cureMarkers').doc(cureMarker).set({cured: false});
-  });
-
-  //add unusedDiseaseCubes
-  unusedDiseaseCubes.forEach(unusedDiseaseCube => {
-    game.collection('unusedDiseaseCubes').doc(unusedDiseaseCube).set({count: collections.unusedDiseaseCubes[unusedDiseaseCube]});
-  });
 
   //add unusedEventCards
   unusedEventCards.forEach(unusedEventCard => {

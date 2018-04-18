@@ -5,13 +5,12 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 
-const SidebarCards = (props) => {
-  const { games } = props;
+const SidebarCards = ({ games }) => {
   let unusedCityCards = {}, players = {}, unusedEventCards = {};
   if (games) {
-    unusedCityCards = games.ytQnw2I0gonsoYXo6M02.unusedCityCards;
-    players = games.ytQnw2I0gonsoYXo6M02.players;
-    unusedEventCards = games.ytQnw2I0gonsoYXo6M02.unusedEventCards;
+    unusedCityCards = games['9irA2eJaPOcagTs53dkV'].unusedCityCards;
+    players = games['9irA2eJaPOcagTs53dkV'].players;
+    unusedEventCards = games['9irA2eJaPOcagTs53dkV'].unusedEventCards;
   }
 
   const playerKeys = Object.keys(players);
@@ -37,7 +36,8 @@ const SidebarCards = (props) => {
         ))
       }
     </Sidebar>
-)};
+  );
+};
 
 const mapStateToProps = (state) => ({
   games: state.firestore.data.games

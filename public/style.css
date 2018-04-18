@@ -51,7 +51,7 @@ img.ui.small.image.hand-card {
   min-height: 5em;
   max-height: 5em;
   width: inherit;
-  position: absolute;
+  position: fixed;
 }
 
 .ui.container.game-header-container {

@@ -3,6 +3,7 @@ import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { doc } from './App';
 
 const PlayerHand = ({ game, currentHand, eventCards } ) => {
   return (
@@ -12,7 +13,7 @@ const PlayerHand = ({ game, currentHand, eventCards } ) => {
         currentHand.map(cardRef => {
           const playerCard = cardRef.id;
           const src = eventCards[playerCard] ? `assets/eventCards/${playerCard}.png` : `assets/cityCards/${playerCard}.png`;
-          return <Image key={playerCard} className="hand-card" src={src} size='small' />;
+          return <Image key={playerCard} className="hand-card" src={src} size="small" />;
         })
       }
     </Container>
@@ -20,7 +21,7 @@ const PlayerHand = ({ game, currentHand, eventCards } ) => {
 };
 
 const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
   const eventCards = game && game.unusedEventCards;
   const player = game && game.players[1];
   const currentHand = player && player.currentHand;
@@ -35,5 +36,4 @@ export default compose(
   firestoreConnect(),
   connect(mapStateToProps)
 )(PlayerHand);
-
 

@@ -4,11 +4,10 @@ import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 //import { withHandlers } from 'recompose';
 import { connect } from 'react-redux';
-import { withFirestore, firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
+import { doc } from './App';
 
-const ActionFooter = (props) => {
-  const { currentTurn, neighbors } = props;
-  console.log('this is current turn', props)
+const ActionFooter = ({ currentTurn, neighbors }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -41,10 +40,11 @@ const ActionFooter = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games.ytQnw2I0gonsoYXo6M02;
-  const {currentTurn, cities, players} = game || {};
+  const game = state.firestore.data.games && state.firestore.data.games[doc];
+  const currentTurn = game && game.currentTurn;
+  const cities = game && game.cities;
+  const players = game && game.players;
   const neighbors = currentTurn && cities[players[currentTurn.id].currentCity].neighbors;
-  console.log(cities)
   return {
     currentTurn,
     neighbors
@@ -55,11 +55,3 @@ export default compose(
   firestoreConnect(),
   connect(mapStateToProps)
 )(ActionFooter);
-
-
-// export default compose(
-//   withFirestore,
-//   withHandlers({
-//     actionClick: (props) => (event) => props.store.firestore.add(`/games/ytQnw2I0gonsoYXo6M02/players/1`, {prop: 'i\'ve been added'})
-//   })
-// );

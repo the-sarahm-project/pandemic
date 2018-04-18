@@ -17,9 +17,9 @@ async function setupLogic(gameState, numPlayers, difficultyLevel) {
 
   //Watch as each player receives a role. & Watch as the player pawns are placed in Atlanta.
   let {players, playersDocs} = await locationAndRolePlacement(gameState, numPlayers);
+
   //Establish current turn.
   const currentPlayerIndex = Math.floor(Math.random() * playersDocs.length);
-
   await gameState.update({currentTurn: playersDocs[currentPlayerIndex].ref});
   await playersDocs[currentPlayerIndex].ref.update({active: true});
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Sidebar, Icon, Button } from 'semantic-ui-react';
-//HOC composition
 import { compose } from 'redux';
-//import { withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { doc } from './App';

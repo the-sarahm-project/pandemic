@@ -2,22 +2,17 @@ import React from 'react';
 import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 
 const PlayerHand = (props) => {
-  let game, player, currentHand, eventCards;
-  if (props.game) {
-    game = props.game['ytQnw2I0gonsoYXo6M02'];
-    eventCards = game.unusedEventCards;
-    player = game.players[1];
-    currentHand = player.currentHand;
-  }
+  const { game, currentHand, eventCards } = props;
   return (
+    isLoaded(game) && isLoaded(eventCards) && isLoaded(currentHand) &&
     <Container className="cards-container">
       {
-        props.game && currentHand.map(cardRef => {
+        currentHand.map(cardRef => {
           const playerCard = cardRef.id;
-          const src = eventCards && eventCards[playerCard] ? `assets/eventCards/${playerCard}.png` : `assets/cityCards/${playerCard}.png`;
+          const src = eventCards[playerCard] ? `assets/eventCards/${playerCard}.png` : `assets/cityCards/${playerCard}.png`;
           return <Image key={playerCard} className="hand-card" src={src} size='small' />;
         })
       }
@@ -25,9 +20,19 @@ const PlayerHand = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  game: state.firestore.data.games,
-});
+const mapStateToProps = (state) => {
+  const game = state.firestore.data.games && state.firestore.data.games['9irA2eJaPOcagTs53dkV'];
+  const eventCards = game && game.unusedEventCards;
+  console.log(game);
+  const player = game && game.players[1];
+  console.log('player', player);
+  const currentHand = player && player.currentHand;
+  return {
+    game,
+    eventCards,
+    currentHand
+  };
+};
 
 export default compose(
   firestoreConnect(),

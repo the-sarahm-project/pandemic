@@ -5,9 +5,11 @@
 /* Player Hand */
 .ui.container.cards-container {
   display: flex;
-  height: inherit;
   align-items: flex-end;
   justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: inherit;
 }
 
 img.ui.small.image.hand-card {

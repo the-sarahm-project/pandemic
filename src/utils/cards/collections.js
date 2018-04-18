@@ -1,18 +1,6 @@
 import { unusedInfectionCards, unusedCityCards, cities } from './index';
 
 const collections = {
-  cureMarkers: { //whether or not you have a cure
-    red: false,
-    blue: false,
-    yellow: false,
-    black: false
-  },
-  unusedDiseaseCubes: {
-    red: 24,
-    blue: 24,
-    yellow: 24,
-    black: 24
-  }, //number of disease cubes left
   unusedEventCards: {
     ResilientPopulation: {
       name: 'Resilient Population'

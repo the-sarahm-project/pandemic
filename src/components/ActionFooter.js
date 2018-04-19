@@ -18,7 +18,11 @@ const ActionFooter = ({ game, currentTurn, neighbors, cities, ...props}) => {
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" onClick={() => props.firestore.update(`games/c5RhJwVFsL31LY0BJkYy/players/4`, {active: true})}>
+        <Button className="action-button build-button" onClick={() => {
+          console.log('hihihi');
+          props.firestore.get(`games/c5RhJwVFsL31LY0BJkYy/players/4`).then(snapshot => console.log(snapshot.ref.update({active: true})));
+          props.firestore.update(`games/c5RhJwVFsL31LY0BJkYy/players/4`, {active: true});
+        }}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>

@@ -16,7 +16,7 @@ const ActionFooter = ({ currentTurn, neighbors }) => {
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button">
+        <Button className="action-button build-button" onClick={() => currentTurn.set({currentCity: neighbors[Math.floor(Math.random() * neighbors.length)]}, {merge: true})}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     currentTurn,
     neighbors
   };
-}
+};
 
 export default compose(
   firestoreConnect(),

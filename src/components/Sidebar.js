@@ -41,8 +41,8 @@ const mapStateToProps = (state) => {
     unusedCityCards,
     players,
     unusedEventCards
-  }
-}
+  };
+};
 
 export default compose(
   firestoreConnect(),

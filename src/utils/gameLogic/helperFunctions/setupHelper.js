@@ -13,8 +13,7 @@ export function getCollectionDocs(gameState, collectionName) {
 
 //add a research station to a city & subtract number of stations
 export async function addResearchStation(gameState, cityName) {
-  await gameState.collection('cities').doc(cityName).update(
-    "researchStation", true);
+  await gameState.collection('cities').doc(cityName).update("researchStation", true);
   await gameState.get().then(gameDoc => gameDoc.data()).then(gameData => gameState.update("remainingResearchStations", gameData.remainingResearchStations - 1));
 }
 

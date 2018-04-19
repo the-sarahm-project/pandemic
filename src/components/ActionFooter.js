@@ -2,10 +2,12 @@ import React from 'react';
 import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { doc } from './App';
 
-const ActionFooter = ({ currentTurn, neighbors }) => {
+const ActionFooter = ({ game, currentTurn, neighbors, cities, ...props}) => {
+  // if (isLoaded(game) && isLoaded(cities) && isLoaded(currentTurn))
+  //   setCityResearchStation(game, currentTurn, cities)
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -16,7 +18,7 @@ const ActionFooter = ({ currentTurn, neighbors }) => {
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" onClick={() => currentTurn.set({currentCity: neighbors[Math.floor(Math.random() * neighbors.length)]}, {merge: true})}>
+        <Button className="action-button build-button" onClick={() => props.firestore.update(`games/c5RhJwVFsL31LY0BJkYy/players/4`, {active: true})}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
@@ -44,10 +46,19 @@ const mapStateToProps = (state) => {
   const players = game && game.players;
   const neighbors = currentTurn && cities[players[currentTurn.id].currentCity].neighbors;
   return {
+    game,
     currentTurn,
-    neighbors
+    neighbors,
+    cities
   };
 };
+
+function setCityResearchStation(game, currentTurn, cities) {
+  console.log(game)
+  return currentTurn && currentTurn.get().then(snapshot => {
+    console.log(cities[snapshot.data().currentCity].researchStation);
+  });
+}
 
 export default compose(
   firestoreConnect(),

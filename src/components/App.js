@@ -13,7 +13,7 @@ class App extends Component {
     // const numPlayers = 4, difficultyLevel = 4;
 
     // setupLogic(db.collection('games').doc(doc), numPlayers, difficultyLevel);
-    //init(db, collections, numPlayers, difficultyLevel);
+    // init(db, collections, numPlayers, difficultyLevel);
   }
 
   render() {

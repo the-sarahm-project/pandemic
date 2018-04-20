@@ -5,7 +5,9 @@ usedDiseaseCubes
 usedEventCards
 */
 
-import { shuffle } from 'lodash';
+import {
+  shuffle
+} from 'lodash';
 
 const init = (db, collections, numPlayers, difficultyLevel) => {
   const game = db.collection('games').doc();
@@ -26,14 +28,15 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
     blackCureMarker: false,
   });
   const unusedEventCards = Object.keys(collections.unusedEventCards);
-  const players = Object.keys(collections.players);
   const cities = Object.keys(collections.cities);
   const unusedInfectionCards = Object.keys(collections.unusedInfectionCards);
   const unusedCityCards = Object.keys(collections.unusedCityCards);
 
   //add remainingEpidemicCards
-  for (let i=0;i<difficultyLevel;i++) {
-    game.collection('epidemicCards').add({name: 'Epidemic'});
+  for (let i = 0; i < difficultyLevel; i++) {
+    game.collection('epidemicCards').add({
+      name: 'Epidemic'
+    });
   }
 
   //add unusedEventCards
@@ -41,20 +44,32 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
     game.collection('unusedEventCards').doc(unusedEventCard).set(collections.unusedEventCards[unusedEventCard]);
   });
 
+  const player = {
+    name: "",
+    role: "",
+    currentCity: "Atlanta"
+  };
   //add players
-  players.forEach(player => {
-    game.collection('players').doc(player).set(collections.players[player]);
-  });
+  for (let i = 1; i <= numPlayers; i++) {
+    game.collection('players').doc(`${i}`).set(player);
+  }
 
   //add cities with cube counters
   cities.forEach(city => {
-    game.collection('cities').doc(city).set({...collections.cities[city], red: 0, blue: 0, yellow: 0, black: 0});
+    game.collection('cities').doc(city).set({ ...collections.cities[city],
+      red: 0,
+      blue: 0,
+      yellow: 0,
+      black: 0
+    });
   });
 
   //add unusedInfectionCards
   let insertOrder = 1;
   shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({...collections.unusedInfectionCards[unusedInfectionCard], insertOrder: insertOrder++});
+    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({ ...collections.unusedInfectionCards[unusedInfectionCard],
+      insertOrder: insertOrder++
+    });
   });
 
   //add unusedCityCards

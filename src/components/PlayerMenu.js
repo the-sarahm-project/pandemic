@@ -13,7 +13,7 @@ const playerColors = {
 };
 
 //this is each player's information on the sidebar
-export default function PlayerMenu ({ players, unusedCityCards, unusedEventCards, playerKey }) {
+const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) => {
   return (
     <Menu
       vertical
@@ -23,14 +23,14 @@ export default function PlayerMenu ({ players, unusedCityCards, unusedEventCards
     >
       <Menu.Item
         className="menu-player"
-        style={{background: (players[playerKey].active) ? 'red' : 'black'}}
+        style={{ background: (players[playerKey].active) ? 'red' : 'black' }}
       >
         <Icon className="menu-player-icon" name="user" color={playerColors[players[playerKey].role]} />
         {`${players[playerKey].name} - ${players[playerKey].role}`}
       </Menu.Item>
       <Menu.Item className="menu-player">
         {players[playerKey].currentHand.map(cardRef => {
-          const {name, color} = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
+          const { name, color } = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
           return (
             <CurrentHandMenu key={cardRef.id} name={name} color={color} />
           );
@@ -38,4 +38,6 @@ export default function PlayerMenu ({ players, unusedCityCards, unusedEventCards
       </Menu.Item>
     </Menu>
   );
-}
+};
+
+export default PlayerMenu;

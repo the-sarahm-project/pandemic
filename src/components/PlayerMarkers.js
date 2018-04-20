@@ -13,16 +13,16 @@ const PlayerIcon = L.Icon.extend({
 });
 
 const playerIconContainer = {
-  'Contingency Planner': new PlayerIcon({iconUrl: 'assets/images/cont_planner.png'}),
-  Dispatcher: new PlayerIcon({iconUrl: 'assets/images/dispatcher.png'}),
-  Medic: new PlayerIcon({iconUrl: 'assets/images/medic.png'}),
-  'Operations Expert': new PlayerIcon({iconUrl: 'assets/images/ops_expert.png'}),
-  'Quarantine Specialist': new PlayerIcon({iconUrl: 'assets/images/quar_spec.png'}),
-  Researcher: new PlayerIcon({iconUrl: 'assets/images/researcher.png'}),
-  Scientist: new PlayerIcon({iconUrl: 'assets/images/scientist.png'}),
+  'Contingency Planner': new PlayerIcon({ iconUrl: 'assets/images/cont_planner.png' }),
+  Dispatcher: new PlayerIcon({ iconUrl: 'assets/images/dispatcher.png' }),
+  Medic: new PlayerIcon({ iconUrl: 'assets/images/medic.png' }),
+  'Operations Expert': new PlayerIcon({ iconUrl: 'assets/images/ops_expert.png' }),
+  'Quarantine Specialist': new PlayerIcon({ iconUrl: 'assets/images/quar_spec.png' }),
+  Researcher: new PlayerIcon({ iconUrl: 'assets/images/researcher.png' }),
+  Scientist: new PlayerIcon({ iconUrl: 'assets/images/scientist.png' }),
 };
 
-const PlayerMarkers = ({ cities, players } ) => {
+const PlayerMarkers = ({ cities, players }) => {
   return (
     isLoaded(cities) && isLoaded(players) &&
     Object.keys(players).map(playerKey => {

@@ -57,7 +57,7 @@ function setCityResearchStation(firestore, currentTurn, cities) {
       const currentCityRef = game.ref.collection('cities').doc(currentCity);
       const currentResearchStation = cities[currentCity].researchStation;
       let remainingResearchStations = game.data().remainingResearchStations;
-      if (!currentResearchStation && remainingResearchStations >= 0) {
+      if (!currentResearchStation && remainingResearchStations > 0) {
         currentCityRef.update({ researchStation: true });
         remainingResearchStations--;
         game.ref.update({ remainingResearchStations });
@@ -66,7 +66,8 @@ function setCityResearchStation(firestore, currentTurn, cities) {
       } else {
         console.log('You lose because no more research stations');
       }
-    });
+    })
+    .catch(err => console.log(err));
 }
 
 export default compose(

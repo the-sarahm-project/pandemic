@@ -20,7 +20,7 @@ const iconContainer = {
   blackIcon: new Icon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' })
 };
 
-const CityMarkers = ({ cities } ) => {
+const CityMarkers = ({ cities }) => {
   return (
     isLoaded(cities) &&
     Object.keys(cities).map(city => (

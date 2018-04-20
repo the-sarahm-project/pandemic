@@ -51,23 +51,11 @@ export async function flipInfectionCards(gameState, num) {
 
 /*-------------  PLAYER: LOCATION, ROLE, CURRENT HAND ---------------*/
 
-//existing roles in the game (7 total)
-const roles = ['Contingency Planner', 'Dispatcher', 'Medic', 'Operations Expert', 'Quarantine Specialist', 'Researcher', 'Scientist'];
-
 //Place players in Atlanta and add their roles
 export async function locationAndRolePlacement(gameState, numPlayers) {
   //get the data for the players in the game
   let players = await gameState.collection('players').get().then(getSnapshotData);
-
   let playersDocs = await getCollectionDocs(gameState, 'players');
-  //update each player's location to Atlanta
-  //shuffle the roles & assign them
-  const gameRoles = shuffle(roles);
-  await playersDocs.forEach((player, i) => {
-    player.ref.update('currentCity', 'Atlanta');
-    player.ref.update('role', gameRoles[i]);
-  });
-
   return {players, playersDocs};
 }
 

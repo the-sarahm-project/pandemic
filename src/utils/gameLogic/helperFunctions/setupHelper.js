@@ -13,9 +13,8 @@ export function getCollectionDocs(gameState, collectionName) {
 
 //add a research station to a city & subtract number of stations
 export async function addResearchStation(gameState, cityName) {
-  await gameState.collection('cities').doc(cityName).update(
-    "researchStation", true);
-  await gameState.get().then(gameDoc => gameDoc.data()).then(gameData => gameState.update("remainingResearchStations", gameData.remainingResearchStations - 1));
+  await gameState.collection('cities').doc(cityName).update('researchStation', true);
+  await gameState.get().then(gameDoc => gameDoc.data()).then(gameData => gameState.update('remainingResearchStations', gameData.remainingResearchStations - 1));
 }
 
 //move the document to a collection
@@ -37,7 +36,7 @@ function addCubes(gameState, docName, cityData, num) {
 
 //infect one city - obtain the reference name. Add the cubes to that city, add the card to the trashed pile and remove the card from the unused pile.
 async function infectOne(gameState, cityData, num) {
-  const docName = cityData.name.replace(/\W/g, "");
+  const docName = cityData.name.replace(/\W/g, '');
   await addCubes(gameState, docName, cityData, num);
   await addTo(gameState, docName, cityData, 'trashedInfectionCards');
   await removeFrom(gameState, docName, 'unusedInfectionCards');
@@ -45,7 +44,7 @@ async function infectOne(gameState, cityData, num) {
 
 //container function to flip a number of infection cards. Obtain the first 3 that were inputted.
 export async function flipInfectionCards(gameState, num) {
-  let snapshots = await gameState.collection('unusedInfectionCards').orderBy("insertOrder", "desc").limit(3).get();
+  let snapshots = await gameState.collection('unusedInfectionCards').orderBy('insertOrder', 'desc').limit(3).get();
   let data = await getSnapshotData(snapshots);
   await Promise.all(data.map(data => infectOne(gameState, data, num)));
 }
@@ -53,7 +52,7 @@ export async function flipInfectionCards(gameState, num) {
 /*-------------  PLAYER: LOCATION, ROLE, CURRENT HAND ---------------*/
 
 //existing roles in the game (7 total)
-const roles = ["Contingency Planner", "Dispatcher", "Medic", "Operations Expert", "Quarantine Specialist", "Researcher", "Scientist"];
+const roles = ['Contingency Planner', 'Dispatcher', 'Medic', 'Operations Expert', 'Quarantine Specialist', 'Researcher', 'Scientist'];
 
 //Place players in Atlanta and add their roles
 export async function locationAndRolePlacement(gameState, numPlayers) {

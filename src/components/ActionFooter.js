@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function setCityResearchStation(firestore, currentTurn, cities) {
+const setCityResearchStation = (firestore, currentTurn, cities) => {
   Promise.all([currentTurn && currentTurn.get(), firestore.get(`games/${doc}`)])
     .then(([player, game]) => {
       const currentCity = player.data().currentCity;
@@ -68,7 +68,7 @@ function setCityResearchStation(firestore, currentTurn, cities) {
       }
     })
     .catch(err => console.log(err));
-}
+};
 
 export default compose(
   firestoreConnect(),

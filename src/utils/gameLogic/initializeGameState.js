@@ -5,9 +5,7 @@ usedDiseaseCubes
 usedEventCards
 */
 
-import {
-  shuffle
-} from 'lodash';
+import { shuffle } from 'lodash';
 
 const init = (db, collections, numPlayers, difficultyLevel) => {
   const game = db.collection('games').doc();

@@ -9,7 +9,7 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
-        <Button className="action-button move-button" onClick={() => currentTurn.set({currentCity: neighbors[Math.floor(Math.random() * neighbors.length)]}, {merge: true})}>
+        <Button className="action-button move-button" onClick={() => currentTurn.set({ currentCity: neighbors[Math.floor(Math.random() * neighbors.length)] }, { merge: true })}>
           <div className="move-icons">
             <Icon className="car-icon action-icon" name="car" size="big" />/
             <Icon className="plane-icon action-icon" name="plane" size="big" />
@@ -66,7 +66,7 @@ function setCityResearchStation(firestore, currentTurn, cities) {
       } else {
         console.log('You lose because no more research stations');
       }
-  });
+    });
 }
 
 export default compose(

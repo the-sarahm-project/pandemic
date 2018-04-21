@@ -6,7 +6,7 @@ import { Sidebar, Board, ActionFooter } from './index';
 // import { db } from '../store';
 // import { init, collections, setupLogic } from '../utils';
 
-export const doc = 'aahsnzztOVGkEXNDonZ1';
+export const doc = 'DGtOTuQcZfamL6ZvJjTn';
 
 class App extends Component {
   componentDidMount() {

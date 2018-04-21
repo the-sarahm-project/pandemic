@@ -13,6 +13,7 @@ const init = (db, collections, numPlayers, difficultyLevel) => {
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,
+    currentTurn: Math.floor(Math.random() * numPlayers) + 1,
     numPlayers,
     difficultyLevel,
     redDiseaseCubes: 24,

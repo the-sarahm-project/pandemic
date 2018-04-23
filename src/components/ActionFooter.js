@@ -6,7 +6,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { doc } from './App';
 import { ChoosePlayerModal } from './index';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }) => {
+const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, playersInSameCity }) => {
+  console.log(playersInSameCity);
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -21,11 +22,13 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
-        <ChoosePlayerModal NewButton={
-          <Button className="action-button share-button">
-            <Icon className="share-icon action-icon" name="gift" size="big" />
-            <div className="share-text action-text">Share</div>
-          </Button>} />
+        <ChoosePlayerModal
+          NewButton={
+            <Button className="action-button share-button">
+              <Icon className="share-icon action-icon" name="gift" size="big" />
+              <div className="share-text action-text">Share</div>
+            </Button>}
+          players={playersInSameCity} />
         <Button className="action-button treat-button">
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
           <div className="treat-text action-text">Treat</div>
@@ -45,12 +48,19 @@ const mapStateToProps = (state) => {
   const cities = game && game.cities;
   const players = game && game.players;
   const currentCity = players && currentTurn && players[currentTurn].currentCity;
+  const playersInSameCity = players && Object.entries(players).reduce((players, player) => {
+    if (player[1].currentCity === currentCity && Number(player[0]) !== currentTurn) {
+      players.push(player[1]);
+    }
+    return players;
+  }, []);
   const neighbors = currentTurn && cities[currentCity].neighbors;
   return {
     currentTurn,
     neighbors,
     cities,
-    currentCity
+    currentCity,
+    playersInSameCity
   };
 };
 

@@ -49,15 +49,7 @@ export async function flipInfectionCards(gameState, num) {
   await Promise.all(data.map(data => infectOne(gameState, data, num)));
 }
 
-/*-------------  PLAYER: LOCATION, ROLE, CURRENT HAND ---------------*/
-
-//Place players in Atlanta and add their roles
-export async function locationAndRolePlacement(gameState, numPlayers) {
-  //get the data for the players in the game
-  let players = await gameState.collection('players').get().then(getSnapshotData);
-  let playersDocs = await getCollectionDocs(gameState, 'players');
-  return {players, playersDocs};
-}
+/*-------------  PLAYER: CURRENT HAND ---------------*/
 
 //distribute cards to each player depending on the number of players
 export async function distributeCards(gameState, playerDeck, players, playersDocs) {

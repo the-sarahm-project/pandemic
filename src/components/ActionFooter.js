@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { doc } from './App';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore }) => {
+const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
-        <Button className="action-button move-button" onClick={() => currentTurn.set({ currentCity: neighbors[Math.floor(Math.random() * neighbors.length)] }, { merge: true })}>
+        <Button className="action-button move-button" onClick={() => movePlayer(firestore, currentTurn, neighbors)}>
           <div className="move-icons">
             <Icon className="car-icon action-icon" name="car" size="big" />/
             <Icon className="plane-icon action-icon" name="plane" size="big" />
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" onClick={() => setCityResearchStation(firestore, currentTurn, cities)}>
+        <Button className="action-button build-button" onClick={() => setCityResearchStation(firestore, currentTurn, cities, currentCity)}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
@@ -42,18 +42,27 @@ const mapStateToProps = (state) => {
   const currentTurn = game && game.currentTurn;
   const cities = game && game.cities;
   const players = game && game.players;
-  const neighbors = currentTurn && cities[players[currentTurn.id].currentCity].neighbors;
+  const currentCity = players && currentTurn && players[currentTurn].currentCity;
+  const neighbors = currentTurn && cities[currentCity].neighbors;
   return {
     currentTurn,
     neighbors,
-    cities
+    cities,
+    currentCity
   };
 };
 
-const setCityResearchStation = (firestore, currentTurn, cities) => {
-  Promise.all([currentTurn && currentTurn.get(), firestore.get(`games/${doc}`)])
-    .then(([player, game]) => {
-      const currentCity = player.data().currentCity;
+const movePlayer = (firestore, currentTurn, neighbors) => {
+  firestore.get(`games/${doc}`)
+    .then(game => {
+      game.ref.collection('players').doc(`${currentTurn}`).update({ currentCity: neighbors[Math.floor(Math.random() * neighbors.length)] });
+    })
+    .catch(err => console.log(err));
+};
+
+const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
+  firestore.get(`games/${doc}`)
+    .then(game => {
       const currentCityRef = game.ref.collection('cities').doc(currentCity);
       const currentResearchStation = cities[currentCity].researchStation;
       let remainingResearchStations = game.data().remainingResearchStations;

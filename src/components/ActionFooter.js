@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { doc } from './App';
+import { ChoosePlayerModal } from './index';
 
 const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }) => {
   return (
@@ -20,25 +21,11 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
-        <Modal trigger={
+        <ChoosePlayerModal NewButton={
           <Button className="action-button share-button">
             <Icon className="share-icon action-icon" name="gift" size="big" />
             <div className="share-text action-text">Share</div>
-          </Button>
-        } >
-          <Header icon='archive' content='Archive Old Messages' />
-          <Modal.Content>
-            <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button basic color='red' inverted>
-              <Icon name='remove' /> No
-            </Button>
-            <Button color='green' inverted>
-              <Icon name='checkmark' /> Yes
-            </Button>
-          </Modal.Actions>
-        </Modal>
+          </Button>} />
         <Button className="action-button treat-button">
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
           <div className="treat-text action-text">Treat</div>

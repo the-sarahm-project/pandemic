@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
-const ChoosePlayer = () => (
-  <Modal trigger={<Button>Basic Modal</Button>} basic size='small'>
+const ChoosePlayer = ({ NewButton, Action }) => (
+  <Modal trigger={NewButton} basic size='small'>
     <Header icon='archive' content='Archive Old Messages' />
     <Modal.Content>
       <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>

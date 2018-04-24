@@ -33,11 +33,6 @@ export const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPla
   else return playersInSameCity.filter(player => player[1].currentHand.find(card => card.id === currentCity));
 };
 
-export const shareKnowledgeDisabled = (playersInSameCity, currentCity, currentPlayer) => {
-  if (!playersInSameCity || !currentCity || !currentPlayer) return true;
-  return !playersInSameCity.length || (!currentPlayer.currentHand.find(card => card.id === currentCity) && !playersInSameCity.find(player => player[1].currentHand.find(card => card.id === currentCity)));
-};
-
 export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber) => {
   firestore.get(`games/${doc}`)
     .then(game => {

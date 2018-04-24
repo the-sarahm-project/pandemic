@@ -11,7 +11,7 @@ const CityMarkers = ({ cities }) => {
     isLoaded(cities) &&
     Object.keys(cities).map(city => (
       <div key={cities[city].coords}>
-        <Marker position={cities[city].coords} icon={iconContainer[cities[city].icon]} />
+        <Marker position={cities[city].coords} icon={iconContainer[cities[city].color]} />
         {cities[city].researchStation && <ResearchStation coords={cities[city].coords} />}
       </div>
     ))

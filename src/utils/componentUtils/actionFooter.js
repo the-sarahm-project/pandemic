@@ -18,17 +18,10 @@ export const setCityResearchStation = (firestore, currentTurn, cities, currentCi
   firestore.get(`games/${doc}`)
     .then(game => {
       const currentCityRef = game.ref.collection('cities').doc(currentCity);
-      const currentResearchStation = cities[currentCity].researchStation;
       let remainingResearchStations = game.data().remainingResearchStations;
-      if (!currentResearchStation && remainingResearchStations > 0) {
-        currentCityRef.update({ researchStation: true });
-        remainingResearchStations--;
-        game.ref.update({ remainingResearchStations });
-      } else if (currentResearchStation) {
-        console.log('There is already a research station at the current city');
-      } else {
-        console.log('No more research stations to place');
-      }
+      currentCityRef.update({ researchStation: true });
+      remainingResearchStations--;
+      game.ref.update({ remainingResearchStations });
     })
     .catch(err => console.log(err));
 };

@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal } from './index';
-import { doc, movePlayer, setCityResearchStation, shareKnowledgeDisabled, shareKnowledge } from './utils';
+import { doc, movePlayer, setCityResearchStation, shareKnowledgeDisabled, shareKnowledge } from '../utils';
 
 const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, playersInSameCity, currentPlayer }) => {
   return (

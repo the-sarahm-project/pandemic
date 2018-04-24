@@ -1,15 +1,6 @@
 import React from 'react';
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react';
-
-const playerImage = {
-  'Contingency Planner': 'assets/images/cont_planner.png',
-  Dispatcher: 'assets/images/dispatcher.png',
-  Medic: 'assets/images/medic.png',
-  'Operations Expert': 'assets/images/ops_expert.png',
-  'Quarantine Specialist': 'assets/images/quar_spec.png',
-  Researcher: 'assets/images/researcher.png',
-  Scientist: 'assets/images/scientist.png'
-};
+import { playerImage } from '../utils';
 
 class ChoosePlayer extends React.Component {
   constructor(props) {

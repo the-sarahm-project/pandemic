@@ -4,7 +4,7 @@ import { Marker } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc } from './utils';
+import { doc } from '../utils';
 
 const PlayerIcon = L.Icon.extend({
   options: {

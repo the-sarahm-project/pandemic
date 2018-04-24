@@ -3,7 +3,7 @@ import { Container, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc } from './utils';
+import { doc } from '../utils';
 
 const GameHeader = ({ game, playerDeck }) => {
   return (

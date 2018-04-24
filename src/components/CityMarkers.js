@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { ResearchStation } from './index';
-import { doc } from './utils';
+import { doc } from '../utils';
 
 const Icon = L.Icon.extend({
   options: {

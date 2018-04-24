@@ -22,12 +22,12 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, 
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
-        <ChoosePlayerModal
+        <ChoosePlayerModal className="action-button share-button"
           NewButton={
-            <Button className="action-button share-button">
+            <div >
               <Icon className="share-icon action-icon" name="gift" size="big" />
               <div className="share-text action-text">Share</div>
-            </Button>}
+            </div>}
           players={playersInSameCity} />
         <Button className="action-button treat-button">
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
@@ -48,12 +48,9 @@ const mapStateToProps = (state) => {
   const cities = game && game.cities;
   const players = game && game.players;
   const currentCity = players && currentTurn && players[currentTurn].currentCity;
-  const playersInSameCity = players && Object.entries(players).reduce((players, player) => {
-    if (player[1].currentCity === currentCity && Number(player[0]) !== currentTurn) {
-      players.push(player[1]);
-    }
-    return players;
-  }, []);
+  const playersInSameCity = players && Object.entries(players).filter(player =>
+    player[1].currentCity === currentCity && Number(player[0]) !== currentTurn
+  );
   const neighbors = currentTurn && cities[currentCity].neighbors;
   return {
     currentTurn,

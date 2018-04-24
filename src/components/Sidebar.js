@@ -4,7 +4,7 @@ import PlayerMenu from './PlayerMenu';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { doc } from './App';
+import { doc } from './utils';
 
 const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
   return (

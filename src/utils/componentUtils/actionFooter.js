@@ -29,7 +29,7 @@ export const setCityResearchStation = (firestore, currentTurn, cities, currentCi
 
 export const shareKnowledgeDisabled = (playersInSameCity, currentCity, currentPlayer) => {
   if (!playersInSameCity || !currentCity || !currentPlayer) return true;
-  return !playersInSameCity.length || !currentPlayer.currentHand.some(card => card.id === currentCity) && !playersInSameCity.some(player => player[1].currentHand.some(card => card.id === currentCity));
+  return !playersInSameCity.length || (!currentPlayer.currentHand.some(card => card.id === currentCity) && !playersInSameCity.some(player => player[1].currentHand.some(card => card.id === currentCity)));
 };
 
 export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber) => {

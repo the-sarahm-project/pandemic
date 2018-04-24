@@ -1,8 +1,7 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import { CityLines, PlayerHand, GameHeader, CityMarkers, PlayerMarkers } from './index';
-
-const darkTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
+import { darkTiles } from '../utils';
 
 const Board = () => {
   const center = [0, 0];

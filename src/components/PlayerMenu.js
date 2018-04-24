@@ -1,16 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import CurrentHandMenu from './CurrentHandMenu';
-
-const playerColors = {
-  'Contingency Planner': 'teal',
-  Dispatcher: 'purple',
-  Medic: 'orange',
-  'Operations Expert': 'olive',
-  'Quarantine Specialist': 'green',
-  Researcher: 'brown',
-  Scientist: 'grey',
-};
+import { playerColors } from '../utils';
 
 //this is each player's information on the sidebar
 const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) => {

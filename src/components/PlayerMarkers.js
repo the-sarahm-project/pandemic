@@ -1,26 +1,9 @@
 import React from 'react';
-import L from 'leaflet';
 import { Marker } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc } from '../utils';
-
-const PlayerIcon = L.Icon.extend({
-  options: {
-    iconSize: [50, 50]
-  }
-});
-
-const playerIconContainer = {
-  'Contingency Planner': new PlayerIcon({ iconUrl: 'assets/images/cont_planner.png' }),
-  Dispatcher: new PlayerIcon({ iconUrl: 'assets/images/dispatcher.png' }),
-  Medic: new PlayerIcon({ iconUrl: 'assets/images/medic.png' }),
-  'Operations Expert': new PlayerIcon({ iconUrl: 'assets/images/ops_expert.png' }),
-  'Quarantine Specialist': new PlayerIcon({ iconUrl: 'assets/images/quar_spec.png' }),
-  Researcher: new PlayerIcon({ iconUrl: 'assets/images/researcher.png' }),
-  Scientist: new PlayerIcon({ iconUrl: 'assets/images/scientist.png' }),
-};
+import { doc, playerIconContainer } from '../utils';
 
 const PlayerMarkers = ({ cities, players }) => {
   return (

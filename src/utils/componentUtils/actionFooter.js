@@ -37,14 +37,24 @@ export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber
   firestore.get(`games/${doc}`)
     .then(game => {
       const players = game.ref.collection('players');
-      const currentCityRef = game.ref.collection('cities').doc(currentCity);
+      const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCity);
       const currentPlayerRef = players.doc(`${currentTurn}`);
       const targetPlayerRef = players.doc(playerNumber);
       return Promise.all([currentPlayerRef.get(), targetPlayerRef.get(), currentCityRef.get()]);
     })
     .then(([currentPlayerSnapshot, targetPlayerSnapshot, currentCitySnapshot]) => {
-      const newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
-      const newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
+      let newCurrentHand;
+      let newTargetHand;
+      // city card is in current player's hand
+      if (currentPlayerSnapshot.data().currentHand.find(card => card.id === currentCity)) {
+        newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
+        newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
+      }
+      // city card is in another player's hand
+      else {
+        newCurrentHand = currentPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
+        newTargetHand = targetPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
+      }
       currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
       targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
     })

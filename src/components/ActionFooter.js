@@ -2,12 +2,11 @@ import React from 'react';
 import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal } from './index';
 import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge } from '../utils';
 
 const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, sharePlayers }) => {
-  console.log(sharePlayers);
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">

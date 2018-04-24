@@ -9,6 +9,9 @@ export const drawNeighborLines = (lines, boundaryCities) => {
     if (boundaryCities.includes(cityKey)) continue;
     visitedCities[cityKey] = true;
     for (let neighbor of city.neighbors) {
+      if (city.name === 'Manila') {
+        console.log(neighbor);
+      }
       if (visitedCities[neighbor]) continue; //prevent double lines
       let cityA = new L.LatLng(...city.coords);
       let cityB = new L.LatLng(...cities[neighbor].coords);
@@ -17,7 +20,7 @@ export const drawNeighborLines = (lines, boundaryCities) => {
       );
     }
   }
-}
+};
 
 //Draw lines that should go beyond east/western boundary rather than across the continents
 export const drawBoundaryLines = (lines, cities, boundaryCities) => {
@@ -38,6 +41,8 @@ export const drawBoundaryLines = (lines, cities, boundaryCities) => {
     <Polyline positions={[cityCoords['SanFrancisco'], newCityCoords['Manila']]} key={[...cities['SanFrancisco'].coords, ...cities['Manila'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['Tokyo'], newCityCoords['SanFrancisco']]} key={[...cities['Tokyo'].coords, ...cities['SanFrancisco'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['Manila'], newCityCoords['SanFrancisco']]} key={[...cities['Manila'].coords, ...cities['SanFrancisco'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
+    <Polyline positions={[cityCoords['Manila'], cityCoords['Sydney']]} key={[...cities['Manila'].coords, ...cities['Sydney'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
+    <Polyline positions={[cityCoords['LosAngeles'], cityCoords['SanFrancisco']]} key={[...cities['LosAngeles'].coords, ...cities['SanFrancisco'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
   ]);
   return lines;
 };

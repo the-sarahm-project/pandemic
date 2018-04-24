@@ -6,8 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { doc } from './App';
 import { ChoosePlayerModal } from './index';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, playersInSameCity }) => {
-  console.log(playersInSameCity);
+const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, playersInSameCity, currentPlayer }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -22,14 +21,20 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, 
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
-        <ChoosePlayerModal className="action-button share-button"
-          NewButton={
-            <div >
+        <ChoosePlayerModal
+          ModalTrigger={(
+            <Button
+              className="action-button share-button"
+              disabled={shareKnowledgeDisabled(playersInSameCity, currentCity, currentPlayer)}
+            >
               <Icon className="share-icon action-icon" name="gift" size="big" />
               <div className="share-text action-text">Share</div>
-            </div>}
-          players={playersInSameCity} />
-        <Button className="action-button treat-button">
+            </Button>)}
+          players={playersInSameCity}
+          action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
+          disabled={shareKnowledgeDisabled.bind(this, playersInSameCity, currentCity, currentPlayer)}
+        />
+        <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
           <div className="treat-text action-text">Treat</div>
         </Button>
@@ -47,6 +52,7 @@ const mapStateToProps = (state) => {
   const currentTurn = game && game.currentTurn;
   const cities = game && game.cities;
   const players = game && game.players;
+  const currentPlayer = players && players[currentTurn];
   const currentCity = players && currentTurn && players[currentTurn].currentCity;
   const playersInSameCity = players && Object.entries(players).filter(player =>
     player[1].currentCity === currentCity && Number(player[0]) !== currentTurn
@@ -57,7 +63,8 @@ const mapStateToProps = (state) => {
     neighbors,
     cities,
     currentCity,
-    playersInSameCity
+    playersInSameCity,
+    currentPlayer
   };
 };
 
@@ -88,9 +95,28 @@ const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => 
     .catch(err => console.log(err));
 };
 
-// const shareKnowledge = (firestore, currentCity, currentTurn) => {
+const shareKnowledgeDisabled = (playersInSameCity, currentCity, currentPlayer) => {
+  if (!playersInSameCity || !currentCity || !currentPlayer) return true;
+  return !playersInSameCity.length || !currentPlayer.currentHand.some(card => card.id === currentCity);
+};
 
-// }
+const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber) => {
+  firestore.get(`games/${doc}`)
+    .then(game => {
+      const players = game.ref.collection('players');
+      const currentCityRef = game.ref.collection('cities').doc(currentCity);
+      const currentPlayerRef = players.doc(`${currentTurn}`);
+      const targetPlayerRef = players.doc(playerNumber);
+      return Promise.all([currentPlayerRef.get(), targetPlayerRef.get(), currentCityRef.get()]);
+    })
+    .then(([currentPlayerSnapshot, targetPlayerSnapshot, currentCitySnapshot]) => {
+      const newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
+      const newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
+      currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
+      targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
+    })
+    .catch(err => console.log(err));
+};
 
 export default compose(
   firestoreConnect(),

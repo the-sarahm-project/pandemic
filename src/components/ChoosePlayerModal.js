@@ -23,10 +23,10 @@ class ChoosePlayer extends React.Component {
   }
 
   render() {
-    const { NewButton, players, action } = this.props;
+    const { ModalTrigger, players, action, disabled } = this.props;
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}>{NewButton}</Button>}
+        trigger={<div onClick={() => !disabled() && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose a Player' />
@@ -76,10 +76,21 @@ class ChoosePlayer extends React.Component {
             </Button.Group>}
         </Modal.Content>
         <Modal.Actions>
-          <Button color='red' inverted onClick={this.handleClose}>
+          <Button
+            color='red'
+            inverted
+            onClick={this.handleClose}
+          >
             <Icon name='remove' /> Cancel
           </Button>
-          <Button color='green' inverted onClick={() => action(this.state.selected)}>
+          <Button
+            color='green'
+            inverted
+            onClick={() => {
+              action.call(this, this.state.selected);
+              this.handleClose();
+            }}
+          >
             <Icon name='checkmark' /> Select
           </Button>
         </Modal.Actions>

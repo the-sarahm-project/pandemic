@@ -4,9 +4,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal } from './index';
-import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge } from '../utils';
+import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../utils';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, sharePlayers }) => {
+const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCityId, sharePlayers, buildDisabled }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -17,7 +17,7 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, 
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" onClick={() => setCityResearchStation(firestore, currentTurn, cities, currentCity)}>
+        <Button className="action-button build-button" disabled={buildDisabled} onClick={() => setCityResearchStation(firestore, currentTurn, cities, currentCityId)}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
@@ -31,7 +31,7 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, 
               <div className="share-text action-text">Share</div>
             </Button>)}
           players={sharePlayers}
-          action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
+          action={shareKnowledge.bind(this, firestore, currentTurn, currentCityId)}
         />
         <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
@@ -52,23 +52,24 @@ const mapStateToProps = (state) => {
   const cities = game && game.cities;
   const players = game && game.players;
   const currentPlayer = players && players[currentTurn];
-  const currentCity = players && currentTurn && players[currentTurn].currentCity;
+  const currentCityId = players && currentTurn && players[currentTurn].currentCity;
   const playersInSameCity = players && Object.entries(players).filter(player =>
-    player[1].currentCity === currentCity && Number(player[0]) !== currentTurn
+    player[1].currentCity === currentCityId && Number(player[0]) !== currentTurn
   );
-  const neighbors = currentTurn && cities[currentCity].neighbors;
-  const sharePlayers = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+  const neighbors = currentTurn && cities[currentCityId].neighbors;
+  const sharePlayers = shareKnowledgePlayers(playersInSameCity, currentCityId, currentPlayer);
   const remainingResearchStations = game && game.remainingResearchStations;
   const currentHand = currentPlayer && currentPlayer.currentHand;
   const unusedCityCards = game && game.unusedCityCards;
-  console.log(unusedCityCards);
-  // const buildDisabled =
+  const currentCity = cities && cities[currentCityId];
+  const buildDisabled = researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
   return {
     currentTurn,
     neighbors,
     cities,
-    currentCity,
-    sharePlayers
+    currentCityId,
+    sharePlayers,
+    buildDisabled
   };
 };
 

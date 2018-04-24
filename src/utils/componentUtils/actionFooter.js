@@ -8,10 +8,11 @@ export const movePlayer = (firestore, currentTurn, neighbors) => {
     .catch(err => console.log(err));
 };
 
-// export const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
-//   currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color)
-//   return numResearchStations <= 0 || currentCity.researchStation ||
-// };
+export const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
+  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color).length;
+  const researchStation = currentCity && currentCity.researchStation;
+  return numResearchStations <= 0 || researchStation || enoughCards < 5;
+};
 
 export const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
   firestore.get(`games/${doc}`)

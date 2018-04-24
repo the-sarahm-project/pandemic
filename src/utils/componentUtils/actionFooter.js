@@ -1,4 +1,4 @@
-import { doc } from './index';
+import { doc } from '../index';
 
 export const movePlayer = (firestore, currentTurn, neighbors) => {
   firestore.get(`games/${doc}`)
@@ -7,6 +7,11 @@ export const movePlayer = (firestore, currentTurn, neighbors) => {
     })
     .catch(err => console.log(err));
 };
+
+// export const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
+//   currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color)
+//   return numResearchStations <= 0 || currentCity.researchStation ||
+// };
 
 export const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
   firestore.get(`games/${doc}`)
@@ -21,7 +26,7 @@ export const setCityResearchStation = (firestore, currentTurn, cities, currentCi
       } else if (currentResearchStation) {
         console.log('There is already a research station at the current city');
       } else {
-        console.log('You lose because no more research stations');
+        console.log('No more research stations to place');
       }
     })
     .catch(err => console.log(err));

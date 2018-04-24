@@ -58,6 +58,11 @@ const mapStateToProps = (state) => {
   );
   const neighbors = currentTurn && cities[currentCity].neighbors;
   const sharePlayers = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+  const remainingResearchStations = game && game.remainingResearchStations;
+  const currentHand = currentPlayer && currentPlayer.currentHand;
+  const unusedCityCards = game && game.unusedCityCards;
+  console.log(unusedCityCards);
+  // const buildDisabled =
   return {
     currentTurn,
     neighbors,

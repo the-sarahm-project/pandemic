@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react';
-import { playerImage } from '../utils';
 
 class ChooseCardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null,
+      selected: [],
       modalOpen: false
     };
     this.handleOpen = () => this.setState({ modalOpen: true });
@@ -14,26 +13,26 @@ class ChooseCardModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, players, action } = this.props;
+    const { ModalTrigger, cards, action } = this.props;
     return (
       <Modal
-        trigger={<div onClick={() => players.length && this.handleOpen()}>{ModalTrigger}</div>}
+        trigger={<div onClick={() => cards.length && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
-        <Header icon='users' content='Choose a Player' />
+        <Header icon='users' content='Choose Cards' />
         <Modal.Content
           image
           style={{
             justifyContent: 'space-around'
           }}
         >
-          {players && players.length &&
-            <Button.Group widths={players.length}>
-              {players.map(player => (
+          {cards && cards.length &&
+            <Button.Group widths={cards.length}>
+              {cards.map(card => (
                 <Button
-                  value={player[0]}
+                  value={card[0]}
                   toggle
-                  key={player[0]}
+                  key={card[0]}
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -47,7 +46,7 @@ class ChooseCardModal extends React.Component {
                     <Image
                       wrapped
                       size='small'
-                      src={playerImage[player[1].role]}
+                      src={`../../public/assets/${card.id}`}
                       style={{ width: 'auto' }}
                     />
                     <div
@@ -59,7 +58,7 @@ class ChooseCardModal extends React.Component {
                       }}
                     >
                       <div>Name</div>
-                      <div>{player[1].role}</div>
+                      <div>{card[1].role}</div>
                     </div>
                   </div>
                 </Button>

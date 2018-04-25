@@ -62,13 +62,13 @@ export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber
       let newTargetHand;
       // city card is in current player's hand
       if (currentPlayerSnapshot.data().currentHand.find(card => card.id === currentCity)) {
-        newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
+        newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity.name);
         newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
       }
       // city card is in another player's hand
       else {
         newCurrentHand = currentPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
-        newTargetHand = targetPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity);
+        newTargetHand = targetPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity.name);
       }
       currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
       targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});

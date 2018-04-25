@@ -77,7 +77,7 @@ class ChooseCardModal extends React.Component {
             color='green'
             inverted
             onClick={() => {
-              action.call(this, this.state.selected);
+              action(this.state.selected);
               this.handleClose();
             }}
           >

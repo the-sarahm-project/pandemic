@@ -1,4 +1,4 @@
-import { doc } from './index';
+import { doc } from '../index';
 
 export const movePlayer = (firestore, currentTurn, neighbors) => {
   firestore.get(`games/${doc}`)
@@ -8,21 +8,20 @@ export const movePlayer = (firestore, currentTurn, neighbors) => {
     .catch(err => console.log(err));
 };
 
+export const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
+  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color).length;
+  const researchStation = currentCity && currentCity.researchStation;
+  return numResearchStations <= 0 || researchStation || enoughCards < 5;
+};
+
 export const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
   firestore.get(`games/${doc}`)
     .then(game => {
       const currentCityRef = game.ref.collection('cities').doc(currentCity);
-      const currentResearchStation = cities[currentCity].researchStation;
       let remainingResearchStations = game.data().remainingResearchStations;
-      if (!currentResearchStation && remainingResearchStations > 0) {
-        currentCityRef.update({ researchStation: true });
-        remainingResearchStations--;
-        game.ref.update({ remainingResearchStations });
-      } else if (currentResearchStation) {
-        console.log('There is already a research station at the current city');
-      } else {
-        console.log('You lose because no more research stations');
-      }
+      currentCityRef.update({ researchStation: true });
+      remainingResearchStations--;
+      game.ref.update({ remainingResearchStations });
     })
     .catch(err => console.log(err));
 };

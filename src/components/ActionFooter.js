@@ -28,6 +28,7 @@ const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDi
               <div className="build-text action-text">Build</div>
             </Button>
           )}
+          disabled={buildDisabled}
           cards={sameColorCityCards}
           action={setCityResearchStation.bind(this, firestore, currentTurn, currentCity, unusedCityCards)}
         />

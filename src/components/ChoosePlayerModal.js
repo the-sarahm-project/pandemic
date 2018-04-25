@@ -14,10 +14,10 @@ class ChoosePlayer extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, players, action, disabled } = this.props;
+    const { ModalTrigger, players, action } = this.props;
     return (
       <Modal
-        trigger={<div onClick={() => !disabled() && this.handleOpen()}>{ModalTrigger}</div>}
+        trigger={<div onClick={() => players.length && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose a Player' />

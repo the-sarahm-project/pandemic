@@ -4,9 +4,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal } from './index';
-import { doc, movePlayer, setCityResearchStation, shareKnowledgeDisabled, shareKnowledge } from '../utils';
+import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge } from '../utils';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, playersInSameCity, currentPlayer }) => {
+const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, sharePlayers }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -25,14 +25,13 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity, 
           ModalTrigger={(
             <Button
               className="action-button share-button"
-              disabled={shareKnowledgeDisabled(playersInSameCity, currentCity, currentPlayer)}
+              disabled={sharePlayers && !sharePlayers.length}
             >
               <Icon className="share-icon action-icon" name="gift" size="big" />
               <div className="share-text action-text">Share</div>
             </Button>)}
-          players={playersInSameCity}
+          players={sharePlayers}
           action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
-          disabled={shareKnowledgeDisabled.bind(this, playersInSameCity, currentCity, currentPlayer)}
         />
         <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
@@ -58,13 +57,13 @@ const mapStateToProps = (state) => {
     player[1].currentCity === currentCity && Number(player[0]) !== currentTurn
   );
   const neighbors = currentTurn && cities[currentCity].neighbors;
+  const sharePlayers = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
   return {
     currentTurn,
     neighbors,
     cities,
     currentCity,
-    playersInSameCity,
-    currentPlayer
+    sharePlayers
   };
 };
 

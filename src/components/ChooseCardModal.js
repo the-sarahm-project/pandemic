@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react';
 import { playerImage } from '../utils';
 
-class ChoosePlayerModal extends React.Component {
+class ChooseCardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,4 +90,4 @@ class ChoosePlayerModal extends React.Component {
   }
 }
 
-export default ChoosePlayerModal;
+export default ChooseCardModal;

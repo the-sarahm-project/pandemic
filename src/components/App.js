@@ -3,10 +3,9 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
 import { Sidebar, Board, ActionFooter } from './index';
+import { doc } from '../utils';
 // import { db } from '../store';
 // import { init, collections, setupLogic } from '../utils';
-
-export const doc = 'DGtOTuQcZfamL6ZvJjTn';
 
 class App extends Component {
   componentDidMount() {

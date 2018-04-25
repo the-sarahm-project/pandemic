@@ -3,7 +3,7 @@ import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc } from './App';
+import { doc } from '../utils';
 
 const PlayerHand = ({ game, currentHand, eventCards } ) => {
   return (
@@ -12,7 +12,7 @@ const PlayerHand = ({ game, currentHand, eventCards } ) => {
       {
         currentHand.map(cardRef => {
           const playerCard = cardRef.id;
-          const src = eventCards[playerCard] ? `assets/eventCards/${playerCard}.png` : `assets/cityCards/${playerCard}.png`;
+          const src = `assets/images/${playerCard}.png`;
           return <Image key={playerCard} className="hand-card" src={src} size="small" />;
         })
       }

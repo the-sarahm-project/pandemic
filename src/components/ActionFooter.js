@@ -3,9 +3,10 @@ import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { doc } from './App';
+import { ChoosePlayerModal, ChooseCardModal } from './index';
+import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../utils';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }) => {
+const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -16,15 +17,35 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCity }
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" onClick={() => setCityResearchStation(firestore, currentTurn, cities, currentCity)}>
-          <Icon className="building-icon action-icon" name="building" size="big" />
-          <div className="build-text action-text">Build</div>
-        </Button>
-        <Button className="action-button share-button">
-          <Icon className="share-icon action-icon" name="gift" size="big" />
-          <div className="share-text action-text">Share</div>
-        </Button>
-        <Button className="action-button treat-button">
+        <ChooseCardModal
+          ModalTrigger={(
+            <Button
+              className="action-button build-button"
+              disabled={buildDisabled}
+              style={{height: '100%'}}
+            >
+              <Icon className="building-icon action-icon" name="building" size="big" />
+              <div className="build-text action-text">Build</div>
+            </Button>
+          )}
+          disabled={buildDisabled}
+          cards={sameColorCityCards}
+          action={setCityResearchStation.bind(this, firestore, currentTurn, currentCity, unusedCityCards)}
+        />
+        <ChoosePlayerModal
+          ModalTrigger={(
+            <Button
+              className="action-button share-button"
+              disabled={shareDisabled}
+            >
+              <Icon className="share-icon action-icon" name="gift" size="big" />
+              <div className="share-text action-text">Share</div>
+            </Button>)}
+          disabled={shareDisabled}
+          players={sharePlayers}
+          action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
+        />
+        <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
           <div className="treat-text action-text">Treat</div>
         </Button>
@@ -42,41 +63,30 @@ const mapStateToProps = (state) => {
   const currentTurn = game && game.currentTurn;
   const cities = game && game.cities;
   const players = game && game.players;
-  const currentCity = players && currentTurn && players[currentTurn].currentCity;
-  const neighbors = currentTurn && cities[currentCity].neighbors;
+  const currentPlayer = players && players[currentTurn];
+  const currentCityId = players && currentTurn && players[currentTurn].currentCity;
+  const playersInSameCity = players && Object.entries(players).filter(player =>
+    player[1].currentCity === currentCityId && Number(player[0]) !== currentTurn
+  );
+  const neighbors = currentTurn && cities[currentCityId].neighbors;
+  const sharePlayers = shareKnowledgePlayers(playersInSameCity, currentCityId, currentPlayer);
+  const remainingResearchStations = game && game.remainingResearchStations;
+  const currentHand = currentPlayer && currentPlayer.currentHand;
+  const unusedCityCards = game && game.unusedCityCards;
+  const currentCity = cities && cities[currentCityId];
+  const buildDisabled = researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
+  const shareDisabled = sharePlayers && !sharePlayers.length;
+  const sameColorCityCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color );
   return {
     currentTurn,
     neighbors,
-    cities,
-    currentCity
+    sharePlayers,
+    buildDisabled,
+    currentCity,
+    unusedCityCards,
+    sameColorCityCards,
+    shareDisabled
   };
-};
-
-const movePlayer = (firestore, currentTurn, neighbors) => {
-  firestore.get(`games/${doc}`)
-    .then(game => {
-      game.ref.collection('players').doc(`${currentTurn}`).update({ currentCity: neighbors[Math.floor(Math.random() * neighbors.length)] });
-    })
-    .catch(err => console.log(err));
-};
-
-const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
-  firestore.get(`games/${doc}`)
-    .then(game => {
-      const currentCityRef = game.ref.collection('cities').doc(currentCity);
-      const currentResearchStation = cities[currentCity].researchStation;
-      let remainingResearchStations = game.data().remainingResearchStations;
-      if (!currentResearchStation && remainingResearchStations > 0) {
-        currentCityRef.update({ researchStation: true });
-        remainingResearchStations--;
-        game.ref.update({ remainingResearchStations });
-      } else if (currentResearchStation) {
-        console.log('There is already a research station at the current city');
-      } else {
-        console.log('You lose because no more research stations');
-      }
-    })
-    .catch(err => console.log(err));
 };
 
 export default compose(

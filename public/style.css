@@ -44,6 +44,10 @@ img.ui.small.image.hand-card {
   padding-top: .5em;
 }
 
+button.ui.button.action-button.share-button {
+  height: 100%;
+}
+
 /* Game Header */
 .ui.container.game-header {
   display: flex;

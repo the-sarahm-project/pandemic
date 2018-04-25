@@ -14,7 +14,7 @@ export const researchStationButtonDisabled = (numResearchStations, currentCity, 
   return numResearchStations <= 0 || researchStation || enoughCards < 5;
 };
 
-export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards) => {
+export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cities) => {
   firestore.get(`games/${doc}`)
     .then(game => {
       const currentCityId = currentCity.name.split(' ').join('');
@@ -61,7 +61,7 @@ export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber
       let newCurrentHand;
       let newTargetHand;
       // city card is in current player's hand
-      if (currentPlayerSnapshot.data().currentHand.find(card => card.id === currentCity)) {
+      if (currentPlayerSnapshot.data().currentHand.find(card => card.id === currentCity.name)) {
         newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity.name);
         newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
       }

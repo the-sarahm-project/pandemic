@@ -3,10 +3,10 @@ import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ChoosePlayerModal } from './index';
+import { ChoosePlayerModal, ChooseCardModal } from './index';
 import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../utils';
 
-const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards }) => {
+const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -17,19 +17,30 @@ const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDi
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" disabled={buildDisabled} onClick={() => setCityResearchStation(firestore, currentTurn, currentCity, unusedCityCards)}>
-          <Icon className="building-icon action-icon" name="building" size="big" />
-          <div className="build-text action-text">Build</div>
-        </Button>
+        <ChooseCardModal
+          ModalTrigger={(
+            <Button
+              className="action-button build-button"
+              disabled={buildDisabled}
+              style={{height: '100%'}}
+            >
+              <Icon className="building-icon action-icon" name="building" size="big" />
+              <div className="build-text action-text">Build</div>
+            </Button>
+          )}
+          cards={sameColorCityCards}
+          action={setCityResearchStation.bind(this, firestore, currentTurn, currentCity, unusedCityCards)}
+        />
         <ChoosePlayerModal
           ModalTrigger={(
             <Button
               className="action-button share-button"
-              disabled={sharePlayers && !sharePlayers.length}
+              disabled={shareDisabled}
             >
               <Icon className="share-icon action-icon" name="gift" size="big" />
               <div className="share-text action-text">Share</div>
             </Button>)}
+          disabled={shareDisabled}
           players={sharePlayers}
           action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
         />
@@ -63,13 +74,17 @@ const mapStateToProps = (state) => {
   const unusedCityCards = game && game.unusedCityCards;
   const currentCity = cities && cities[currentCityId];
   const buildDisabled = researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
+  const shareDisabled = sharePlayers && !sharePlayers.length;
+  const sameColorCityCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color );
   return {
     currentTurn,
     neighbors,
     sharePlayers,
     buildDisabled,
     currentCity,
-    unusedCityCards
+    unusedCityCards,
+    sameColorCityCards,
+    shareDisabled
   };
 };
 

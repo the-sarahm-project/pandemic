@@ -13,10 +13,10 @@ class ChooseCardModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, cards, action } = this.props;
+    const { ModalTrigger, cards, action, disabled } = this.props;
     return (
       <Modal
-        trigger={<div onClick={() => cards.length && this.handleOpen()}>{ModalTrigger}</div>}
+        trigger={<div onClick={() => disabled && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose Cards' />
@@ -32,7 +32,7 @@ class ChooseCardModal extends React.Component {
                 <Button
                   value={card[0]}
                   toggle
-                  key={card[0]}
+                  key={card.id}
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -49,17 +49,6 @@ class ChooseCardModal extends React.Component {
                       src={`../../public/assets/${card.id}`}
                       style={{ width: 'auto' }}
                     />
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start'
-                      }}
-                    >
-                      <div>Name</div>
-                      <div>{card[1].role}</div>
-                    </div>
                   </div>
                 </Button>
               ))}

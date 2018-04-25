@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react';
-import { playerImage } from '../utils';
 
-class ChoosePlayerModal extends React.Component {
+class ChooseCardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null,
+      active: {},
+      selected: [],
       modalOpen: false
     };
     this.handleOpen = () => this.setState({ modalOpen: true });
@@ -14,53 +14,50 @@ class ChoosePlayerModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, players, action, disabled } = this.props;
+    const { ModalTrigger, cards, action, disabled } = this.props;
     return (
       <Modal
         trigger={<div onClick={() => !disabled && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
-        <Header icon='users' content='Choose a Player' />
+        <Header icon='users' content='Choose Cards' />
         <Modal.Content
           image
           style={{
             justifyContent: 'space-around'
           }}
         >
-          {players && players.length &&
-            <Button.Group widths={players.length}>
-              {players.map(player => (
+          {cards && cards.length &&
+            <Button.Group widths={cards.length}>
+              {cards.map(card => (
                 <Button
-                  value={player[0]}
+                  active={this.state.active[card.id]}
+                  value={card.id}
                   toggle
-                  key={player[0]}
+                  key={card.id}
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    borderStyle: 'solid',
-                    borderColor: 'black',
-                    borderRadius: '10px'
                   }}
-                  onClick={event => this.setState({ selected: event.currentTarget.value })}
+                  onClick={event => {
+                    const cardId = event.currentTarget.value;
+                    this.setState(prevState => {
+                      const selected = !prevState.active[cardId] ? [...prevState.selected, card] : prevState.selected.filter(card => card.id !== cardId);
+                      const active = {...prevState.active, [cardId]: !prevState.active[cardId]};
+                      return {
+                        selected,
+                        active
+                      };
+                    });
+                  }}
                 >
                   <div style={{ display: 'flex' }}>
                     <Image
                       wrapped
                       size='small'
-                      src={playerImage[player[1].role]}
+                      src={`assets/images/${card.id}.png`}
                       style={{ width: 'auto' }}
                     />
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start'
-                      }}
-                    >
-                      <div>Name</div>
-                      <div>{player[1].role}</div>
-                    </div>
                   </div>
                 </Button>
               ))}
@@ -90,4 +87,4 @@ class ChoosePlayerModal extends React.Component {
   }
 }
 
-export default ChoosePlayerModal;
+export default ChooseCardModal;

@@ -12,7 +12,7 @@ const PlayerHand = ({ game, currentHand, eventCards } ) => {
       {
         currentHand.map(cardRef => {
           const playerCard = cardRef.id;
-          const src = eventCards[playerCard] ? `assets/eventCards/${playerCard}.png` : `assets/cityCards/${playerCard}.png`;
+          const src = `assets/images/${playerCard}.png`;
           return <Image key={playerCard} className="hand-card" src={src} size="small" />;
         })
       }

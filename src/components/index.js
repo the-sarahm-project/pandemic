@@ -8,3 +8,4 @@ export { default as GameHeader } from './GameHeader';
 export { default as CityMarkers } from './CityMarkers';
 export { default as PlayerMarkers } from './PlayerMarkers';
 export { default as ChoosePlayerModal } from './ChoosePlayerModal';
+export { default as ChooseCardModal } from './ChooseCardModal';

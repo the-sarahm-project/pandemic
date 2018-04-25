@@ -14,7 +14,11 @@ export const researchStationButtonDisabled = (numResearchStations, currentCity, 
   return numResearchStations <= 0 || researchStation || enoughCards < 5;
 };
 
-export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cities) => {
+export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
+  if (cardsToRemove.length < 5) {
+    console.log('Not enough cards selected');
+    return;
+  }
   firestore.get(`games/${doc}`)
     .then(game => {
       const currentCityId = currentCity.name.split(' ').join('');
@@ -31,7 +35,6 @@ export const setCityResearchStation = (firestore, currentTurn, currentCity, unus
       //update currentHand
       const currentHand = currentPlayerSnapshot.data().currentHand;
       const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
-      const cardsToRemove = currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color);
       currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
       //remove cards from unusedCityCards
       for (let card of cardsToRemove) {

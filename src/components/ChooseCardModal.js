@@ -5,6 +5,7 @@ class ChooseCardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      active: {},
       selected: [],
       modalOpen: false
     };
@@ -16,7 +17,7 @@ class ChooseCardModal extends React.Component {
     const { ModalTrigger, cards, action, disabled } = this.props;
     return (
       <Modal
-        trigger={<div onClick={() => disabled && this.handleOpen()}>{ModalTrigger}</div>}
+        trigger={<div onClick={() => !disabled && this.handleOpen()}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose Cards' />
@@ -30,23 +31,31 @@ class ChooseCardModal extends React.Component {
             <Button.Group widths={cards.length}>
               {cards.map(card => (
                 <Button
-                  value={card[0]}
+                  active={this.state.active[card.id]}
+                  value={card.id}
                   toggle
                   key={card.id}
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    borderStyle: 'solid',
-                    borderColor: 'black',
-                    borderRadius: '10px'
                   }}
-                  onClick={event => this.setState({ selected: event.currentTarget.value })}
+                  onClick={event => {
+                    const cardId = event.currentTarget.value;
+                    this.setState(prevState => {
+                      const selected = !prevState.active[cardId] ? [...prevState.selected, card] : prevState.selected.filter(card => card.id !== cardId);
+                      const active = {...prevState.active, [cardId]: !prevState.active[cardId]};
+                      return {
+                        selected,
+                        active
+                      };
+                    });
+                  }}
                 >
                   <div style={{ display: 'flex' }}>
                     <Image
                       wrapped
                       size='small'
-                      src={`../../public/assets/${card.id}`}
+                      src={`assets/images/${card.id}.png`}
                       style={{ width: 'auto' }}
                     />
                   </div>

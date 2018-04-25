@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
   const currentCity = cities && cities[currentCityId];
   const buildDisabled = researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
   const shareDisabled = sharePlayers && !sharePlayers.length;
-  const sameColorCityCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color );
+  const sameColorCityCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color );
   return {
     currentTurn,
     neighbors,

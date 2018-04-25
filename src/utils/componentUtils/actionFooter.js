@@ -20,14 +20,23 @@ export const setCityResearchStation = (firestore, currentTurn, currentCity, unus
       const currentCityId = currentCity.name.split(' ').join('');
       const currentCityRef = game.ref.collection('cities').doc(currentCityId);
       let remainingResearchStations = game.data().remainingResearchStations;
+      //build research station
       currentCityRef.update({ researchStation: true });
       remainingResearchStations--;
       game.ref.update({ remainingResearchStations });
-      return game.ref.collection('players').doc(`${currentTurn}`).get();
+      const currentTurnRef = game.ref.collection('players').doc(`${currentTurn}`);
+      return currentTurnRef.get();
     })
-    .then(currentPlayerSnapshot => {
-      const newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
+    .then((currentPlayerSnapshot) => {
+      //update currentHand
+      const currentHand = currentPlayerSnapshot.data().currentHand;
+      const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
+      const cardsToRemove = currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color);
       currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
+      //remove cards from unusedCityCards
+      for (let card of cardsToRemove) {
+        card.delete();
+      }
     })
     .catch(err => console.log(err));
 };

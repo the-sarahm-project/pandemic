@@ -21,6 +21,7 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) =
       </Menu.Item>
       <Menu.Item className="menu-player">
         {players[playerKey].currentHand.map(cardRef => {
+          console.log(cardRef);
           const { name, color } = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
           return (
             <CurrentHandMenu key={cardRef.id} name={name} color={color} />

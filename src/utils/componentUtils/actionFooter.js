@@ -14,14 +14,20 @@ export const researchStationButtonDisabled = (numResearchStations, currentCity, 
   return numResearchStations <= 0 || researchStation || enoughCards < 5;
 };
 
-export const setCityResearchStation = (firestore, currentTurn, cities, currentCity) => {
+export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards) => {
   firestore.get(`games/${doc}`)
     .then(game => {
-      const currentCityRef = game.ref.collection('cities').doc(currentCity);
+      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityRef = game.ref.collection('cities').doc(currentCityId);
       let remainingResearchStations = game.data().remainingResearchStations;
       currentCityRef.update({ researchStation: true });
       remainingResearchStations--;
       game.ref.update({ remainingResearchStations });
+      return game.ref.collection('players').doc(`${currentTurn}`).get();
+    })
+    .then(currentPlayerSnapshot => {
+      const newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
+      currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
     })
     .catch(err => console.log(err));
 };
@@ -36,7 +42,8 @@ export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber
   firestore.get(`games/${doc}`)
     .then(game => {
       const players = game.ref.collection('players');
-      const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCity);
+      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCityId);
       const currentPlayerRef = players.doc(`${currentTurn}`);
       const targetPlayerRef = players.doc(playerNumber);
       return Promise.all([currentPlayerRef.get(), targetPlayerRef.get(), currentCityRef.get()]);

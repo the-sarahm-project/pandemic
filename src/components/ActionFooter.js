@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal } from './index';
 import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../utils';
 
-const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCityId, sharePlayers, buildDisabled }) => {
+const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
@@ -17,7 +17,7 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCityId
           </div>
           <div className="move-text action-text">Move</div>
         </Button>
-        <Button className="action-button build-button" disabled={buildDisabled} onClick={() => setCityResearchStation(firestore, currentTurn, cities, currentCityId)}>
+        <Button className="action-button build-button" disabled={buildDisabled} onClick={() => setCityResearchStation(firestore, currentTurn, currentCity, unusedCityCards)}>
           <Icon className="building-icon action-icon" name="building" size="big" />
           <div className="build-text action-text">Build</div>
         </Button>
@@ -31,7 +31,7 @@ const ActionFooter = ({ currentTurn, neighbors, cities, firestore, currentCityId
               <div className="share-text action-text">Share</div>
             </Button>)}
           players={sharePlayers}
-          action={shareKnowledge.bind(this, firestore, currentTurn, currentCityId)}
+          action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
         />
         <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
@@ -66,10 +66,10 @@ const mapStateToProps = (state) => {
   return {
     currentTurn,
     neighbors,
-    cities,
-    currentCityId,
     sharePlayers,
-    buildDisabled
+    buildDisabled,
+    currentCity,
+    unusedCityCards
   };
 };
 

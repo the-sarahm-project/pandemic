@@ -3,8 +3,8 @@ import { Sidebar, Icon, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { ChoosePlayerModal, ChooseCardModal } from './index';
-import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../utils';
+import { ChoosePlayerModal, ChooseCardModal } from '../index';
+import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../../utils';
 
 const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
   return (

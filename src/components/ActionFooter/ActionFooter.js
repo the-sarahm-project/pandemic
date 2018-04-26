@@ -4,19 +4,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal, ChooseCardModal } from '../index';
-import { doc, movePlayer, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../../utils';
+import { doc, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../../utils';
+import { Move } from './index';
 
-const ActionFooter = ({ currentTurn, neighbors, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
+const ActionFooter = ({ currentTurn, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
   return (
     <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
       <div className="action-container">
-        <Button className="action-button move-button" onClick={() => movePlayer(firestore, currentTurn, neighbors)}>
-          <div className="move-icons">
-            <Icon className="car-icon action-icon" name="car" size="big" />/
-            <Icon className="plane-icon action-icon" name="plane" size="big" />
-          </div>
-          <div className="move-text action-text">Move</div>
-        </Button>
+        <Move />
         <ChooseCardModal
           ModalTrigger={(
             <Button

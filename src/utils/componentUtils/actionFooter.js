@@ -21,7 +21,7 @@ export const setCityResearchStation = (firestore, currentTurn, currentCity, unus
   }
   firestore.get(`games/${doc}`)
     .then(game => {
-      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityId = currentCity.id;
       const currentCityRef = game.ref.collection('cities').doc(currentCityId);
       let remainingResearchStations = game.data().remainingResearchStations;
       //build research station
@@ -54,7 +54,7 @@ export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber
   firestore.get(`games/${doc}`)
     .then(game => {
       const players = game.ref.collection('players');
-      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityId = currentCity.id;
       const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCityId);
       const currentPlayerRef = players.doc(`${currentTurn}`);
       const targetPlayerRef = players.doc(playerNumber);

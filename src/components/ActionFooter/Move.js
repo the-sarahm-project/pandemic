@@ -17,20 +17,22 @@ const Move = ({ currentTurn, neighbors, firestore }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games[doc];
-  const currentTurn = game && game.currentTurn;
-  const cities = game && game.cities;
-  const players = game && game.players;
-  const currentCityId = players && currentTurn && players[currentTurn].currentCity;
-  const neighbors = currentTurn && cities[currentCityId].neighbors;
-  return {
-    currentTurn,
-    neighbors
-  };
-};
+export default Move;
 
-export default compose(
-  firestoreConnect(),
-  connect(mapStateToProps)
-)(Move);
+// const mapStateToProps = (state) => {
+//   const game = state.firestore.data.games && state.firestore.data.games[doc];
+//   const currentTurn = game && game.currentTurn;
+//   const cities = game && game.cities;
+//   const players = game && game.players;
+//   const currentCityId = players && currentTurn && players[currentTurn].currentCity;
+//   const neighbors = currentTurn && cities[currentCityId].neighbors;
+//   return {
+//     currentTurn,
+//     neighbors
+//   };
+// };
+
+// export default compose(
+//   firestoreConnect(),
+//   connect(mapStateToProps)
+// )(Move);

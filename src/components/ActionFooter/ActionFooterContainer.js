@@ -50,10 +50,10 @@ export const MoveContainer = compose(
   connect(mapStateToProps)
 )(Move);
 
-// export const ShareContainer = compose(
-//   firestoreConnect(),
-//   connect(mapStateToProps)
-// )(Share);
+export const ShareContainer = compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Share);
 
 // export const TreatContainer = compose(
 //   firestoreConnect(),

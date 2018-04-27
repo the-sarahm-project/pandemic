@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ChoosePlayerModal, ChooseCardModal } from '../index';
 import { doc, setCityResearchStation, shareKnowledgePlayers, shareKnowledge, researchStationButtonDisabled } from '../../utils';
-import { MoveContainer, BuildContainer } from './index';
+import { MoveContainer, BuildContainer, ShareContainer } from './index';
 
 const ActionFooter = ({ currentTurn, firestore, sharePlayers, buildDisabled, currentCity, unusedCityCards, sameColorCityCards, shareDisabled }) => {
   return (
@@ -13,19 +13,7 @@ const ActionFooter = ({ currentTurn, firestore, sharePlayers, buildDisabled, cur
       <div className="action-container">
         <MoveContainer />
         <BuildContainer />
-        <ChoosePlayerModal
-          ModalTrigger={(
-            <Button
-              className="action-button share-button"
-              disabled={shareDisabled}
-            >
-              <Icon className="share-icon action-icon" name="gift" size="big" />
-              <div className="share-text action-text">Share</div>
-            </Button>)}
-          disabled={shareDisabled}
-          players={sharePlayers}
-          action={shareKnowledge.bind(this, firestore, currentTurn, currentCity)}
-        />
+        <ShareContainer />
         <Button className="action-button treat-button" >
           <Icon className="treat-icon action-icon" name="medkit" size="big" />
           <div className="treat-text action-text">Treat</div>

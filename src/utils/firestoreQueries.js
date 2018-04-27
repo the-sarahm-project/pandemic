@@ -1,7 +1,5 @@
 import { doc, shareKnowledgePlayers, researchStationButtonDisabled } from './index';
 
-
-
 export const getGame = (state) => {
   return state.firestore.data.games && state.firestore.data.games[doc];
 };
@@ -85,12 +83,12 @@ export const getBuildDisabled = (state) => {
   return researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
 };
 
-export const shareDisabled = (state) => {
+export const getShareKnowledgeDisabled = (state) => {
   const shareKnowledgePlayers = getShareKnowledgePlayers(state);
   return shareKnowledgePlayers && !shareKnowledgePlayers.length;
 };
 
-export const sameColorCityCards = (state) => {
+export const getSameColorCityCards = (state) => {
   const currentHand = getCurrentHand(state);
   const unusedCityCards = getUnusedCityCards(state);
   const currentCity = getCurrentCity(state);

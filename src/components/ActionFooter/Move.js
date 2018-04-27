@@ -1,6 +1,9 @@
 import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { movePlayer } from '../../utils';
+import { movePlayer, getCurrentTurn, getNeighbors } from '../../utils';
 
 const Move = ({ currentTurn, neighbors, firestore }) => {
   return (
@@ -14,4 +17,14 @@ const Move = ({ currentTurn, neighbors, firestore }) => {
   );
 };
 
-export default Move;
+const mapStateToProps = (state) => {
+  return {
+    currentTurn: getCurrentTurn(state),
+    neighbors: getNeighbors(state)
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Move);

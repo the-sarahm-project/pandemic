@@ -1,10 +1,11 @@
-import { cities, drawNeighborLines, drawBoundaryLines } from '../utils';
+import { initialCities, drawNeighborLines, drawBoundaryLines } from '../utils';
 
 const CityLines = () => {
+  const cities = Object.values(initialCities);
   const boundaryCities = ['Sydney','Manila','Tokyo','SanFrancisco','LosAngeles'];
   let lines = [];
   drawNeighborLines(lines, boundaryCities);
-  lines = drawBoundaryLines(lines, cities, boundaryCities);
+  lines = drawBoundaryLines(lines, boundaryCities);
   return lines;
 };
 

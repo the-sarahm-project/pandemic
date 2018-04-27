@@ -31,7 +31,8 @@ export const drawBoundaryLines = (lines, boundaryCities) => {
       newCityCoords[city] = new L.LatLng(initialCities[city].coords[0], initialCities[city].coords[1] - 360);
     }
   }
-  lines = lines.concat([
+  const boundaryCityLines =
+  [
     <Polyline positions={[cityCoords['Sydney'], newCityCoords['LosAngeles']]} key={[...initialCities['Sydney'].coords, ...initialCities['LosAngeles'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['LosAngeles'], newCityCoords['Sydney']]} key={[...initialCities['LosAngeles'].coords, ...initialCities['Sydney'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['SanFrancisco'], newCityCoords['Tokyo']]} key={[...initialCities['SanFrancisco'].coords, ...initialCities['Tokyo'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
@@ -40,6 +41,8 @@ export const drawBoundaryLines = (lines, boundaryCities) => {
     <Polyline positions={[cityCoords['Manila'], newCityCoords['SanFrancisco']]} key={[...initialCities['Manila'].coords, ...initialCities['SanFrancisco'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['Manila'], cityCoords['Sydney']]} key={[...initialCities['Manila'].coords, ...initialCities['Sydney'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
     <Polyline positions={[cityCoords['LosAngeles'], cityCoords['SanFrancisco']]} key={[...initialCities['LosAngeles'].coords, ...initialCities['SanFrancisco'].coords].toString()} color='red' weight={3} opacity={0.5} smoothFactor={1} />,
-  ]);
-  return lines;
+  ];
+  for (const line of boundaryCityLines) {
+    lines.push(line);
+  }
 };

@@ -40,10 +40,10 @@ export const BuildContainer = compose(
   connect(mapStateToProps)
 )(Build);
 
-// export const CureContainer = compose(
-//   firestoreConnect(),
-//   connect(mapStateToProps)
-// )(Cure);
+export const CureContainer = compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Cure);
 
 export const MoveContainer = compose(
   firestoreConnect(),
@@ -55,7 +55,7 @@ export const ShareContainer = compose(
   connect(mapStateToProps)
 )(Share);
 
-// export const TreatContainer = compose(
-//   firestoreConnect(),
-//   connect(mapStateToProps)
-// )(Treat);
+export const TreatContainer = compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Treat);

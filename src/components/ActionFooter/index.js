@@ -1,6 +1,10 @@
 import React from 'react';
 import { Sidebar } from 'semantic-ui-react';
-import { Move, Build, Share, Treat, Cure } from './index';
+import Build from './Build';
+import Cure from './Cure';
+import Move from './Move';
+import Treat from './Treat';
+import Share from './Share';
 
 const ActionFooter = () => {
   return (

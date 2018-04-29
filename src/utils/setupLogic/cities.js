@@ -1,4 +1,4 @@
-const initialCities = {
+const cities = {
   Algiers: {
     id: "Algiers",
     name: "Algiers",
@@ -385,4 +385,4 @@ const initialCities = {
   }
 };
 
-export default initialCities;
+export default cities;

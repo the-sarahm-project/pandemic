@@ -36,7 +36,7 @@ export default setupLogic;
 
 export { default as init } from './initializeGameState';
 export { default as collections } from './collections';
-export { default as initialCities } from './initialCities';
+export { default as cities } from './cities';
 export { default as initializeGameState } from './initializeGameState';
 export { default as unusedCityCards } from './unusedCityCards';
 export { default as unusedInfectionCards } from './unusedInfectionCards';

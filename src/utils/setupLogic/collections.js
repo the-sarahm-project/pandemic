@@ -1,4 +1,4 @@
-import initialCities from './initialCities';
+import cities from './cities';
 import unusedInfectionCards from './unusedInfectionCards';
 import unusedCityCards from './unusedCityCards';
 
@@ -48,7 +48,7 @@ const collections = {
   },
   unusedInfectionCards,
   unusedCityCards,
-  initialCities
+  cities
 };
 
 export default collections;

@@ -1,4 +1,4 @@
 export * from './componentUtils';
 export * from './currentDoc';
-export * from './firestoreQueries';
+export * from './getFirestoreData';
 export * from './setupLogic/index';

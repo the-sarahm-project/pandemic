@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Button } from 'semantic-ui-react';
 
-const Treat = () => {
+export const Treat = () => {
   return (
     <Button className="action-button treat-button" >
       <Icon className="treat-icon action-icon" name="medkit" size="big" />

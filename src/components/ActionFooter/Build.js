@@ -6,9 +6,10 @@ import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
 import { setCityResearchStation, getCurrentTurn, getBuildDisabled, getCurrentCity, getUnusedCityCards, getSameColorCityCards } from '../../utils';
 
-const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityCards, sameColorCityCards }) => {
+export const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityCards, sameColorCityCards }) => {
   return (
     <ChooseCardModal
+      className="build-choose-card-modal"
       ModalTrigger={(
         <Button
           className="action-button build-button"

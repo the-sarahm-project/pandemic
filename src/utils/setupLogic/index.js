@@ -1,4 +1,4 @@
-import {flipInfectionCards, getSnapshotData, addResearchStation, getCollectionDocs, createPlayerDeck} from './helperFunctions';
+import { flipInfectionCards, getSnapshotData, addResearchStation, getCollectionDocs, createPlayerDeck } from './setupHelper';
 
 //pass in the game state, the number of players, the difficulty level
 async function setupLogic(gameState, numPlayers, difficultyLevel) {
@@ -33,3 +33,10 @@ async function setupLogic(gameState, numPlayers, difficultyLevel) {
 //add cubes as fields, like black: 0, etc. directly on the city.
 
 export default setupLogic;
+
+export { default as init } from './initializeGameState';
+export { default as collections } from './collections';
+export { default as cities } from './cities';
+export { default as initializeGameState } from './initializeGameState';
+export { default as unusedCityCards } from './unusedCityCards';
+export { default as unusedInfectionCards } from './unusedInfectionCards';

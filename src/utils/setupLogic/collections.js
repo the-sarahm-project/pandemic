@@ -1,4 +1,6 @@
-import { unusedInfectionCards, unusedCityCards, cities } from './index';
+import cities from './cities';
+import unusedInfectionCards from './unusedInfectionCards';
+import unusedCityCards from './unusedCityCards';
 
 const collections = {
   unusedEventCards: {
@@ -46,7 +48,7 @@ const collections = {
   },
   unusedInfectionCards,
   unusedCityCards,
-  cities,
+  cities
 };
 
 export default collections;

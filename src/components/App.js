@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
-import { Sidebar, Board, ActionFooter } from './index';
+import { SidebarCards, Board, ActionFooter } from './index';
 import { doc } from '../utils';
 // import { db } from '../store';
 // import { init, setupLogic } from '../utils';
@@ -18,7 +18,7 @@ export class App extends Component {
   render() {
     return (
       <div className="game">
-        <Sidebar />
+        <SidebarCards />
         <Board />
         <ActionFooter />
       </div>

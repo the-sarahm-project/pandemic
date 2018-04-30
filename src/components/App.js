@@ -7,7 +7,7 @@ import { doc } from '../utils';
 // import { db } from '../store';
 // import { init, setupLogic } from '../utils';
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     // const numPlayers = 4, difficultyLevel = 4;
 

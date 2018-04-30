@@ -9,7 +9,6 @@ import { setCityResearchStation, getCurrentTurn, getBuildDisabled, getCurrentCit
 export const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityCards, sameColorCityCards }) => {
   return (
     <ChooseCardModal
-      className="build-choose-card-modal"
       ModalTrigger={(
         <Button
           className="action-button build-button"

@@ -9,7 +9,7 @@ describe('App', () => {
 
   const component = shallow(<App />);
 
-  it('renders a div with className game', () => {
+  it('renders a div with three children', () => {
     expect(component.find('div').children()).toHaveLength(3);
   });
 

@@ -26,7 +26,7 @@ const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityC
   );
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     buildDisabled: getBuildDisabled(state),

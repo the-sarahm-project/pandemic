@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm run build && firebase deploy",
-    "test": "react-scripts test --env=jsdom --verbose",
+    "test": "react-scripts test --env=jsdom",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },

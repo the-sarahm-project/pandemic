@@ -41,25 +41,29 @@ export const dummyState = {
               name: "",
               active: false,
               role: "",
-              currentCity: "Atlanta"
+              currentCity: "Atlanta",
+              currentHand: []
             },
             2: {
               name: "",
               active: false,
               role: "",
-              currentCity: "Atlanta"
+              currentCity: "Atlanta",
+              currentHand: []
             },
             3: {
               name: "",
               active: false,
               role: "",
-              currentCity: "Atlanta"
+              currentCity: "Atlanta",
+              currentHand: []
             },
             4: {
               name: "",
               active: false,
               role: "",
-              currentCity: "Atlanta"
+              currentCity: "Atlanta",
+              currentHand: []
             }
           },
           cities,

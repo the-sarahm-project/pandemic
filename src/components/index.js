@@ -12,3 +12,5 @@ export { default as ChooseCardModal } from './ChooseCardModal';
 export { default as CardButton } from './CardButton';
 export { default as ModalActions } from './ModalActions';
 export { default as ModalCardContent } from './ModalCardContent';
+export { default as PlayerButton } from './PlayerButton';
+export { default as ModalPlayerContent } from './ModalPlayerContent';

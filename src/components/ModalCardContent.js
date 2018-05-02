@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Button } from 'semantic-ui-react';
 import { CardButton } from './index';
 
-//this is each player's information on the sidebar
 const ModalCardContent = ({ cards, active, setSelectedAndActive }) => {
   return (
     <Modal.Content

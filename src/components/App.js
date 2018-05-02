@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
-import { Sidebar, Board, ActionFooter } from './index';
+import { SidebarCards, Board, ActionFooter } from './index';
 import { doc } from '../utils';
 // import { db } from '../store';
 // import { init, setupLogic } from '../utils';
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     // const numPlayers = 4, difficultyLevel = 4;
 
@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <div className="game">
-        <Sidebar />
+        <SidebarCards />
         <Board />
         <ActionFooter />
       </div>

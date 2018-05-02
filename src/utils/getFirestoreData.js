@@ -1,4 +1,4 @@
-import { doc, shareKnowledgePlayers, researchStationButtonDisabled } from './index';
+import { doc } from './index';
 
 export const getGame = (state) => {
   return state.firestore.data.games && state.firestore.data.games[doc];
@@ -47,6 +47,12 @@ export const getNeighbors = (state) => {
   return currentTurn && cities[currentCityId].neighbors;
 };
 
+const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPlayer) => {
+  if (!playersInSameCity || !currentCity || !currentPlayer) return;
+  if (currentPlayer.currentHand.find(card => card.id === currentCity)) return playersInSameCity;
+  else return playersInSameCity.filter(player => player[1].currentHand.find(card => card.id === currentCity));
+};
+
 export const getShareKnowledgePlayers = (state) => {
   const playersInSameCity = getPlayersInSameCity(state);
   const currentCityId = getCurrentCityId(state);
@@ -73,6 +79,12 @@ export const getCurrentCity = (state) => {
   const cities = getCities(state);
   const currentCityId = getCurrentCityId(state);
   return cities && cities[currentCityId];
+};
+
+const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
+  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color).length;
+  const researchStation = currentCity && currentCity.researchStation;
+  return numResearchStations <= 0 || researchStation || enoughCards < 5;
 };
 
 export const getBuildDisabled = (state) => {

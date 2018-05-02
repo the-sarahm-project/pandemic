@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { movePlayer, getCurrentTurn, getNeighbors } from '../../utils';
 
-const Move = ({ currentTurn, neighbors, firestore }) => {
+export const Move = ({ currentTurn, neighbors, firestore }) => {
   return (
     <Button className="action-button move-button" onClick={() => movePlayer(firestore, currentTurn, neighbors)}>
       <div className="move-icons">
@@ -17,7 +17,7 @@ const Move = ({ currentTurn, neighbors, firestore }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     neighbors: getNeighbors(state)

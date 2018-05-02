@@ -13,15 +13,27 @@ describe('Board', () => {
     expect(component.find('Map').name()).toBe('Map');
   });
 
-  // it('renders Sidebar', () => {
-  //   expect(component.find(SidebarCards)).toHaveLength(1);
-  // });
+  it('renders GameHeader', () => {
+    expect(component.find(GameHeader)).toHaveLength(1);
+  });
 
-  // it('renders Board', () => {
-  //   expect(component.find('Board').name()).toBe('Board');
-  // });
+  it('renders PlayerHand', () => {
+    expect(component.find(PlayerHand)).toHaveLength(1);
+  });
 
-  // it('renders ActionFooter', () => {
-  //   expect(component.find('ActionFooter').name()).toBe('ActionFooter');
-  // });
+  it('renders TileLayer', () => {
+    expect(component.find('TileLayer').name()).toBe('TileLayer');
+  });
+
+  it('renders PlayerMarkers', () => {
+    expect(component.find(PlayerMarkers)).toHaveLength(1);
+  });
+
+  it('renders CityMarkers', () => {
+    expect(component.find(CityMarkers)).toHaveLength(1);
+  });
+
+  it('renders CityLines', () => {
+    expect(component.find('CityLines').name()).toBe('CityLines');
+  });
 });

@@ -8,15 +8,26 @@ describe('ChoosesCardModal', () => {
 
   const component = shallow(<ChooseCardModal />);
 
-  describe('renders', () => {
+  describe('has correct initialState', () => {
+    const expectedState = {
+      active: {},
+      selected: [],
+      modalOpen: false
+    };
 
+    it('initialState', () => {
+      expect(component.state()).toEqual(expectedState);
+    });
+  });
+
+  describe('renders', () => {
     describe('a Modal', () => {
       const expectedProps = ['trigger', 'open'];
       it('actually renders a Modal', () => {
         expect(component.find('Modal').name()).toBe('Modal');
       });
 
-      it('that takes in correct props', () => {
+      it('takes in correct props', () => {
         expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedProps));
       });
     });
@@ -33,7 +44,7 @@ describe('ChoosesCardModal', () => {
         expect(ModalCardContentWrapper.name()).toBe('ModalCardContent');
       });
 
-      it('that takes in correct props', () => {
+      it('takes in correct props', () => {
         expect(Object.keys(ModalCardContentWrapper.props())).toEqual(expect.arrayContaining(expectedProps));
       });
     });
@@ -46,7 +57,7 @@ describe('ChoosesCardModal', () => {
         expect(ModalActionsWrapper.name()).toBe('ModalActions');
       });
 
-      it('that takes in correct props', () => {
+      it('takes in correct props', () => {
         expect(Object.keys(ModalActionsWrapper.props())).toEqual(expect.arrayContaining(expectedProps));
       });
     });

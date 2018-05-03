@@ -4,6 +4,11 @@ export const getGame = (state) => {
   return state.firestore.data.games && state.firestore.data.games[doc];
 };
 
+export const getPlayerDeck = (state) => {
+  const game = getGame(state);
+  return game && game.playerDeck;
+};
+
 export const getCurrentTurn = (state) => {
   const game = getGame(state);
   return game && game.currentTurn;

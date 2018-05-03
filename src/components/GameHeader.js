@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { getGame, getPlayerDeck } from '../utils';
 
-const GameHeader = ({ game, playerDeck }) => {
+export const GameHeader = ({ game, playerDeck }) => {
   return (
     isLoaded(game) && isLoaded(playerDeck) && (
       <Container className="game-header">
@@ -27,7 +27,7 @@ const GameHeader = ({ game, playerDeck }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     game: getGame(state),
     playerDeck: getPlayerDeck(state)

@@ -19,7 +19,7 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
         <Image
           wrapped
           size='small'
-          src={playerImage[player[1].role]}
+          src={playerImage[player[1].role]} //referring to playerId (number), because players comes from Object.entries. Array of [key, value]
           style={{ width: 'auto' }}
         />
         <div

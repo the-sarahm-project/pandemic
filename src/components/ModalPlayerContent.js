@@ -7,7 +7,7 @@ const ModalPlayerContent = ({ players, playerImage, setSelected }) => {
     <Modal.Content>
       {players && players.length &&
         <Button.Group
-          className="PlayerButtonGroup"
+          className="player-button-group"
           style={{
             display: 'flex',
             justifyContent: 'center',

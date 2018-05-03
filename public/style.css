@@ -98,10 +98,10 @@ button.ui.button.action-button.share-button {
 }
 
 /* PlayerModal */
-.ui.four.buttons.PlayerButtonGroup::after {
+.ui.four.buttons.player-button-group::after {
   content: none;
 }
 
-button.ui.toggle.button + button.ui.toggle.button {
+button.ui.toggle.button.player-button + button.ui.toggle.button.player-button {
   margin-left: 10px;
 }

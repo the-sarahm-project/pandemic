@@ -4,6 +4,7 @@ import { Button, Image } from 'semantic-ui-react';
 const PlayerButton = ({ player, playerImage, setSelected }) => {
   return (
     <Button
+      className="player-button"
       value={player[0]}
       toggle
       style={{

@@ -4,14 +4,15 @@ import { CardButton } from './index';
 
 const ModalCardContent = ({ cards, active, setSelectedAndActive }) => {
   return (
-    <Modal.Content
-      image
-      style={{
-        justifyContent: 'space-around'
-      }}
-    >
+    <Modal.Content>
       {cards && cards.length &&
-        <Button.Group widths={cards.length}>
+        <Button.Group
+          className="card-button-group"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
           {cards.map(card => (
             <CardButton
               key={card.id}

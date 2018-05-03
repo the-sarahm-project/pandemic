@@ -8,12 +8,6 @@ export const movePlayer = (firestore, currentTurn, neighbors) => {
     .catch(err => console.log(err));
 };
 
-export const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
-  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color).length;
-  const researchStation = currentCity && currentCity.researchStation;
-  return numResearchStations <= 0 || researchStation || enoughCards < 5;
-};
-
 export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length < 5) {
     console.log('Not enough cards selected');
@@ -21,7 +15,7 @@ export const setCityResearchStation = (firestore, currentTurn, currentCity, unus
   }
   firestore.get(`games/${doc}`)
     .then(game => {
-      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityId = currentCity.id;
       const currentCityRef = game.ref.collection('cities').doc(currentCityId);
       let remainingResearchStations = game.data().remainingResearchStations;
       //build research station
@@ -44,17 +38,11 @@ export const setCityResearchStation = (firestore, currentTurn, currentCity, unus
     .catch(err => console.log(err));
 };
 
-export const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPlayer) => {
-  if (!playersInSameCity || !currentCity || !currentPlayer) return;
-  if (currentPlayer.currentHand.find(card => card.id === currentCity)) return playersInSameCity;
-  else return playersInSameCity.filter(player => player[1].currentHand.find(card => card.id === currentCity));
-};
-
 export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber) => {
   firestore.get(`games/${doc}`)
     .then(game => {
       const players = game.ref.collection('players');
-      const currentCityId = currentCity.name.split(' ').join('');
+      const currentCityId = currentCity.id;
       const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCityId);
       const currentPlayerRef = players.doc(`${currentTurn}`);
       const targetPlayerRef = players.doc(playerNumber);

@@ -1,5 +1,7 @@
-export * from './cards';
-export * from './gameLogic';
+export { default as setupLogic } from './setupLogic/index';
+
 export * from './componentUtils';
 export * from './currentDoc';
-export * from './firestoreQueries';
+export * from './getFirestoreData';
+export * from './setupLogic/index';
+export * from './dummyState';

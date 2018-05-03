@@ -6,8 +6,9 @@ usedEventCards
 */
 
 import { shuffle } from 'lodash';
+import { collections } from './index';
 
-const init = (db, collections, numPlayers, difficultyLevel) => {
+const init = (db, numPlayers, difficultyLevel) => {
   const game = db.collection('games').doc();
   game.set({
     infectionRate: 0, //the infection rate marker

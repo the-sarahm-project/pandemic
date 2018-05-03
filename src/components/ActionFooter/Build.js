@@ -6,7 +6,7 @@ import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
 import { setCityResearchStation, getCurrentTurn, getBuildDisabled, getCurrentCity, getUnusedCityCards, getSameColorCityCards } from '../../utils';
 
-const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityCards, sameColorCityCards }) => {
+export const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityCards, sameColorCityCards }) => {
   return (
     <ChooseCardModal
       ModalTrigger={(
@@ -26,7 +26,7 @@ const Build = ({ currentTurn, firestore, buildDisabled, currentCity, unusedCityC
   );
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     buildDisabled: getBuildDisabled(state),

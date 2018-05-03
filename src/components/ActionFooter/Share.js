@@ -6,7 +6,7 @@ import { Icon, Button } from 'semantic-ui-react';
 import { ChoosePlayerModal } from '../index';
 import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getCurrentCity } from '../../utils';
 
-const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, currentCity, firestore }) => {
+export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, currentCity, firestore }) => {
   return (
     <ChoosePlayerModal
       ModalTrigger={(
@@ -25,7 +25,7 @@ const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, cur
   );
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     shareKnowledgeDisabled: getShareKnowledgeDisabled(state),

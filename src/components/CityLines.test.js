@@ -7,6 +7,6 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('CityLines', () => {
   const component = shallow(<CityLines />);
   it('renders all 96 lines', () => {
-    expect(component.children().length).toEqual(96);
+    expect(component.children().find('Polyline').length).toEqual(96);
   });
 });

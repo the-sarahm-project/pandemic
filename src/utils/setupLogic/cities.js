@@ -11,7 +11,7 @@ const cities = {
     id: "Atlanta",
     name: "Atlanta",
     coords: [36.7322, -96.0644],
-    researchStation: false,
+    researchStation: true,
     neighbors: ["Chicago", "Miami", "Washington"],
     color: "blue"
   },

@@ -6,7 +6,8 @@ import { dummyState, doc } from '../utils';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('CityMarkers', () => {
-  const component = shallow(<CityMarkers cities={dummyState.firestore.data.games[doc].cities} />);
+  const component = shallow(<CityMarkers />);
+  component.setProps({cities: dummyState.firestore.data.games[doc].cities});
 
   it('receives correct props from mapStateToProps', () => {
     const expectedProps = ['cities'];

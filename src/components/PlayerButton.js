@@ -7,8 +7,6 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
       value={player[0]}
       toggle
       style={{
-        display: 'flex',
-        justifyContent: 'center',
         borderStyle: 'solid',
         borderColor: 'black',
         borderRadius: '10px'
@@ -19,7 +17,7 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
         <Image
           wrapped
           size='small'
-          src={playerImage[player[1].role]} //referring to playerId (number), because players comes from Object.entries. Array of [key, value]
+          src={playerImage[player[1].role]} //referring to player data, because players comes from Object.entries. Array of [key, value]
           style={{ width: 'auto' }}
         />
         <div
@@ -27,7 +25,7 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'flex-start'
+            alignItems: 'flex-start',
           }}
         >
           <div>Name</div>

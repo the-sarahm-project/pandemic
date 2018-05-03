@@ -13,14 +13,12 @@ const CardButton = ({ card, active, setSelectedAndActive }) => {
       }}
       onClick={event => setSelectedAndActive(event.currentTarget.value, card)}
     >
-      <div style={{ display: 'flex' }}>
-        <Image
-          wrapped
-          size='small'
-          src={`assets/images/${card.id}.png`}
-          style={{ width: 'auto' }}
-        />
-      </div>
+      <Image
+        wrapped
+        size='small'
+        src={`assets/images/${card.id}.png`}
+        style={{ width: 'auto' }}
+      />
     </Button>
   );
 };

@@ -5,16 +5,16 @@ import { PlayerButton } from './index';
 const ModalPlayerContent = ({ players, playerImage, setSelected }) => {
   return (
     <Modal.Content
-      image
       style={{
-        justifyContent: 'space-around'
+        display: 'flex',
+        justifyContent: 'center'
       }}
     >
       {players && players.length &&
         <Button.Group widths={players.length}>
           {players.map(player => (
             <PlayerButton
-              key={player[0]} //referring to playerId (number)
+              key={player[0]} //referring to playerId (number), because players comes from Object.entries. Array of [key, value]
               player={player}
               playerImage={playerImage}
               setSelected={setSelected}

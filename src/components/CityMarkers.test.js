@@ -24,6 +24,6 @@ describe('CityMarkers', () => {
   });
 
   it ('renders the correct number of Research Stations', () => {
-    expect(component.find('ResearchStation').length).toEqual(1);
+    expect(component.find('ResearchStation').length).toEqual(2);
   });
 });

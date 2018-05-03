@@ -9,7 +9,9 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
       style={{
         borderStyle: 'solid',
         borderColor: 'black',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        flex: 'none',
+        width: '33%'
       }}
       onClick={event => setSelected(event.currentTarget.value)}
     >
@@ -25,7 +27,7 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'flex-start',
+            alignItems: 'flex-start'
           }}
         >
           <div>Name</div>

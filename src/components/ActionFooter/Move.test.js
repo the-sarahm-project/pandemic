@@ -7,11 +7,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Move', () => {
   it('receives correct props from store', () => {
-    const expectedProps = {
-      currentTurn: 1,
-      neighbors: []
-    };
-    expect(Object.keys(mapStateToProps(dummyState)).sort()).toEqual(Object.keys(expectedProps).sort());
+    const expectedProps = ['currentTurn', 'neighbors'];
+    expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
   });
 
   const component = shallow(<Move />);

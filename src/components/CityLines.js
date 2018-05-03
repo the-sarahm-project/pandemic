@@ -1,3 +1,4 @@
+import React from 'react';
 import { drawNeighborLines, drawBoundaryLines } from '../utils';
 
 const CityLines = () => {
@@ -5,7 +6,9 @@ const CityLines = () => {
   let lines = [];
   drawNeighborLines(lines, boundaryCities);
   drawBoundaryLines(lines, boundaryCities);
-  return lines;
+  return (
+    <div>{lines}</div>
+  );
 };
 
 export default CityLines;

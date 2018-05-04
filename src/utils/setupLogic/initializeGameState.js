@@ -52,7 +52,8 @@ const init = (db, numPlayers, difficultyLevel) => {
       name: "",
       role: gameRoles[i],
       currentCity: "Atlanta",
-      currentHand: []
+      currentHand: [],
+      isMoving: false
     };
     game.collection('players').doc(`${i}`).set(player);
   }

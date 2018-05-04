@@ -4,12 +4,12 @@ import { compose } from 'redux';
 import '../App.css';
 import { SidebarCards, Board, ActionFooter } from './index';
 import { doc } from '../utils';
-// import { db } from '../store';
-// import { init, setupLogic } from '../utils';
+ import { db } from '../store';
+ import { init, setupLogic } from '../utils';
 
 export class App extends Component {
   componentDidMount() {
-    // const numPlayers = 4, difficultyLevel = 4;
+    const numPlayers = 4, difficultyLevel = 4;
 
     // setupLogic(db.collection('games').doc(doc), numPlayers, difficultyLevel);
     // init(db, numPlayers, difficultyLevel);

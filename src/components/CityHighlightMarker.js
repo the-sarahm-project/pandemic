@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 //make all city markers (has its own component + own state) that has a local state of display false, or hidden
 //when "MOVE" is clicked, this will change local state display of the neighbors ONLY.
 //maybe bind an onclick to true or false depending on if it's a neighbor
@@ -21,10 +24,14 @@ onclick
 class CityHighlightMarker extends Component {
   constructor(props) {
     super(props);
+    //mmaaaaybe put the 'showNeighbors' on local state for now
     this.state = {
-
+      showNeighbors: false,
+      isMoving: false,
+      isFerry: false
     };
   }
+
 
   render() {
     return (
@@ -32,3 +39,14 @@ class CityHighlightMarker extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(CityHighlightMarker);

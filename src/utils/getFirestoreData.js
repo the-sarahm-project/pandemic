@@ -87,7 +87,8 @@ export const getCurrentCity = (state) => {
 };
 
 const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
-  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color).length;
+  //filter the cards to check if the card is an event card or a city card && if the color matches the current city
+  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color)).length;
   const researchStation = currentCity && currentCity.researchStation;
   return numResearchStations <= 0 || researchStation || enoughCards < 5;
 };
@@ -109,5 +110,5 @@ export const getSameColorCityCards = (state) => {
   const currentHand = getCurrentHand(state);
   const unusedCityCards = getUnusedCityCards(state);
   const currentCity = getCurrentCity(state);
-  return currentHand && currentHand.filter(card => unusedCityCards[card.id].color === currentCity.color);
+  return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
 };

@@ -1,9 +1,17 @@
 import { doc } from '../index';
 
-export const movePlayer = (firestore, currentTurn, neighbors) => {
+export const movePlayer = (firestore, currentTurn) => {
   firestore.get(`games/${doc}`)
     .then(game => {
-      game.ref.collection('players').doc(`${currentTurn}`).update({ currentCity: neighbors[Math.floor(Math.random() * neighbors.length)] });
+      game.ref.collection('players').doc(`${currentTurn}`).update({isMoving: true});
     })
-    .catch(err => console.log(err));
+    .catch(console.error);
+};
+
+export const changeCurrentCity = (firestore, currentTurn, newCity) => {
+  firestore.get(`games/${doc}`)
+  .then(game => {
+    game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+  })
+  .catch(console.error);
 };

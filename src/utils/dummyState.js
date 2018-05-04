@@ -66,7 +66,18 @@ export const dummyState = {
               currentHand: []
             }
           },
-          cities,
+          cities: {
+            ...cities,
+            Algiers: {
+              ...cities.Algiers,
+              researchStation: true
+            },
+            Beijing: {
+              ...cities.Beijing,
+              researchStation: true
+            }
+          },
+          // cities,
           unusedInfectionCards,
           unusedCityCards,
           infectionRate: 0, //the infection rate marker

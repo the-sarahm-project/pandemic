@@ -1,15 +1,17 @@
 import React from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Item as MenuItem, Icon } from 'semantic-ui-react';
 
 //this is each item in the current hand on the sidebar
-export default function CurrentHandMenu({ name, color }) {
+const CurrentHandMenu = ({ name, color }) => {
   color = (color === 'black') ? 'grey' : color;
   return (
     <div>
-      <Menu.Item className="menu-player-hand">
+      <MenuItem className="menu-player-hand">
         <Icon className="menu-player-hand-icon" name={color ? 'square' : 'content'} color={color || 'olive'} />
           {name}
-      </Menu.Item>
+      </MenuItem>
     </div>
   );
-}
+};
+
+export default CurrentHandMenu;

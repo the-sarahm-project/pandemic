@@ -4,25 +4,30 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { ResearchStation } from './index';
-import { doc, iconContainer } from '../utils';
+import { iconContainer, getCities } from '../utils';
 
-const CityMarkers = ({ cities }) => {
+export const CityMarkers = ({ cities }) => {
+  let cityMarkers = [];
+  let researchStations = [];
+  if (isLoaded(cities)) {
+    for (const city of Object.values(cities)) {
+      cityMarkers.push(<Marker key={city.coords} position={city.coords} icon={iconContainer[city.color]} />);
+      if (city.researchStation) {
+        researchStations.push(<ResearchStation key={city.coords} coords={city.coords} />);
+      }
+    }
+  }
   return (
-    isLoaded(cities) &&
-    Object.keys(cities).map(city => (
-      <div key={cities[city].coords}>
-        <Marker position={cities[city].coords} icon={iconContainer[cities[city].color]} />
-        {cities[city].researchStation && <ResearchStation coords={cities[city].coords} />}
-      </div>
-    ))
+    <div>
+      {cityMarkers}
+      {researchStations}
+    </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games[doc];
-  const cities = game && game.cities;
+export const mapStateToProps = (state) => {
   return {
-    cities
+    cities: getCities(state)
   };
 };
 

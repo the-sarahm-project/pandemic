@@ -7,13 +7,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Share', () => {
   it('receives correct props from store', () => {
-    const expectedProps = {
-      currentTurn: 1,
-      shareKnowledgeDisabled: false,
-      shareKnowledgePlayers: [],
-      currentCity: ''
-    };
-    expect(Object.keys(mapStateToProps(dummyState)).sort()).toEqual(Object.keys(expectedProps).sort());
+    const expectedProps = ['currentTurn', 'shareKnowledgeDisabled', 'shareKnowledgePlayers', 'currentCity'];
+    expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
   });
 
   describe('renders a Choose Player Modal', () => {
@@ -25,13 +20,8 @@ describe('Share', () => {
     });
 
     it('that takes in the correct props', () => {
-      const expectedProps = {
-        ModalTrigger: {},
-        disabled: false,
-        players: [],
-        action: ()=>{}
-      };
-      expect(Object.keys(component.props()).sort()).toEqual(Object.keys(expectedProps).sort());
+      const expectedProps = ['ModalTrigger', 'disabled', 'players', 'action'];
+      expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedProps));
     });
   });
 });

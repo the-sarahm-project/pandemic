@@ -16,6 +16,17 @@ export const changeCurrentCity = (firestore, currentTurn, newCity) => {
   .catch(console.error);
 };
 
+//update the city & then adding the city card data to the trashedCityCards, and then remove from the current player hand (should not be in unusedcitycards?)
+export const changeCurrentHandCity = (firestore, currentTurn, newCity) => {
+   changeCurrentCity(firestore, currentTurn, newCity);
+  firestore.get(`games/${doc}`)
+  .then(game => {
+    game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+  })
+  .catch(console.error);
+};
+//AHHHH
+
 export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length < 5) {
     console.log('Not enough cards selected');

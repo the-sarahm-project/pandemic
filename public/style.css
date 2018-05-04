@@ -96,3 +96,16 @@ button.ui.button.action-button.share-button {
 .ui.bottom.very.wide.visible.sidebar.action-footer {
   max-width: calc(100% - 249.1px);
 }
+
+/* PlayerModal */
+.ui.four.buttons.player-button-group::after {
+  content: none;
+}
+
+button.ui.toggle.button.player-button + button.ui.toggle.button.player-button {
+  margin-left: 10px;
+}
+
+button.ui.toggle.button.card-button + button.ui.toggle.button.card-button {
+  margin-left: 5px;
+}

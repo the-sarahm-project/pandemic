@@ -7,14 +7,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Build', () => {
   it('receives correct props from mapStateToProps', () => {
-    const expectedProps = {
-      currentTurn: 1,
-      buildDisabled: false,
-      currentCity: '',
-      unusedCityCards: [],
-      sameColorCityCards: []
-    };
-    expect(Object.keys(mapStateToProps(dummyState)).sort()).toEqual(Object.keys(expectedProps).sort());
+    const expectedProps = ['currentTurn', 'buildDisabled', 'currentCity', 'unusedCityCards', 'sameColorCityCards'];
+    expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
   });
 
   describe('renders a Choose Card Modal', () => {
@@ -26,13 +20,8 @@ describe('Build', () => {
     });
 
     it('that takes in the correct props', () => {
-      const expectedProps = {
-        ModalTrigger: {},
-        disabled: false,
-        cards: [],
-        action: ()=>{}
-      };
-      expect(Object.keys(component.props()).sort()).toEqual(Object.keys(expectedProps).sort());
+      const expectedProps = ['ModalTrigger', 'disabled', 'cards', 'action'];
+      expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedProps));
     });
   });
 });

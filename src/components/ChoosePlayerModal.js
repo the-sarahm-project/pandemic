@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Header, Icon, Modal, Image } from 'semantic-ui-react';
+import { Header, Modal } from 'semantic-ui-react';
+import { ModalActions, ModalPlayerContent } from './index';
 import { playerImage } from '../utils';
 
 class ChoosePlayerModal extends React.Component {
@@ -21,70 +22,16 @@ class ChoosePlayerModal extends React.Component {
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose a Player' />
-        <Modal.Content
-          image
-          style={{
-            justifyContent: 'space-around'
-          }}
-        >
-          {players && players.length &&
-            <Button.Group widths={players.length}>
-              {players.map(player => (
-                <Button
-                  value={player[0]}
-                  toggle
-                  key={player[0]}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    borderStyle: 'solid',
-                    borderColor: 'black',
-                    borderRadius: '10px'
-                  }}
-                  onClick={event => this.setState({ selected: event.currentTarget.value })}
-                >
-                  <div style={{ display: 'flex' }}>
-                    <Image
-                      wrapped
-                      size='small'
-                      src={playerImage[player[1].role]}
-                      style={{ width: 'auto' }}
-                    />
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start'
-                      }}
-                    >
-                      <div>Name</div>
-                      <div>{player[1].role}</div>
-                    </div>
-                  </div>
-                </Button>
-              ))}
-            </Button.Group>}
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            color='red'
-            inverted
-            onClick={this.handleClose}
-          >
-            <Icon name='remove' /> Cancel
-          </Button>
-          <Button
-            color='green'
-            inverted
-            onClick={() => {
-              action(this.state.selected);
-              this.handleClose();
-            }}
-          >
-            <Icon name='checkmark' /> Select
-          </Button>
-        </Modal.Actions>
+        <ModalPlayerContent
+          players={players}
+          playerImage={playerImage}
+          setSelected={selected => this.setState({ selected })}
+        />
+        <ModalActions
+          action={action}
+          handleClose={this.handleClose}
+          selected={this.state.selected}
+        />
       </Modal>
     );
   }

@@ -13,7 +13,7 @@ function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, fir
          position={cities[neighbor].coords}
          key={neighbor}
          icon={iconContainer.highlight}
-         zIndexOffset={1001}
+         zIndexOffset={1000}
          onClick={() => changeCurrentCity(firestore, currentTurn, neighbor)}
         />
       );

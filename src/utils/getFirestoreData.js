@@ -41,7 +41,8 @@ export const getPlayersInSameCity = (state) => {
   const currentCityId = getCurrentCityId(state);
   const currentTurn = getCurrentTurn(state);
   return players && Object.entries(players).filter(player =>
-    player[1].currentCity === currentCityId && Number(player[0]) !== currentTurn);
+    player[1].currentCity === currentCityId && Number(player[0]) !== currentTurn
+  );
 };
 
 export const getNeighbors = (state) => {
@@ -86,6 +87,7 @@ export const getCurrentCity = (state) => {
 };
 
 const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
+  //filter the cards to check if the card is an event card or a city card && if the color matches the current city
   const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color)).length;
   const researchStation = currentCity && currentCity.researchStation;
   return numResearchStations <= 0 || researchStation || enoughCards < 5;

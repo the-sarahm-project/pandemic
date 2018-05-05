@@ -9,7 +9,7 @@ export const setCityResearchStation = async (firestore, currentTurn, currentCity
     const game = await getGame(firestore);
     const currentCityRef = game.ref.collection('cities').doc(currentCity.id);
     const currentPlayerSnapshot = await getCurrentPlayerSnapshot(game, currentTurn, currentCityRef);
-    await setResearchStationTrue(game);
+    await setResearchStationTrue(currentCityRef);
     await updateCurrentHand(currentPlayerSnapshot, unusedCityCards, currentCity);
     await removeCards(cardsToRemove);
   } catch(err) {
@@ -40,9 +40,10 @@ async function setRemainingResearchStations(game) {
 
 async function removeCards(cardsToRemove) {
   //remove cards from unusedCityCards
-  for (let card of cardsToRemove) {
-    await card.delete();
-  }
+  await Promise.all(cardsToRemove.map(card => card.delete()));
+  // for (let card of cardsToRemove) {
+  //   await card.delete();
+  // }
 }
 
 async function updateCurrentHand(currentPlayerSnapshot, unusedCityCards, currentCity) {

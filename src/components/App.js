@@ -4,8 +4,8 @@ import { compose } from 'redux';
 import '../App.css';
 import { SidebarCards, Board, ActionFooter } from './index';
 import { doc } from '../utils';
- import { db } from '../store';
- import { init, setupLogic } from '../utils';
+import { db } from '../store';
+import { init, setupLogic } from '../utils';
 
 export class App extends Component {
   componentDidMount() {

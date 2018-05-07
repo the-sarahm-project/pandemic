@@ -13,15 +13,15 @@ export const setCityResearchStation = async (firestore, currentTurn, currentCity
   await removeCards(cardsToRemove);
 };
 
-async function getGame(firestore) {
+const getGame = async (firestore) => {
   try {
     return await firestore.get(`games/${doc}`);
   } catch(err) {
     console.log(err);
   }
-}
+};
 
-async function getCurrentPlayerSnapshot(game, currentTurn, currentCityRef) {
+const getCurrentPlayerSnapshot = async (game, currentTurn, currentCityRef) => {
   const currentTurnRef = game.ref.collection('players').doc(`${currentTurn}`);
   setResearchStationTrue(currentCityRef);
   setRemainingResearchStations(game);
@@ -30,36 +30,36 @@ async function getCurrentPlayerSnapshot(game, currentTurn, currentCityRef) {
   } catch(err) {
     console.log(err);
   }
-}
+};
 
 //build research station
-async function setResearchStationTrue(currentCityRef) {
+const setResearchStationTrue = async (currentCityRef) => {
   try {
     return await currentCityRef.update({ researchStation: true });
   } catch(err) {
     console.log(err);
   }
-}
+};
 
-async function setRemainingResearchStations(game) {
+const setRemainingResearchStations = async (game) => {
   const remainingResearchStations = game.data().remainingResearchStations;
   try {
     return await game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
   } catch(err) {
     console.log(err);
   }
-}
+};
 
-async function removeCards(cardsToRemove) {
+const removeCards = async (cardsToRemove) => {
   //remove cards from unusedCityCards
   try {
     await Promise.all(cardsToRemove.map(card => card.delete()));
   } catch(err) {
     console.log(err);
   }
-}
+};
 
-async function updateCurrentHand(currentPlayerSnapshot, unusedCityCards, currentCity) {
+const updateCurrentHand = async (currentPlayerSnapshot, unusedCityCards, currentCity) => {
   const currentHand = currentPlayerSnapshot.data().currentHand;
   const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
   try {
@@ -67,4 +67,4 @@ async function updateCurrentHand(currentPlayerSnapshot, unusedCityCards, current
   } catch(err) {
     console.log(err);
   }
-}
+};

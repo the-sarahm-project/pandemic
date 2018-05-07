@@ -8,9 +8,24 @@ usedEventCards
 import { shuffle } from 'lodash';
 import { collections } from './index';
 
-const init = (db, numPlayers, difficultyLevel) => {
-  const game = db.collection('games').doc();
-  game.set({
+const init = async (db, numPlayers, difficultyLevel) => {
+  const game = await db.collection('games').doc();
+  const unusedEventCards = Object.entries(collections.unusedEventCards);
+  const cities = Object.entries(collections.cities);
+  const unusedInfectionCards = Object.entries(collections.unusedInfectionCards);
+  const unusedCityCards = Object.entries(collections.unusedCityCards);
+  await setGameFields(game, numPlayers, difficultyLevel);
+  await addRemainingEpidemicCards(game, difficultyLevel);
+  await addUnusedEventCards(game, unusedEventCards);
+  await addPlayers(game, numPlayers);
+  await addCities(game, cities);
+  await addUnusedInfectionCards(game, unusedInfectionCards);
+  await addUnusedCityCards(game, unusedCityCards);
+  return game.id;
+};
+
+const setGameFields = async (game, numPlayers, difficultyLevel) => {
+  await game.set({
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,
@@ -26,73 +41,71 @@ const init = (db, numPlayers, difficultyLevel) => {
     yellowCureMarker: false,
     blackCureMarker: false,
   });
-  const unusedEventCards = Object.keys(collections.unusedEventCards);
-  const cities = Object.keys(collections.cities);
-  const unusedInfectionCards = Object.keys(collections.unusedInfectionCards);
-  const unusedCityCards = Object.keys(collections.unusedCityCards);
-  addRemainingEpidemicCards(game, difficultyLevel);
-  addUnusedEventCards(game, unusedEventCards);
-  addPlayers(game, numPlayers);
-  addCities(game, cities);
-  addUnusedInfectionCards(game, unusedInfectionCards);
-  addUnusedCityCards(game, unusedCityCards);
-  return game.id;
 };
 
-const addRemainingEpidemicCards = (game, difficultyLevel) => {
-  for (let i = 0; i < difficultyLevel; i++) {
-    game.collection('epidemicCards').add({
-      name: 'Epidemic'
-    });
-  }
+const addRemainingEpidemicCards = async (game, difficultyLevel) => {
+  const addEpidemicCards = new Array(difficultyLevel).fill();
+  const epidemicCardsCollection = game.collection('epidemicCards');
+  await Promise.all(addEpidemicCards.map(() => {
+    return epidemicCardsCollection.add({ name: 'Epidemic'});
+  }));
 };
 
-const addUnusedEventCards = (game, unusedEventCards) => {
-  unusedEventCards.forEach(unusedEventCard => {
-    game.collection('unusedEventCards').doc(unusedEventCard).set(collections.unusedEventCards[unusedEventCard]);
-  });
+const addUnusedEventCards = async (game, unusedEventCards) => {
+  const unusedEventCardsCollection = game.collection('unusedEventCards');
+  await Promise.all(unusedEventCards.map(unusedEventCard => {
+    const [ eventCardKey, eventCardValue ] = unusedEventCard;
+    return unusedEventCardsCollection.doc(eventCardKey).set(eventCardValue);
+  }));
 };
 
-const addPlayers = (game, numPlayers) => {
+const addPlayers = async (game, numPlayers) => {
   //existing roles in the game (7 total)
   const roles = ['Contingency Planner', 'Dispatcher', 'Medic', 'Operations Expert', 'Quarantine Specialist', 'Researcher', 'Scientist'];
   const gameRoles = shuffle(roles);
-  for (let i = 1; i <= numPlayers; i++) {
-    const player = {
-      name: "",
-      role: gameRoles[i],
-      currentCity: "Atlanta",
-      currentHand: [],
-      isMoving: false
-    };
-    game.collection('players').doc(`${i}`).set(player);
-  }
-};
-
-const addCities = (game, cities) => {
-  cities.forEach(city => {
-    game.collection('cities').doc(city).set({ ...collections.cities[city],
-      red: 0,
-      blue: 0,
-      yellow: 0,
-      black: 0
+  const playersCollection = game.collection('players');
+  const newPlayer = {
+    name: "",
+    role: "",
+    currentCity: "Atlanta",
+    currentHand: [],
+    isMoving: false
+  };
+  const players = new Array(numPlayers).fill(newPlayer);
+  await Promise.all(players.map((player, index) => {
+    return playersCollection.doc(`${index + 1}`).set({
+      ...player,
+      role: gameRoles[index]
     });
-  });
+  }));
 };
 
-const addUnusedInfectionCards = (game, unusedInfectionCards) => {
-  let insertOrder = 1;
-  shuffle(unusedInfectionCards).forEach(unusedInfectionCard => {
-    game.collection('unusedInfectionCards').doc(unusedInfectionCard).set({ ...collections.unusedInfectionCards[unusedInfectionCard],
+const addCities = async (game, cities) => {
+  await Promise.all(cities.map(city => {
+    const [ cityKey, cityValue ] = city;
+    return game.collection('cities').doc(cityKey).set(cityValue);
+  }));
+};
+
+const addUnusedInfectionCards = async (game, unusedInfectionCards) => {
+  let insertOrder = 0;
+  const unusedInfectionCardsCollection = game.collection('unusedInfectionCards');
+  const shuffledCards = shuffle(unusedInfectionCards);
+  await Promise.all(shuffledCards.map(unusedInfectionCard => {
+    const [ unusedInfectionCardKey, unusedInfectionCardValue ] = unusedInfectionCard;
+    return unusedInfectionCardsCollection.doc(unusedInfectionCardKey).set({
+      ...unusedInfectionCardValue,
       insertOrder: insertOrder++
     });
-  });
+  }));
 };
 
-const addUnusedCityCards = (game, unusedCityCards) => {
-  unusedCityCards.forEach(unusedCityCard => {
-    game.collection('unusedCityCards').doc(unusedCityCard).set(collections.unusedCityCards[unusedCityCard]);
-  });
+const addUnusedCityCards = async (game, unusedCityCards) => {
+  const unusedCityCardsCollection = game.collection('unusedCityCards');
+  await Promise.all(unusedCityCards.map(unusedCityCard => {
+    const [ unusedCityCardKey, unusedCityCardValue ] = unusedCityCard;
+    return unusedCityCardsCollection.doc(unusedCityCardKey).set(unusedCityCardValue);
+  }));
 };
 
 export default init;

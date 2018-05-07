@@ -1,4 +1,4 @@
-import { setCityResearchStation, getGame, getCurrentPlayerSnapshot, setResearchStationTrue, setRemainingResearchStations, removeCards, updateCurrentHand } from './build';
+// import { setCityResearchStation, getGameRef, getCurrentPlayerSnapshot, setResearchStationTrue, setRemainingResearchStations, removeCards, updateCurrentHand } from './build';
 
 describe('build', () => {
   describe('setCityResearchStation', () => {
@@ -9,6 +9,7 @@ describe('build', () => {
 
   describe('getGame', () => {
     it('gets ', () => {
+      //getGame();
       expect(2).toEqual(2);
     });
   });

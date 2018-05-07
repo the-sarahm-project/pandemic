@@ -5,7 +5,7 @@ export const setCityResearchStation = async (firestore, currentTurn, currentCity
     console.log('Not enough cards selected');
     return;
   }
-  const game = await getGame(firestore);
+  const game = await getGameRef(firestore);
   const currentCityRef = game.ref.collection('cities').doc(currentCity.id);
   const currentPlayerSnapshot = await getCurrentPlayerSnapshot(game, currentTurn, currentCityRef);
   await setResearchStationTrue(currentCityRef);
@@ -13,7 +13,7 @@ export const setCityResearchStation = async (firestore, currentTurn, currentCity
   await removeCards(cardsToRemove);
 };
 
-const getGame = async (firestore) => {
+export const getGameRef = async (firestore) => {
   try {
     return await firestore.get(`games/${doc}`);
   } catch(err) {
@@ -21,7 +21,7 @@ const getGame = async (firestore) => {
   }
 };
 
-const getCurrentPlayerSnapshot = async (game, currentTurn, currentCityRef) => {
+export const getCurrentPlayerSnapshot = async (game, currentTurn, currentCityRef) => {
   const currentTurnRef = game.ref.collection('players').doc(`${currentTurn}`);
   setResearchStationTrue(currentCityRef);
   setRemainingResearchStations(game);
@@ -33,7 +33,7 @@ const getCurrentPlayerSnapshot = async (game, currentTurn, currentCityRef) => {
 };
 
 //build research station
-const setResearchStationTrue = async (currentCityRef) => {
+export const setResearchStationTrue = async (currentCityRef) => {
   try {
     return await currentCityRef.update({ researchStation: true });
   } catch(err) {
@@ -41,7 +41,7 @@ const setResearchStationTrue = async (currentCityRef) => {
   }
 };
 
-const setRemainingResearchStations = async (game) => {
+export const setRemainingResearchStations = async (game) => {
   const remainingResearchStations = game.data().remainingResearchStations;
   try {
     return await game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
@@ -50,7 +50,7 @@ const setRemainingResearchStations = async (game) => {
   }
 };
 
-const removeCards = async (cardsToRemove) => {
+export const removeCards = async (cardsToRemove) => {
   //remove cards from unusedCityCards
   try {
     await Promise.all(cardsToRemove.map(card => card.delete()));
@@ -59,7 +59,7 @@ const removeCards = async (cardsToRemove) => {
   }
 };
 
-const updateCurrentHand = async (currentPlayerSnapshot, unusedCityCards, currentCity) => {
+export const updateCurrentHand = async (currentPlayerSnapshot, unusedCityCards, currentCity) => {
   const currentHand = currentPlayerSnapshot.data().currentHand;
   const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
   try {

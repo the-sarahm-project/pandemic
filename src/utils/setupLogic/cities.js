@@ -5,7 +5,11 @@ const cities = {
     coords: [31.4966, 9.0527],
     researchStation: false,
     neighbors: ["Cairo", "Istanbul", "Madrid", "Paris"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Atlanta: {
     id: "Atlanta",
@@ -13,7 +17,11 @@ const cities = {
     coords: [36.7322, -96.0644],
     researchStation: false,
     neighbors: ["Chicago", "Miami", "Washington"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Baghdad: {
     id: "Baghdad",
@@ -21,7 +29,11 @@ const cities = {
     coords: [37.5728, 48.7793],
     researchStation: false,
     neighbors: ["Cairo", "Istanbul", "Karachi", "Riyadh", "Tehran"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Bangkok: {
     id: "Bangkok",
@@ -29,7 +41,11 @@ const cities = {
     coords: [13.0607, 101.5137],
     researchStation: false,
     neighbors: ["Chennai", "HoChiMinhCity", "HongKong", "Jakarta", "Kolkata"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Beijing: {
     id: "Beijing",
@@ -37,7 +53,11 @@ const cities = {
     coords: [55.2744, 118.3887],
     researchStation: false,
     neighbors: ["Seoul", "Shanghai"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Bogota: {
     id: "Bogota",
@@ -45,7 +65,11 @@ const cities = {
     coords: [0.8706, -77.7832],
     researchStation: false,
     neighbors: ["BuenosAires", "Lima", "MexicoCity", "Miami", "SaoPaulo"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   BuenosAires: {
     id: "BuenosAires",
@@ -53,7 +77,11 @@ const cities = {
     coords: [-36.7455, -59.5020],
     researchStation: false,
     neighbors: ["Bogota", "SaoPaulo"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Cairo: {
     id: "Cairo",
@@ -61,7 +89,11 @@ const cities = {
     coords: [28.4518, 29.4434],
     researchStation: false,
     neighbors: ["Algiers", "Baghdad", "Istanbul", "Khartoum", "Riyadh"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Chennai: {
     id: "Chennai",
@@ -69,7 +101,11 @@ const cities = {
     coords: [3.3297, 89.2090],
     researchStation: false,
     neighbors: ["Bangkok", "Delhi", "Jakarta", "Kolkata", "Mumbai"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Chicago: {
     id: "Chicago",
@@ -77,7 +113,11 @@ const cities = {
     coords: [48.8691, -110.3033],
     researchStation: false,
     neighbors: ["Atlanta", "LosAngeles", "MexicoCity", "Montreal", "SanFrancisco"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Delhi: {
     id: "Delhi",
@@ -85,7 +125,11 @@ const cities = {
     coords: [44.9260, 82.4193],
     researchStation: false,
     neighbors: ["Chennai", "Karachi", "Kolkata", "Mumbai", "Tehran"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Essen: {
     id: "Essen",
@@ -93,7 +137,11 @@ const cities = {
     coords: [61.2903, 5.3608],
     researchStation: false,
     neighbors: ["London", "Milan", "Paris", "StPetersburg"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   HoChiMinhCity: {
     id: "HoChiMinhCity",
@@ -101,7 +149,11 @@ const cities = {
     coords: [0.0418, 117.1576],
     researchStation: false,
     neighbors: ["Bangkok", "HongKong", "Jakarta", "Manila"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   HongKong: {
     id: "HongKong",
@@ -109,7 +161,11 @@ const cities = {
     coords: [22.3964, 114.1095],
     researchStation: false,
     neighbors: ["Bangkok", "HoChiMinhCity", "Kolkata", "Manila", "Shanghai", "Taipei"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Istanbul: {
     id: "Istanbul",
@@ -117,7 +173,11 @@ const cities = {
     coords: [41.0082, 28.9784],
     researchStation: false,
     neighbors: ["Algiers", "Baghdad", "Cairo", "Milan", "Moscow", "StPetersburg"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Jakarta: {
     id: "Jakarta",
@@ -125,7 +185,11 @@ const cities = {
     coords: [-11.3934, 105.7319],
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "HoChiMinhCity", "Sydney"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Johannesburg: {
     id: "Johannesburg",
@@ -133,7 +197,11 @@ const cities = {
     coords: [-26.2041, 28.0473],
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Karachi: {
     id: "Karachi",
@@ -141,7 +209,11 @@ const cities = {
     coords: [29.6503, 67.2848],
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Mumbai", "Riyadh", "Tehran"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Khartoum: {
     id: "Khartoum",
@@ -149,7 +221,11 @@ const cities = {
     coords: [7.6679, 29.0912],
     researchStation: false,
     neighbors: ["Cairo", "Johannesburg", "Kinshasa", "Lagos"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Kinshasa: {
     id: "Kinshasa",
@@ -157,7 +233,11 @@ const cities = {
     coords: [-12.3052, 14.5459],
     researchStation: false,
     neighbors: ["Johannesburg", "Khartoum", "Lagos"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Kolkata: {
     id: "Kolkata",
@@ -165,7 +245,11 @@ const cities = {
     coords: [36.4527, 99.0967],
     researchStation: false,
     neighbors: ["Bangkok", "Chennai", "Delhi", "HongKong"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Lagos: {
     id: "Lagos",
@@ -173,7 +257,11 @@ const cities = {
     coords: [8.4103, 6.6357],
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa", "SaoPaulo"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Lima: {
     id: "Lima",
@@ -181,7 +269,11 @@ const cities = {
     coords: [-19.9703, -87.2149],
     researchStation: false,
     neighbors: ["Bogota", "MexicoCity", "Santiago"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   London: {
     id: "London",
@@ -189,7 +281,11 @@ const cities = {
     coords: [58.4870, -16.9024],
     researchStation: false,
     neighbors: ["Essen", "Madrid", "NewYork", "Paris"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   LosAngeles: {
     id: "LosAngeles",
@@ -197,7 +293,11 @@ const cities = {
     coords: [34.7027, -127.0877],
     researchStation: false,
     neighbors: ["Chicago", "MexicoCity", "SanFrancisco", "Sydney"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Madrid: {
     id: "Madrid",
@@ -205,7 +305,11 @@ const cities = {
     coords: [40.9442, -16.5213],
     researchStation: false,
     neighbors: ["Algiers", "NewYork", "London", "Paris", "SaoPaulo"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Manila: {
     id: "Manila",
@@ -213,7 +317,11 @@ const cities = {
     coords: [2.4662, 141.3303],
     researchStation: false,
     neighbors: ["HoChiMinhCity", "HongKong", "SanFrancisco", "Sydney", "Taipei"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   MexicoCity: {
     id: "MexicoCity",
@@ -221,7 +329,11 @@ const cities = {
     coords: [14.0998, -106.8728],
     researchStation: false,
     neighbors: ["Bogota", "Chicago", "Lima", "LosAngeles", "Miami"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Miami: {
     id: "Miami",
@@ -229,7 +341,11 @@ const cities = {
     coords: [24.3726, -81.7361],
     researchStation: false,
     neighbors: ["Atlanta", "Bogota", "MexicoCity", "Washington"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Milan: {
     id: "Milan",
@@ -237,7 +353,11 @@ const cities = {
     coords: [53.3709, 19.3381],
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Paris"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Montreal: {
     id: "Montreal",
@@ -245,7 +365,11 @@ const cities = {
     coords: [52.3361, -81.9119],
     researchStation: false,
     neighbors: ["Chicago", "NewYork", "Washington"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Moscow: {
     id: "Moscow",
@@ -253,7 +377,11 @@ const cities = {
     coords: [58.0669, 44.8264],
     researchStation: false,
     neighbors: ["Istanbul", "StPetersburg", "Tehran"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Mumbai: {
     id: "Mumbai",
@@ -261,7 +389,11 @@ const cities = {
     coords: [14.2443, 74.3576],
     researchStation: false,
     neighbors: ["Chennai", "Delhi", "Karachi"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   NewYork: {
     id: "NewYork",
@@ -269,7 +401,11 @@ const cities = {
     coords: [51.3620, -58.0056],
     researchStation: false,
     neighbors: ["London", "Madrid", "Montreal", "Washington"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Osaka: {
     id: "Osaka",
@@ -277,7 +413,11 @@ const cities = {
     coords: [33.6748, 153.1076],
     researchStation: false,
     neighbors: ["Taipei", "Tokyo"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Paris: {
     id: "Paris",
@@ -285,7 +425,11 @@ const cities = {
     coords: [48.7676, 0.5295],
     researchStation: false,
     neighbors: ["Algiers", "Essen", "Madrid", "Milan", "London"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Riyadh: {
     id: "Riyadh",
@@ -293,7 +437,11 @@ const cities = {
     coords: [19.2549, 51.5061],
     researchStation: false,
     neighbors: ["Baghdad", "Cairo", "Karachi"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   SanFrancisco: {
     id: "SanFrancisco",
@@ -301,7 +449,11 @@ const cities = {
     coords: [48.0722, -133.4158],
     researchStation: false,
     neighbors: ["Chicago", "LosAngeles", "Manila", "Tokyo"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Santiago: {
     id: "Santiago",
@@ -309,7 +461,11 @@ const cities = {
     coords: [-40.0188, -87.5369],
     researchStation: false,
     neighbors: ["Lima"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   SaoPaulo: {
     id: "SaoPaulo",
@@ -317,7 +473,11 @@ const cities = {
     coords: [-24.0178, -48.5135],
     researchStation: false,
     neighbors: ["BuenosAires", "Bogota", "Lagos", "Madrid"],
-    color: "yellow"
+    color: "yellow",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Seoul: {
     id: "Seoul",
@@ -325,7 +485,11 @@ const cities = {
     coords: [55.1968, 137.1115],
     researchStation: false,
     neighbors: ["Beijing", "Shanghai", "Tokyo"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Shanghai: {
     id: "Shanghai",
@@ -333,7 +497,11 @@ const cities = {
     coords: [41.0036, 123.2248],
     researchStation: false,
     neighbors: ["Beijing", "HongKong", "Seoul", "Taipei", "Tokyo"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   StPetersburg: {
     id: "StPetersburg",
@@ -341,7 +509,11 @@ const cities = {
     coords: [62.4456, 29.1819],
     researchStation: false,
     neighbors: ["Essen", "Istanbul", "Moscow"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Sydney: {
     id: "Sydney",
@@ -349,7 +521,11 @@ const cities = {
     coords: [-34.4263, 154.3381],
     researchStation: false,
     neighbors: ["Jakarta", "LosAngeles", "Manila"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Taipei: {
     id: "Taipei",
@@ -357,7 +533,11 @@ const cities = {
     coords: [25.8282, 134.8264],
     researchStation: false,
     neighbors: ["HongKong", "Manila", "Osaka", "Shanghai"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Tehran: {
     id: "Tehran",
@@ -365,7 +545,11 @@ const cities = {
     coords: [53.8713, 64.8529],
     researchStation: false,
     neighbors: ["Baghdad", "Delhi", "Karachi", "Moscow"],
-    color: "black"
+    color: "black",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Tokyo: {
     id: "Tokyo",
@@ -373,7 +557,11 @@ const cities = {
     coords: [47.0154, 156.9748],
     researchStation: false,
     neighbors: ["Osaka", "SanFrancisco", "Seoul", "Shanghai"],
-    color: "red"
+    color: "red",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   },
   Washington: {
     id: "Washington",
@@ -381,7 +569,11 @@ const cities = {
     coords: [37.5973, -71.0260],
     researchStation: false,
     neighbors: ["Atlanta", "Miami", "Montreal", "NewYork"],
-    color: "blue"
+    color: "blue",
+    red: 0,
+    blue: 0,
+    yellow: 0,
+    black: 0
   }
 };
 

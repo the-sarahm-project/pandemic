@@ -7,7 +7,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Move', () => {
   it('receives correct props from store', () => {
-    const expectedProps = ['currentTurn', 'neighbors'];
+    const expectedProps = ['currentTurn'];
     expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
   });
 

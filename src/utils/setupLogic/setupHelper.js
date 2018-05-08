@@ -18,12 +18,12 @@ export async function addResearchStation(gameState, cityName) {
 }
 
 //move the document to a collection
-function addTo(gameState, cityRef, cityData, collection) {
+export function addTo(gameState, cityRef, cityData, collection) {
   return gameState.collection(collection).doc(cityRef).set(cityData);
 }
 
 //delete the document from a collection
-function removeFrom(gameState, cityRef, collection) {
+export function removeFrom(gameState, cityRef, collection) {
   return gameState.collection(collection).doc(cityRef).delete();
 }
 

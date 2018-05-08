@@ -3,19 +3,20 @@ import { Marker } from 'react-leaflet';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { getCurrentPlayer, getNeighbors, getCities, iconContainer } from '../utils';
+import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentHandCity } from '../utils';
 
-const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities }) => {
-  const availableCities = currentPlayer && currentPlayer.currentHand.filter(cardRef => !neighbors.find(neighbor => cardRef.id === neighbor.id));
-  console.log('current player', availableCities, neighbors);
+const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn }) => {
+  const availableCities = currentPlayer && currentPlayer.currentHand.filter(cardRef => !neighbors.find(neighbor => cardRef.id === neighbor) && !!cities[cardRef.id] && cardRef.id !== currentPlayer.currentCity);
+  console.log(availableCities);
   return (
-    isLoaded(currentPlayer) && currentPlayer.isMoving && availableCities.map(cardRef => {
+    isLoaded(currentPlayer) && isLoaded(cities) && currentPlayer.isMoving && availableCities.map(cardRef => {
       return (
         <Marker
           position={cities[cardRef.id].coords}
           key={cardRef.id}
           icon={iconContainer.highlight}
-          onClick={() => console.log('woohoo cards!')}
+          zIndexOffset={1001}
+          onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id)}
         />
       );
     })
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => {
   return {
     currentPlayer: getCurrentPlayer(state),
     neighbors: getNeighbors(state),
-    cities: getCities(state)
+    cities: getCities(state),
+    currentTurn: getCurrentTurn(state)
   };
 };
 

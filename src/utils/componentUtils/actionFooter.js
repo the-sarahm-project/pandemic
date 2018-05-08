@@ -1,4 +1,4 @@
-import { doc } from '../index';
+import { doc, addTo, removeFrom } from '../index';
 
 export const movePlayer = (firestore, currentTurn) => {
   firestore.get(`games/${doc}`)
@@ -9,23 +9,33 @@ export const movePlayer = (firestore, currentTurn) => {
 };
 
 export const changeCurrentCity = (firestore, currentTurn, newCity) => {
-  firestore.get(`games/${doc}`)
+  return firestore.get(`games/${doc}`)
   .then(game => {
     game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+    return game;
   })
   .catch(console.error);
 };
 
-//update the city & then adding the city card data to the trashedCityCards, and then remove from the current player hand (should not be in unusedcitycards?)
+//update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand
 export const changeCurrentHandCity = (firestore, currentTurn, newCity) => {
-   changeCurrentCity(firestore, currentTurn, newCity);
-  firestore.get(`games/${doc}`)
+  let playerRef, currentGame;
+  changeCurrentCity(firestore, currentTurn, newCity)
   .then(game => {
-    game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+    currentGame = game;
+    playerRef = game.ref.collection('players').doc(`${currentTurn}`);
+    return playerRef.get();
+  })
+  .then(docSnapshot => {
+    let {currentHand} = docSnapshot.data();
+    let newHand = currentHand.filter(card => card.id !== newCity);
+    return playerRef.update({currentHand: newHand});
+  })
+  .then(() => {
+    currentGame.ref.collection('unusedCityCards').doc(`${newCity}`).delete();
   })
   .catch(console.error);
 };
-//AHHHH
 
 export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length < 5) {

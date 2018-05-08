@@ -7,7 +7,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Cure', () => {
   it('receives correct props from mapStateToProps', () => {
-    const expectedProps = ['currentTurn', 'CureDisabled', 'currentCity', 'unusedCityCards', 'sameColorCityCards'];
+    const expectedProps = ['currentTurn', 'cureDisabled', 'currentCity', 'unusedCityCards', 'sameColorCityCards'];
     expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
   });
 

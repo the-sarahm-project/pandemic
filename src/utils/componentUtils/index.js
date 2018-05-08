@@ -5,7 +5,5 @@ export * from './cityMarkers';
 export * from './playerMarkers';
 export * from './playerMenu';
 export * from './chooseCardModal';
-export * from './build';
-export * from './move';
-export * from './share';
 export * from './app';
+export * from './actionFooterUtils/index';

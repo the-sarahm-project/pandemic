@@ -45,26 +45,6 @@ export const getPlayersInSameCity = (state) => {
   );
 };
 
-export const getNeighbors = (state) => {
-  const currentTurn = getCurrentTurn(state);
-  const cities = getCities(state);
-  const currentCityId = getCurrentCityId(state);
-  return currentTurn && cities[currentCityId].neighbors;
-};
-
-const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPlayer) => {
-  if (!playersInSameCity || !currentCity || !currentPlayer) return;
-  if (currentPlayer.currentHand.find(card => card.id === currentCity)) return playersInSameCity;
-  else return playersInSameCity.filter(player => player[1].currentHand.find(card => card.id === currentCity));
-};
-
-export const getShareKnowledgePlayers = (state) => {
-  const playersInSameCity = getPlayersInSameCity(state);
-  const currentCityId = getCurrentCityId(state);
-  const currentPlayer = getCurrentPlayer(state);
-  return shareKnowledgePlayers(playersInSameCity, currentCityId, currentPlayer);
-};
-
 export const getRemainingResearchStations = (state) => {
   const game = getGame(state);
   return game && game.remainingResearchStations;
@@ -84,26 +64,6 @@ export const getCurrentCity = (state) => {
   const cities = getCities(state);
   const currentCityId = getCurrentCityId(state);
   return cities && cities[currentCityId];
-};
-
-const researchStationButtonDisabled = (numResearchStations, currentCity, currentHand, unusedCityCards) => {
-  //filter the cards to check if the card is an event card or a city card && if the color matches the current city
-  const enoughCards = currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color)).length;
-  const researchStation = currentCity && currentCity.researchStation;
-  return numResearchStations <= 0 || researchStation || enoughCards < 5;
-};
-
-export const getBuildDisabled = (state) => {
-  const remainingResearchStations = getRemainingResearchStations(state);
-  const currentCity = getCurrentCity(state);
-  const currentHand = getCurrentHand(state);
-  const unusedCityCards = getUnusedCityCards(state);
-  return researchStationButtonDisabled(remainingResearchStations, currentCity, currentHand, unusedCityCards);
-};
-
-export const getShareKnowledgeDisabled = (state) => {
-  const shareKnowledgePlayers = getShareKnowledgePlayers(state);
-  return shareKnowledgePlayers && !shareKnowledgePlayers.length;
 };
 
 export const getSameColorCityCards = (state) => {

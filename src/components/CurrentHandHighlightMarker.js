@@ -7,7 +7,6 @@ import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTur
 
 const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn }) => {
   const availableCities = currentPlayer && currentPlayer.currentHand.filter(cardRef => !neighbors.find(neighbor => cardRef.id === neighbor) && !!cities[cardRef.id] && cardRef.id !== currentPlayer.currentCity);
-  console.log(availableCities);
   return (
     isLoaded(currentPlayer) && isLoaded(cities) && currentPlayer.isMoving && availableCities.map(cardRef => {
       return (

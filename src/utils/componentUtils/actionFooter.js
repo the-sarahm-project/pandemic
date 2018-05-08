@@ -1,5 +1,6 @@
-import { doc, addTo, removeFrom } from '../index';
+import { doc } from '../index';
 
+//initiates move player & shows all possible locations to fly to
 export const movePlayer = (firestore, currentTurn) => {
   firestore.get(`games/${doc}`)
     .then(game => {
@@ -8,6 +9,7 @@ export const movePlayer = (firestore, currentTurn) => {
     .catch(console.error);
 };
 
+//update the current city (move)
 export const changeCurrentCity = (firestore, currentTurn, newCity) => {
   return firestore.get(`games/${doc}`)
   .then(game => {
@@ -17,24 +19,24 @@ export const changeCurrentCity = (firestore, currentTurn, newCity) => {
   .catch(console.error);
 };
 
-//update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand
+//update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand (flight)
 export const changeCurrentHandCity = (firestore, currentTurn, newCity) => {
   let playerRef, currentGame;
   changeCurrentCity(firestore, currentTurn, newCity)
-  .then(game => {
-    currentGame = game;
-    playerRef = game.ref.collection('players').doc(`${currentTurn}`);
-    return playerRef.get();
-  })
-  .then(docSnapshot => {
-    let {currentHand} = docSnapshot.data();
-    let newHand = currentHand.filter(card => card.id !== newCity);
-    return playerRef.update({currentHand: newHand});
-  })
-  .then(() => {
-    currentGame.ref.collection('unusedCityCards').doc(`${newCity}`).delete();
-  })
-  .catch(console.error);
+    .then(game => {
+      currentGame = game;
+      playerRef = game.ref.collection('players').doc(`${currentTurn}`);
+      return playerRef.get();
+    })
+    .then(docSnapshot => {
+      let {currentHand} = docSnapshot.data();
+      let newHand = currentHand.filter(card => card.id !== newCity);
+      return playerRef.update({currentHand: newHand});
+    })
+    .then(() => {
+      currentGame.ref.collection('unusedCityCards').doc(`${newCity}`).delete();
+    })
+    .catch(console.error);
 };
 
 export const setCityResearchStation = (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {

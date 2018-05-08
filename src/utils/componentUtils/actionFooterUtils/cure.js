@@ -27,14 +27,10 @@ export const removeCards = (cardsToRemove) => {
   return Promise.all(cardsToRemove.map(card => card.delete()));
 };
 
-export const updateCurrentHand = async (currentPlayerSnapshot, unusedCityCards, currentCity) => {
+export const updateCurrentHand = (currentPlayerSnapshot, unusedCityCards, currentCity) => {
   const currentHand = currentPlayerSnapshot.data().currentHand;
   const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
-  try {
-    await currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
-  } catch(err) {
-    console.log(err);
-  }
+  return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
 };
 
 const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCards) => {

@@ -1,5 +1,6 @@
 import { doc } from './index';
 
+/* Firestore Data */
 export const getGame = (state) => {
   return state.firestore.data.games && state.firestore.data.games[doc];
 };
@@ -71,4 +72,17 @@ export const getSameColorCityCards = (state) => {
   const unusedCityCards = getUnusedCityCards(state);
   const currentCity = getCurrentCity(state);
   return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
+};
+
+/* Firestore Refs */
+export const getGameRef = (firestore) => {
+  return firestore.get(`games/${doc}`);
+};
+
+export const getCurrentCityRef = (game, currentCity) => {
+  return game.ref.collection('cities').doc(currentCity.id);
+};
+
+export const getCurrentTurnRef = (game, currentTurn) => {
+  return game.ref.collection('players').doc(`${currentTurn}`);
 };

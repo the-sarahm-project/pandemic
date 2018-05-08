@@ -1,36 +1,24 @@
-import { setCityResearchStation, getGameRef, getCurrentPlayerSnapshot, setResearchStationTrue, setRemainingResearchStations, removeCards, updateCurrentHand } from './cure';
+import { setCityResearchStation, setCureMarker, getCurrentPlayerSnapshot, setResearchStationTrue, setRemainingResearchStations, removeCards, updateCurrentHand } from './cure';
 
 describe('build', () => {
-  describe('setCityResearchStation', () => {
+  describe('cureDisease', () => {
     it('does something', () => {
       expect(2).toEqual(2);
     });
   });
 
-  describe('getGame', () => {
-    it('calls firestore.get ', () => {
-      const firestore = {};
-      firestore.get = jest.fn();
-      getGameRef(firestore);
-      expect(firestore.get).toHaveBeenCalled();
-    });
-  });
+  describe('setCureMarker', () => {
+    const update = jest.fn();
+      const game = {
+        ref: {
+          update
+        }
+      };
+    const color = 'blue';
 
-  describe('getCurrentPlayerSnapshot', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
-    });
-  });
-
-  describe('setResearchStationTrue', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
-    });
-  });
-
-  describe('setRemainingResearchStations', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
+    it('calls update on the game ref with given color', () => {
+      setCureMarker(game, color);
+      expect(update).toHaveBeenCalledWith({ [`${color}CureMarker`]: true });
     });
   });
 
@@ -41,6 +29,18 @@ describe('build', () => {
   });
 
   describe('updateCurrentHand', () => {
+    it('does something', () => {
+      expect(2).toEqual(2);
+    });
+  });
+
+  describe('cureButtonDisabled', () => {
+    it('does something', () => {
+      expect(2).toEqual(2);
+    });
+  });
+
+  describe('getCureDisabled', () => {
     it('does something', () => {
       expect(2).toEqual(2);
     });

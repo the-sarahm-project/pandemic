@@ -1,16 +1,8 @@
-export const setResearchStationTrue = async (currentCityRef) => {
-  try {
-    return await currentCityRef.update({ researchStation: true });
-  } catch(err) {
-    console.log(err);
-  }
+export const setResearchStationTrue = currentCityRef => {
+  return currentCityRef.update({ researchStation: true });
 };
 
-export const setRemainingResearchStations = async (game) => {
+export const setRemainingResearchStations = game => {
   const remainingResearchStations = game.data().remainingResearchStations;
-  try {
-    return await game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
-  } catch(err) {
-    console.log(err);
-  }
+  return game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
 };

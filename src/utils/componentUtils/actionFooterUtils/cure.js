@@ -22,7 +22,7 @@ export const setCureMarker = (game, color) => {
   return game.ref.update({ [`${color}CureMarker`]: true });
 };
 
-export const removeCards = (cardsToRemove) => {
+export const removeCards = cardsToRemove => {
   //remove cards from unusedCityCards
   return Promise.all(cardsToRemove.map(card => card.delete()));
 };

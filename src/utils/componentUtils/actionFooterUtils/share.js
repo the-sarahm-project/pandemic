@@ -35,14 +35,9 @@ const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPlayer) =>
   else return playersInSameCity.filter(player => player[1].currentHand.find(card => card.id === currentCity));
 };
 
-export const getShareKnowledgePlayers = (state) => {
+export const getShareKnowledgePlayers = state => {
   const playersInSameCity = getPlayersInSameCity(state);
   const currentCityId = getCurrentCityId(state);
   const currentPlayer = getCurrentPlayer(state);
   return shareKnowledgePlayers(playersInSameCity, currentCityId, currentPlayer);
-};
-
-export const getShareKnowledgeDisabled = (state) => {
-  const shareKnowledgePlayers = getShareKnowledgePlayers(state);
-  return shareKnowledgePlayers && !shareKnowledgePlayers.length;
 };

@@ -33,7 +33,7 @@ export const updateCurrentHand = (currentPlayerSnapshot, cardsToRemove) => {
   return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
 };
 
-const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCards) => {
+export const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCards) => {
   const currentCityColor = currentCity && currentCity.color;
   const cured = game && game[`${currentCityColor}CureMarker`];
   //filter the cards to check if the card is an event card or a city card && if the color matches the current city

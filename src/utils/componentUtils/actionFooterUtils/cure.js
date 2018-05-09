@@ -1,4 +1,4 @@
-import { getGameRef, getCurrentPlayerSnapshot, getCurrentCity, getCurrentHand, getUnusedCityCards, getGame } from '../../index';
+import { getGameRef, getCurrentTurnRef, getCurrentCity, getCurrentHand, getUnusedCityCards, getGame } from '../../index';
 
 export const cureDisease = async (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length !== 5) {
@@ -7,7 +7,7 @@ export const cureDisease = async (firestore, currentTurn, currentCity, unusedCit
   }
   try {
     const game = await getGameRef(firestore);
-    const currentPlayerSnapshot = await getCurrentPlayerSnapshot(game, currentTurn);
+    const currentPlayerSnapshot = await getCurrentTurnRef(game, currentTurn).get();
     return Promise.all([
       updateCurrentHand(currentPlayerSnapshot, unusedCityCards, currentCity),
       setCureMarker(game, currentCity.color),

@@ -1,4 +1,4 @@
-import { setCureMarker, removeCards, updateCurrentHand, cureButtonDisabled, getCureDisabled } from './cure';
+import { setCureMarker, removeCards, updateCurrentHand, cureButtonDisabled } from './cure';
 
 describe('build', () => {
   describe('cureDisease', () => {

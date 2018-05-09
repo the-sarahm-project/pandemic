@@ -29,8 +29,8 @@ export const changeCurrentHandCity = (firestore, currentTurn, newCity) => {
       return playerRef.get();
     })
     .then(docSnapshot => {
-      let {currentHand} = docSnapshot.data();
-      let newHand = currentHand.filter(card => card.id !== newCity);
+      const { currentHand } = docSnapshot.data();
+      const newHand = currentHand.filter(card => card.id !== newCity);
       return playerRef.update({currentHand: newHand});
     })
     .then(() => {

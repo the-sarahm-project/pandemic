@@ -6,19 +6,24 @@ import { connect } from 'react-redux';
 import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentHandCity } from '../utils';
 
 const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn }) => {
-  const availableCities = currentPlayer && currentPlayer.currentHand.filter(cardRef => !neighbors.find(neighbor => cardRef.id === neighbor) && !!cities[cardRef.id] && cardRef.id !== currentPlayer.currentCity);
+  const isNeighbor = cardRefId => neighbors.find(neighbor => neighbor === cardRefId);
+  const isCurrentCity = cardRefId => cardRefId === currentPlayer.currentCity;
+  const isCityCard = cardRefId => cities[cardRefId];
   return (
-    isLoaded(currentPlayer) && isLoaded(cities) && currentPlayer.isMoving && availableCities.map(cardRef => {
-      return (
-        <Marker
-          position={cities[cardRef.id].coords}
-          key={cardRef.id}
-          icon={iconContainer.highlight}
-          zIndexOffset={1001}
-          onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id)}
-        />
-      );
-    })
+    isLoaded(currentPlayer) && currentPlayer.isMoving && currentPlayer.currentHand.reduce((markers, cardRef) => {
+      if (!isNeighbor(cardRef.id) && !isCurrentCity(cardRef.id) && isCityCard(cardRef.id)) {
+        markers.push(
+          <Marker
+            position={cities[cardRef.id].coords}
+            key={cardRef.id}
+            icon={iconContainer.highlight}
+            zIndexOffset={1001}
+            onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id)}
+          />
+        );
+      }
+      return markers;
+    }, [])
   );
 };
 

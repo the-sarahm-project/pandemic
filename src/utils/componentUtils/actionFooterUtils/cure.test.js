@@ -137,10 +137,4 @@ describe('build', () => {
       });
     });
   });
-
-  describe('getCureDisabled', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
-    });
-  });
 });

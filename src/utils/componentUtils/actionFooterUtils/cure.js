@@ -1,18 +1,18 @@
+import { differenceWith, isEqual } from 'lodash';
 import { getGameRef, getCurrentTurnRef, getCurrentCity, getCurrentHand, getUnusedCityCards, getGame } from '../../index';
 
 export const cureDisease = async (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
-  if (cardsToRemove.length !== 5) {
+  if (cardsToRemove.length !== 1) {
     console.log('Please select 5 cards');
     return;
   }
   try {
     const game = await getGameRef(firestore);
     const currentPlayerSnapshot = await getCurrentTurnRef(game, currentTurn).get();
-    return Promise.all([
-      updateCurrentHand(currentPlayerSnapshot, unusedCityCards, currentCity),
-      setCureMarker(game, currentCity.color),
-      removeCards(cardsToRemove)
-    ]);
+    await updateCurrentHand(currentPlayerSnapshot, cardsToRemove);
+    await setCureMarker(game, currentCity.color);
+    //remove cards from unusedCityCards
+    await removeCards(cardsToRemove);
   } catch (err) {
     console.log(err);
   }
@@ -27,9 +27,9 @@ export const removeCards = (cardsToRemove) => {
   return Promise.all(cardsToRemove.map(card => card.delete()));
 };
 
-export const updateCurrentHand = (currentPlayerSnapshot, unusedCityCards, currentCity) => {
+export const updateCurrentHand = (currentPlayerSnapshot, cardsToRemove) => {
   const currentHand = currentPlayerSnapshot.data().currentHand;
-  const newCurrentHand = currentHand.filter(card => unusedCityCards[card.id].color !== currentCity.color);
+  const newCurrentHand = differenceWith(currentHand, cardsToRemove, isEqual);
   return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
 };
 
@@ -40,7 +40,7 @@ const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCards) => 
   const enoughCards = currentHand && currentHand.filter(card => {
     return unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCityColor);
   }).length;
-  return enoughCards < 1 || cured;
+  return enoughCards < 5 || cured;
 };
 
 export const getCureDisabled = (state) => {

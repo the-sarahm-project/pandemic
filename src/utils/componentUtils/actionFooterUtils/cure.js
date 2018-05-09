@@ -1,5 +1,5 @@
 import { differenceWith, isEqual } from 'lodash';
-import { getGameRef, getCurrentTurnRef, getCurrentCity, getCurrentHand, getUnusedCityCards, getGame } from '../../index';
+import { getGameRef, getCurrentTurnRef } from '../../index';
 
 export const cureDisease = async (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length !== 1) {
@@ -41,13 +41,5 @@ export const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCar
     return unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCityColor);
   }).length;
   return enoughCards < 5 || cured;
-};
-
-export const getCureDisabled = (state) => {
-  const currentCity = getCurrentCity(state);
-  const currentHand = getCurrentHand(state);
-  const unusedCityCards = getUnusedCityCards(state);
-  const game = getGame(state);
-  return cureButtonDisabled(game, currentCity, currentHand, unusedCityCards);
 };
 

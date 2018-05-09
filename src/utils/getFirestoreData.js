@@ -1,4 +1,4 @@
-import { doc } from './index';
+import { doc, cureButtonDisabled, getShareKnowledgePlayers } from './index';
 
 /* Firestore Data */
 export const getGame = (state) => {
@@ -72,6 +72,21 @@ export const getSameColorCityCards = (state) => {
   const unusedCityCards = getUnusedCityCards(state);
   const currentCity = getCurrentCity(state);
   return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
+};
+
+// Cure
+export const getCureDisabled = (state) => {
+  const currentCity = getCurrentCity(state);
+  const currentHand = getCurrentHand(state);
+  const unusedCityCards = getUnusedCityCards(state);
+  const game = getGame(state);
+  return cureButtonDisabled(game, currentCity, currentHand, unusedCityCards);
+};
+
+// Share
+export const getShareKnowledgeDisabled = (state) => {
+  const shareKnowledgePlayers = getShareKnowledgePlayers(state);
+  return shareKnowledgePlayers && !shareKnowledgePlayers.length;
 };
 
 /* Firestore Refs */

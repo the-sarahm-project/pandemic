@@ -1,4 +1,4 @@
-import { setCityResearchStation, setCureMarker, getCurrentPlayerSnapshot, setResearchStationTrue, setRemainingResearchStations, removeCards, updateCurrentHand } from './cure';
+import { setCureMarker, removeCards, updateCurrentHand, cureButtonDisabled, getCureDisabled } from './cure';
 
 describe('build', () => {
   describe('cureDisease', () => {
@@ -9,11 +9,11 @@ describe('build', () => {
 
   describe('setCureMarker', () => {
     const update = jest.fn();
-      const game = {
-        ref: {
-          update
-        }
-      };
+    const game = {
+      ref: {
+        update
+      }
+    };
     const color = 'blue';
 
     it('calls update on the game ref with given color', () => {
@@ -23,14 +23,40 @@ describe('build', () => {
   });
 
   describe('removeCards', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
+    const remove = jest.fn();
+    const cardsToRemove = new Array(5).fill({delete: remove});
+    it('calls delete on all cards in cardsToRemove', () => {
+      removeCards(cardsToRemove);
+      expect(remove).toHaveBeenCalledTimes(5);
     });
   });
 
   describe('updateCurrentHand', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
+    const update = jest.fn();
+    const currentPlayerSnapshot = {
+      ref: {
+        update
+      },
+      data: () => ({
+        currentHand: [
+          {id: 'Atlanta', color: 'blue'},
+          {id: 'Paris', color: 'blue'},
+          {id: 'Lima', color: 'yellow'}
+        ]
+      })
+    };
+    const cardsToRemove = [
+      {id: 'Atlanta', color: 'blue'},
+      {id: 'Paris', color: 'blue'},
+    ];
+
+    updateCurrentHand(currentPlayerSnapshot, cardsToRemove);
+    it('calls update with the new hand', () => {
+      expect(update).toHaveBeenCalled();
+    });
+
+    it('calls update with the all the other cards filtered out.', () => {
+      expect(update).toHaveBeenCalledWith({ currentHand: [{id: 'Lima', color: 'yellow'}] });
     });
   });
 

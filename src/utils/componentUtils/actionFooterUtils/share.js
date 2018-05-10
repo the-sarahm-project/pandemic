@@ -1,32 +1,29 @@
-import { doc, getPlayersInSameCity, getCurrentCityId, getCurrentPlayer } from '../../index';
+import { getPlayersInSameCity, getCurrentCityId, getCurrentPlayer, getGameRef, getCurrentCityRef, getPlayerRef } from '../../index';
 
-export const shareKnowledge = (firestore, currentTurn, currentCity, playerNumber) => {
-  firestore.get(`games/${doc}`)
-    .then(game => {
-      const players = game.ref.collection('players');
-      const currentCityId = currentCity.id;
-      const currentCityRef = game.ref.collection('unusedCityCards').doc(currentCityId);
-      const currentPlayerRef = players.doc(`${currentTurn}`);
-      const targetPlayerRef = players.doc(playerNumber);
-      return Promise.all([currentPlayerRef.get(), targetPlayerRef.get(), currentCityRef.get()]);
-    })
-    .then(([currentPlayerSnapshot, targetPlayerSnapshot, currentCitySnapshot]) => {
-      let newCurrentHand;
-      let newTargetHand;
-      // city card is in current player's hand
-      if (currentPlayerSnapshot.data().currentHand.find(card => card.id === currentCity.name)) {
-        newCurrentHand = currentPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity.name);
-        newTargetHand = targetPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
-      }
-      // city card is in another player's hand
-      else {
-        newCurrentHand = currentPlayerSnapshot.data().currentHand.concat(currentCitySnapshot.ref);
-        newTargetHand = targetPlayerSnapshot.data().currentHand.filter(card => card.id !== currentCity.name);
-      }
-      currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
-      targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
-    })
-    .catch(err => console.log(err));
+export const shareKnowledge = async (firestore, currentTurn, currentCity, playerNumber) => {
+  const game = await getGameRef(firestore);
+  // getSnapshots
+  const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
+  const targetPlayerSnapshot = await getPlayerRef(game, playerNumber).get();
+  const currentCitySnapshot = await getCurrentCityRef(game, currentCity.id).get();
+
+  // Different hands
+  const currentHand = currentPlayerSnapshot.data().currentHand;
+  const targetHand = targetPlayerSnapshot.data().currentHand;
+  // Check if card for the current city exists in currentHand
+  const inCurrentHand = currentHand.find(card => card.id === currentCity.name);
+
+  // Filter out cards
+  const filterHand = (hand, cityName) => hand.filter(card => card.id !== cityName);
+
+  const city = currentCity.name;
+  // sets the new hands.
+  const newCurrentHand = inCurrentHand ? filterHand(currentHand, city) : currentHand.concat(currentCitySnapshot.ref);
+  const newTargetHand = inCurrentHand ? targetHand.concat(currentCitySnapshot.ref) : filterHand(targetHand, city);
+
+  // updates.
+  currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
+  targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
 };
 
 const shareKnowledgePlayers = (playersInSameCity, currentCity, currentPlayer) => {

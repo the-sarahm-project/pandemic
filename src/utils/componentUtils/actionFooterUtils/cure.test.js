@@ -1,9 +1,67 @@
-import { setCureMarker, removeCards, updateCurrentHand, cureButtonDisabled } from './cure';
+import { cureDisease, setCureMarker, removeCards, updateCurrentHand, cureButtonDisabled } from './cure';
 
-describe('build', () => {
+describe('cure', () => {
   describe('cureDisease', () => {
-    it('does something', () => {
-      expect(2).toEqual(2);
+    const currentHandUpdate = jest.fn();
+    const currentPlayerSnapshot = {
+      ref: {
+        update: currentHandUpdate
+      },
+      data: () => ({
+        currentHand: [
+          {id: 'Atlanta', color: 'blue'},
+          {id: 'Paris', color: 'blue'},
+          {id: 'Lima', color: 'yellow'}
+        ]
+      })
+    };
+    const doc = () => ({
+      get: () => currentPlayerSnapshot
+    });
+    const collection = () => ({
+      doc
+    });
+    const setCureMarkerUpdate = jest.fn();
+    const testGame = {
+      ref: {
+        collection,
+        update: setCureMarkerUpdate
+      }
+    };
+    const testFirestore = {
+      get: () => testGame
+    };
+    describe('When given exactly 5 cards to remove', () => {
+      const remove = jest.fn();
+      const cardsToRemove = new Array(5).fill({delete: remove});
+      cureDisease(testFirestore, {}, {}, [], cardsToRemove);
+      it('calls updateCurrentHand', () => {
+        expect(currentHandUpdate).toHaveBeenCalled();
+      });
+
+      it('calls setCureMarker', () => {
+        expect(setCureMarkerUpdate).toHaveBeenCalled();
+      });
+
+      it('calls removeCards', () => {
+        expect(remove).toHaveBeenCalledTimes(5);
+      });
+    });
+
+    describe('When not given 5 cards to remove', () => {
+      it('When given less than 5 cards', async () => {
+        const cardsToRemove = new Array(3).fill({});
+        const message = await cureDisease(testFirestore, {}, {}, [], cardsToRemove);
+        expect(message).toEqual('Please select 5 cards');
+      });
+    });
+
+    describe('When not given 5 cards to remove', () => {
+      it('When given less than 5 cards', async () => {
+        const cardsToRemove = new Array(7).fill({});
+        const message = await cureDisease(testFirestore, {}, {}, [], cardsToRemove);
+        expect(message).toBe('Please select 5 cards');
+      });
     });
   });
 

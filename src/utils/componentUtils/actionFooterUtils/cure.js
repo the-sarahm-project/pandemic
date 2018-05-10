@@ -2,9 +2,10 @@ import { differenceWith, isEqual } from 'lodash';
 import { getGameRef, getCurrentTurnRef } from '../../index';
 
 export const cureDisease = async (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
-  if (cardsToRemove.length !== 1) {
-    console.log('Please select 5 cards');
-    return;
+  if (cardsToRemove.length !== 5) {
+    const message = 'Please select 5 cards';
+    console.log(message);
+    return message;
   }
   try {
     const game = await getGameRef(firestore);

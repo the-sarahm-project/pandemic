@@ -94,8 +94,8 @@ export const getGameRef = firestore => {
   return firestore.get(`games/${doc}`);
 };
 
-export const getCurrentCityRef = (game, currentCity) => {
-  return game.ref.collection('unusedCityCards').doc(`${currentCity.id}`);
+export const getCurrentCityRef = (game, currentCityId) => {
+  return game.ref.collection('unusedCityCards').doc(currentCityId);
 };
 
 export const getPlayerRef = (game, player) => {

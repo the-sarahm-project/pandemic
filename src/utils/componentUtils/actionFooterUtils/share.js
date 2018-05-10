@@ -10,6 +10,7 @@ export const shareKnowledge = async (firestore, currentTurn, currentCity, player
   // Different hands
   const currentHand = currentPlayerSnapshot.data().currentHand;
   const targetHand = targetPlayerSnapshot.data().currentHand;
+
   // Check if card for the current city exists in currentHand
   const inCurrentHand = currentHand.find(card => card.id === currentCity.name);
 

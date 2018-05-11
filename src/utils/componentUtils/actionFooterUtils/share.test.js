@@ -1,4 +1,4 @@
-import { shareKnowledge, shareKnowledgePlayers, getShareKnowledgePlayers } from './share';
+import { shareKnowledge, shareKnowledgePlayers } from './share';
 
 describe('share', () => {
   describe('shareKnowledge', () => {
@@ -43,13 +43,14 @@ describe('share', () => {
       players
     };
 
-    // currentTurn
+    // Other arguments.
     const currentTurn = 1;
     const currentCity = {
       id: "Miami",
       name: "Miami"
     };
     const playerNumber = 2;
+
     shareKnowledge(testFirestore, currentTurn, currentCity, playerNumber);
     it('calls update on currentHand', () => {
       expect(updatePlayerOne).toHaveBeenCalledWith({currentHand: [{id: 'Atlanta'}, {id: 'Lima'}]});
@@ -60,15 +61,44 @@ describe('share', () => {
     });
   });
 
-  // describe('shareKnowledgePlayers', () => {
-  //   it('calls update to decrement the amount of Research Stations', () => {
-  //     expect(update).toHaveBeenCalledWith({remainingResearchStations: remainingResearchStations - 1});
-  //   });
-  // });
+  describe('shareKnowledgePlayers', () => {
+    const playerOne = {currentHand: [], currentCity: 'Bogota'};
+    const playerTwo = {currentHand: [], currentCity: 'Bogota'};
+    const playerThree = {currentHand: [{id: 'Atlanta'}, {id: 'Miami'}, {id: 'Lima'}], currentCity: 'Miami'};
+    const playerFour = {currentHand: [{id: 'LosAngeles'}, {id: 'Paris'}], currentCity: 'Miami'};
+    const playerFive = {currentHand: [], currentCity: 'Miami'};
+    const playerSix = {currentHand: [], currentCity: 'Paris'};
+    const playerSeven = {currentHand: [{id: 'LosAngeles'}, {id: 'Paris'}], currentCity: 'Paris'};
+    it('returns an array', () => {
+      const playersInSameCity = [playerTwo];
+      const currentCity = 'Bogota';
+      const currentPlayer = playerOne;
+      const players = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+      expect(Array.isArray(players)).toBe(true);
+    });
 
-  // describe('getShareKnowledgePlayers', () => {
-  //   it('calls update to set ResearchStation to true', () => {
-  //     expect(update).toHaveBeenCalledWith({researchStation: true});
-  //   });
-  // });
+    it('returns empty array if no players have the currentCity card.', () => {
+      const playersInSameCity = [playerTwo];
+      const currentCity = 'Bogota';
+      const currentPlayer = playerOne;
+      const players = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+      expect(players.length).toBe(0);
+    });
+
+    it('returns all other players if the current player has the current city card', () => {
+      const playersInSameCity = [playerFour, playerFive];
+      const currentCity = 'Miami';
+      const currentPlayer = playerThree;
+      const players = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+      expect(players).toEqual([playerFour, playerFive]);
+    });
+
+    it('returns the player with the card if another player in the same city has the current city card', () => {
+      const playersInSameCity = [playerSeven];
+      const currentCity = 'Paris';
+      const currentPlayer = playerSix;
+      const players = shareKnowledgePlayers(playersInSameCity, currentCity, currentPlayer);
+      expect(players).toEqual([playerSeven]);
+    });
+  });
 });

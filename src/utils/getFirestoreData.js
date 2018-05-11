@@ -1,4 +1,4 @@
-import { doc, cureButtonDisabled, getShareKnowledgePlayers } from './index';
+import { doc, cureButtonDisabled, shareKnowledgePlayers } from './index';
 
 /* Firestore Data */
 export const getGame = state => {
@@ -41,9 +41,12 @@ export const getPlayersInSameCity = state => {
   const players = getPlayers(state);
   const currentCityId = getCurrentCityId(state);
   const currentTurn = getCurrentTurn(state);
-  return players && Object.entries(players).filter(player =>
-    player[1].currentCity === currentCityId && Number(player[0]) !== currentTurn
-  );
+  return players && Object.values(players).reduce((totalPlayers, player) => {
+    if (player.id !== currentTurn && player.currentCity === currentCityId ) {
+      totalPlayers.push(player);
+    }
+    return totalPlayers;
+  }, []);
 };
 
 export const getRemainingResearchStations = state => {
@@ -84,6 +87,13 @@ export const getCureDisabled = state => {
 };
 
 // Share
+export const getShareKnowledgePlayers = state => {
+  const playersInSameCity = getPlayersInSameCity(state);
+  const currentCityId = getCurrentCityId(state);
+  const currentPlayer = getCurrentPlayer(state);
+  return shareKnowledgePlayers(playersInSameCity, currentCityId, currentPlayer);
+};
+
 export const getShareKnowledgeDisabled = state => {
   const shareKnowledgePlayers = getShareKnowledgePlayers(state);
   return shareKnowledgePlayers && !shareKnowledgePlayers.length;

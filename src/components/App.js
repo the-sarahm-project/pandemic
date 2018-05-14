@@ -3,16 +3,16 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
 import { SidebarCards, Board, ActionFooter } from './index';
-import { doc } from '../utils';
- import { db } from '../store';
- import { init, setupLogic } from '../utils';
+import { doc, initAndSetupGame } from '../utils';
 
 export class App extends Component {
-  componentDidMount() {
-    const numPlayers = 4, difficultyLevel = 4;
-
-    // setupLogic(db.collection('games').doc(doc), numPlayers, difficultyLevel);
-    // init(db, numPlayers, difficultyLevel);
+  async componentDidMount() {
+    const numPlayers = 3, difficultyLevel = 4, create = false;
+    try {
+      await initAndSetupGame(numPlayers, difficultyLevel, create);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {

@@ -11,8 +11,9 @@ const PlayerButton = ({ player, playerImage, setSelected }) => {
         borderStyle: 'solid',
         borderColor: 'black',
         borderRadius: '10px',
-        flex: 'none',
-        width: '33%'
+        flexShrink: 1,
+        maxWidth: '33%',
+        minWidth: '25%'
       }}
       onClick={event => setSelected(event.currentTarget.value)}
     >

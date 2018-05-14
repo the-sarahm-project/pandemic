@@ -77,7 +77,6 @@ export const dummyState = {
               researchStation: true
             }
           },
-          // cities,
           unusedInfectionCards,
           unusedCityCards,
           infectionRate: 0, //the infection rate marker

@@ -65,6 +65,7 @@ const addPlayers = async (game, numPlayers) => {
   const gameRoles = shuffle(roles);
   const playersCollection = game.collection('players');
   const newPlayer = {
+    id: -1,
     name: "",
     role: "",
     currentCity: "Atlanta",
@@ -75,6 +76,7 @@ const addPlayers = async (game, numPlayers) => {
   await Promise.all(players.map((player, index) => {
     return playersCollection.doc(`${index + 1}`).set({
       ...player,
+      id: index + 1,
       role: gameRoles[index]
     });
   }));

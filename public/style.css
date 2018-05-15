@@ -106,6 +106,7 @@ button.ui.toggle.button.player-button + button.ui.toggle.button.player-button {
   margin-left: 10px;
 }
 
+/* CardModal */
 button.ui.toggle.button.card-button + button.ui.toggle.button.card-button {
-  margin-left: 5px;
+  margin-left: 10px;
 }

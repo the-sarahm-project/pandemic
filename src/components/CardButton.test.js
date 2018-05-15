@@ -23,12 +23,8 @@ describe('CardButton', () => {
       expect(component.find('Button').name()).toBe('Button');
     });
 
-    it('a Button with a div', () => {
-      expect(component.find('Button').childAt(0).name()).toBe('div');
-    });
-
-    it('a Button with a div with an Image', () => {
-      expect(component.find('Button').childAt(0).childAt(0).name()).toBe('Image');
+    it('a Button with an Image', () => {
+      expect(component.find('Button').childAt(0).name()).toBe('Image');
     });
   });
 });

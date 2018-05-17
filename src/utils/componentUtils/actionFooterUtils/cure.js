@@ -4,7 +4,7 @@ import { getGameRef, getPlayerRef } from '../../index';
 export const cureDisease = async (firestore, currentTurn, currentCity, unusedCityCards, cardsToRemove) => {
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
-    console.log(message);
+    alert(message);
     return message;
   }
   try {

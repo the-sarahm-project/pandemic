@@ -14,7 +14,7 @@ const CardButton = ({ card, active, setSelectedAndActive }) => {
         maxWidth: '20%',
         flexShrink: 1
       }}
-      onClick={event => setSelectedAndActive(event.currentTarget.value, card)}
+      onClick={() => setSelectedAndActive(card)}
     >
       <Image
         wrapped

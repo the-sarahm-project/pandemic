@@ -6,16 +6,13 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('CardButton', () => {
   const setSelectedAndActive = jest.fn();
-  const component = shallow(<CardButton card={[]} active={false} setSelectedAndActive={setSelectedAndActive} />);
+  const card = [];
+  const active = false;
+  const component = shallow(<CardButton card={card} active={active} setSelectedAndActive={setSelectedAndActive} />);
 
   it('executes setSelectedAndActive when clicked', () => {
-    const mockEvent = {
-      currentTarget: {
-        value: ''
-      }
-    };
-    component.find('Button').simulate('click', mockEvent);
-    expect(setSelectedAndActive).toHaveBeenCalledWith('', []);
+    component.find('Button').simulate('click');
+    expect(setSelectedAndActive).toHaveBeenCalledWith(card);
   });
 
   describe('renders', () => {

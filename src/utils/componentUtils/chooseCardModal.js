@@ -1,8 +1,8 @@
-export const setSelectedAndActive = function(cardId, card) {
-  this.setState(prevState => {
-    const selected = !prevState.active[cardId] ? [...prevState.selected, card] : prevState.selected.filter(card => card.id !== cardId);
+export const setSelectedAndActive = function(card) {
+  return this.setState(prevState => {
+    const selected = !prevState.active[card.id] ? [...prevState.selected, card] : prevState.selected.filter(prevCard => prevCard.id !== card.id);
     const active = { ...prevState.active,
-      [cardId]: !prevState.active[cardId]
+      [card.id]: !prevState.active[card.id]
     };
     return {
       selected,

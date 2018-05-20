@@ -14,3 +14,5 @@ export { default as ModalActions } from './ModalActions';
 export { default as ModalCardContent } from './ModalCardContent';
 export { default as PlayerButton } from './PlayerButton';
 export { default as ModalPlayerContent } from './ModalPlayerContent';
+export { default as CityHighlightMarker } from './CityHighlightMarker';
+export { default as CurrentHandHighlightMarker } from './CurrentHandHighlightMarker';

@@ -1,8 +1,7 @@
 import React from 'react';
-import { drawNeighborLines, drawBoundaryLines } from '../utils';
+import { drawNeighborLines, drawBoundaryLines, boundaryCities } from '../utils';
 
 const CityLines = () => {
-  const boundaryCities = ['Sydney','Manila','Tokyo','SanFrancisco','LosAngeles'];
   let lines = [];
   drawNeighborLines(lines, boundaryCities);
   drawBoundaryLines(lines, boundaryCities);

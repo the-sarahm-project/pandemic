@@ -9,12 +9,12 @@ const CardButton = ({ card, active, setSelectedAndActive }) => {
       value={card.id}
       toggle
       style={{
-        display: 'flex',
-        justifyContent: 'center',
+        padding: '3px',
         flex: 'none',
-        width: '20%'
+        maxWidth: '20%',
+        flexShrink: 1
       }}
-      onClick={event => setSelectedAndActive(event.currentTarget.value, card)}
+      onClick={() => setSelectedAndActive(card)}
     >
       <Image
         wrapped

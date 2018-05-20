@@ -15,7 +15,7 @@ const ModalPlayerContent = ({ players, playerImage, setSelected }) => {
         >
           {players.map(player => (
             <PlayerButton
-              key={player[0]} //referring to playerId (number), because players comes from Object.entries. Array of [key, value]
+              key={player.id}
               player={player}
               playerImage={playerImage}
               setSelected={setSelected}

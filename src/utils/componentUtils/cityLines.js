@@ -3,6 +3,8 @@ import L from 'leaflet';
 import { Polyline } from 'react-leaflet';
 import { cities } from '../index';
 
+export const boundaryCities = ['Sydney', 'Manila', 'Tokyo', 'SanFrancisco', 'LosAngeles'];
+
 export const drawNeighborLines = (lines, boundaryCities) => {
   const visitedCities = {};
   for (const [cityKey, city] of Object.entries(cities)) {

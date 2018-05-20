@@ -20,32 +20,6 @@ const collections = {
       name: 'Government Grant'
     }
   },
-  players: {
-    1: {
-      name: "",
-      active: false,
-      role: "",
-      currentCity: "Atlanta"
-    },
-    2: {
-      name: "",
-      active: false,
-      role: "",
-      currentCity: "Atlanta"
-    },
-    3: {
-      name: "",
-      active: false,
-      role: "",
-      currentCity: "Atlanta"
-    },
-    4: {
-      name: "",
-      active: false,
-      role: "",
-      currentCity: "Atlanta"
-    }
-  },
   unusedInfectionCards,
   unusedCityCards,
   cities

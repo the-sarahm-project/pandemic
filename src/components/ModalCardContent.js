@@ -10,7 +10,7 @@ const ModalCardContent = ({ cards, active, setSelectedAndActive }) => {
           className="card-button-group"
           style={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           {cards.map(card => (

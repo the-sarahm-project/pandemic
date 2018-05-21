@@ -18,11 +18,11 @@ export const movePlayer = (firestore, currentTurn) => {
 //update the current city (move)
 export const changeCurrentCity = (firestore, currentTurn, newCity) => {
   return firestore.get(`games/${doc}`)
-  .then(game => {
-    game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
-    return game;
-  })
-  .catch(console.error);
+    .then(game => {
+      game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+      return game;
+    })
+    .catch(console.error);
 };
 
 //update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand (flight)

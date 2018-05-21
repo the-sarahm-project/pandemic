@@ -1,13 +1,17 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
-import { CityLines, PlayerHand, GameHeader, CityMarkers, PlayerMarkers, CityHighlightMarker, CurrentHandHighlightMarker } from './index';
-import { darkTiles } from '../utils';
+import { CityLines, PlayerHand, GameHeader, CityMarkers, PlayerMarkers, CityHighlightMarker, CurrentHandHighlightMarker, CharterHighlightMarker } from './index';
+import { darkTiles, getCurrentPlayer } from '../utils';
+import { connect } from 'react-redux';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { compose } from 'redux';
 
-const Board = () => {
+const Board = ({ currentPlayer }) => {
   const center = [0, 0];
   const zoomLevel = 2.3;
   const maxBounds = [[70, -100], [-60, 120]];
-  return (
+  console.log(currentPlayer);
+  return isLoaded(currentPlayer) && (
     <Map
       center={center}
       zoom={zoomLevel}
@@ -22,10 +26,26 @@ const Board = () => {
       <PlayerMarkers />
       <CityMarkers />
       <CityLines />
-      <CityHighlightMarker />
-      <CurrentHandHighlightMarker />
+      {currentPlayer.currentHand.find(card => card.id === currentPlayer.currentCity) !== undefined ?
+        <CharterHighlightMarker />
+        :
+      (
+        <div>
+          <CityHighlightMarker />
+          <CurrentHandHighlightMarker />
+        </div>
+      )}
     </Map>
   );
 };
 
-export default Board;
+const mapStateToProps = (state) => {
+  return {
+    currentPlayer: getCurrentPlayer(state)
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Board);

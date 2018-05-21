@@ -49,6 +49,7 @@ describe('cure', () => {
     });
 
     describe('When not given 5 cards to remove', () => {
+      window.alert = () => {};
       it('When given less than 5 cards', async () => {
         const cardsToRemove = new Array(3).fill({});
         const message = await cureDisease(testFirestore, {}, {}, [], cardsToRemove);

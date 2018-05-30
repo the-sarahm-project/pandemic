@@ -1,4 +1,4 @@
-import { doc, cureButtonDisabled, shareKnowledgePlayers } from './index';
+import { doc, cureButtonDisabled, shareKnowledgePlayers, buildButtonDisabled } from './index';
 
 /* Firestore Data */
 export const getGame = state => {
@@ -77,6 +77,14 @@ export const getSameColorCityCards = state => {
   return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
 };
 
+// Build
+export const getBuildDisabled = state => {
+  const currentCityId = getCurrentCityId(state);
+  const currentHand = getCurrentHand(state);
+  const remainingResearchStations = getRemainingResearchStations(state);
+  return buildButtonDisabled(remainingResearchStations, currentHand, currentCityId);
+}
+
 // Cure
 export const getCureDisabled = state => {
   const currentCity = getCurrentCity(state);
@@ -104,8 +112,12 @@ export const getGameRef = firestore => {
   return firestore.get(`games/${doc}`);
 };
 
-export const getCurrentCityRef = (game, currentCityId) => {
-  return game.ref.collection('unusedCityCards').doc(currentCityId);
+export const getUnusedCityCardRef = (game, cityId) => {
+  return game.ref.collection('unusedCityCards').doc(cityId);
+};
+
+export const getCityRef = (game, cityId) => {
+  return game.ref.collection('cities').doc(cityId);
 };
 
 export const getPlayerRef = (game, player) => {

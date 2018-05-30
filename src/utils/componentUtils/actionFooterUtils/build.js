@@ -1,8 +1,25 @@
-export const setResearchStationTrue = currentCityRef => {
-  return currentCityRef.update({ researchStation: true });
+import { getGameRef, getCityRef, getPlayerRef, removeCards, updateCurrentHand } from '../../index';
+
+export const buildResearchStation = async (firestore, currentCityId, currentTurn) => {
+  const game = await getGameRef(firestore);
+  const currentCityRef = getCityRef(game, currentCityId);
+  const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
+  const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === currentCityId);
+  // set research station to true for that city.
+  currentCityRef.update({ researchStation: true });
+  // update remaining research stations count
+  setRemainingResearchStations(game);
+  // remove card from current hand
+  updateCurrentHand(currentPlayerSnapshot, cardToRemove);
+  //remove card from unusedCityCards
+  removeCards(cardToRemove);
 };
 
 export const setRemainingResearchStations = game => {
   const remainingResearchStations = game.data().remainingResearchStations;
   return game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
+};
+
+export const buildButtonDisabled = (remainingResearchStations, currentHand, currentCityId) => {
+  return remainingResearchStations <= 0 || !(currentHand && currentHand.find(card => card.id === currentCityId));
 };

@@ -1,18 +1,22 @@
 import { getGameRef, getCityRef, getPlayerRef, removeCards, updateCurrentHand } from '../../index';
 
 export const buildResearchStation = async (firestore, currentCityId, currentTurn) => {
-  const game = await getGameRef(firestore);
-  const currentCityRef = getCityRef(game, currentCityId);
-  const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
-  const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === currentCityId);
-  // set research station to true for that city.
-  currentCityRef.update({ researchStation: true });
-  // update remaining research stations count
-  setRemainingResearchStations(game);
-  // remove card from current hand
-  updateCurrentHand(currentPlayerSnapshot, cardToRemove);
-  //remove card from unusedCityCards
-  removeCards(cardToRemove);
+  try {
+    const game = await getGameRef(firestore);
+    const currentCityRef = getCityRef(game, currentCityId);
+    const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
+    const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === currentCityId);
+    // set research station to true for that city.
+    currentCityRef.update({ researchStation: true });
+    // update remaining research stations count
+    setRemainingResearchStations(game);
+    // remove card from current hand
+    updateCurrentHand(currentPlayerSnapshot, cardToRemove);
+    //remove card from unusedCityCards
+    removeCards(cardToRemove);
+  } catch(err) {
+    console.log(err);
+  }
 };
 
 export const setRemainingResearchStations = game => {

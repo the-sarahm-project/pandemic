@@ -126,9 +126,6 @@ describe('cure', () => {
     const curedTrue = {
       blueCureMarker: true
     };
-    const currentCityBlue = {
-      color: 'blue'
-    };
     const currentHandBlue = [
       {id: 'Atlanta', color: 'blue'},
       {id: 'Paris', color: 'blue'},

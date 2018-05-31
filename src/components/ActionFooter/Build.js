@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { buildResearchStation, getCurrentCityId, getBuildDisabled, getCurrentTurn } from '../../utils';
 
-const Build = ({ firestore, currentCityId, buildButtonDisabled, currentTurn }) => {
+export const Build = ({ firestore, currentCityId, buildButtonDisabled, currentTurn }) => {
   return (
     <Button
       className="action-button build-button"

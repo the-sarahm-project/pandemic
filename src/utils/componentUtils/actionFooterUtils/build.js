@@ -1,9 +1,10 @@
-import { getGameRef, getCityRef, getPlayerRef, removeCards, updateCurrentHand } from '../../index';
+import { getGameRef, getCityRef, getPlayerRef } from '../../index';
+import { removeCards, updateCurrentHand } from './cure';
 
 export const buildResearchStation = async (firestore, currentCityId, currentTurn) => {
   try {
     const game = await getGameRef(firestore);
-    const currentCityRef = getCityRef(game, currentCityId);
+    const currentCityRef = await getCityRef(game, currentCityId);
     const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
     const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === currentCityId);
     // set research station to true for that city.

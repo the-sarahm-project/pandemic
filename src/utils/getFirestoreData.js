@@ -83,7 +83,7 @@ export const getBuildDisabled = state => {
   const currentHand = getCurrentHand(state);
   const remainingResearchStations = getRemainingResearchStations(state);
   return buildButtonDisabled(remainingResearchStations, currentHand, currentCityId);
-}
+};
 
 // Cure
 export const getCureDisabled = state => {

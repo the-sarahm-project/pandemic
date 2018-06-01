@@ -77,6 +77,18 @@ export const getSameColorCityCards = state => {
   return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
 };
 
+export const getDiseaseCubes = state => {
+  const currentCity = getCurrentCity(state);
+  let diseaseCubes = [];
+  if (currentCity) {
+    if (currentCity.red) diseaseCubes.push(['red', currentCity.red]);
+    if (currentCity.blue) diseaseCubes.push(['blue', currentCity.blue]);
+    if (currentCity.yellow) diseaseCubes.push(['yellow', currentCity.yellow]);
+    if (currentCity.black) diseaseCubes.push(['black', currentCity.black]);
+  }
+  return diseaseCubes;
+};
+
 // Cure
 export const getCureDisabled = state => {
   const currentCity = getCurrentCity(state);
@@ -106,6 +118,10 @@ export const getGameRef = firestore => {
 
 export const getCurrentCityRef = (game, currentCityId) => {
   return game.ref.collection('unusedCityCards').doc(currentCityId);
+};
+
+export const getCityRef = (game, cityId) => {
+  return game.ref.collection('cities').doc(cityId);
 };
 
 export const getPlayerRef = (game, player) => {

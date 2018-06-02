@@ -1,12 +1,12 @@
 import React from 'react';
-import { Modal, Button } from 'semantic-ui-react';
+import { ModalContent, ButtonGroup } from 'semantic-ui-react';
 import { DiseaseButton } from './index';
 
 const TreatModalContent = ({ diseases, setSelected, selected }) => {
   return (
-    <Modal.Content>
+    <ModalContent>
       {diseases && diseases.length &&
-        <Button.Group
+        <ButtonGroup
           className="disease-button-group"
           style={{
             display: 'flex',
@@ -25,8 +25,8 @@ const TreatModalContent = ({ diseases, setSelected, selected }) => {
               />
             );
           })}
-        </Button.Group>}
-    </Modal.Content>
+        </ButtonGroup>}
+    </ModalContent>
   );
 };
 

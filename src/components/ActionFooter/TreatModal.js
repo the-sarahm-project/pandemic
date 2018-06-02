@@ -7,7 +7,7 @@ import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
 import { treatDisease, getCurrentCity } from '../../utils';
 
-class TreatModal extends React.Component {
+export class TreatModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

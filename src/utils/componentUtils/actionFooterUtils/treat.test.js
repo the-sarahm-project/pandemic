@@ -23,12 +23,12 @@ describe('treat', () => {
   };
   describe('treatDisease', () => {
     it('calls update to increase the remaining disease cubes by 1', async () => {
-      await treatDisease({firestore, currentCity: 'Atlanta', disease: ['blue', 3]});
+      await treatDisease({firestore, currentCity: 'Atlanta'}, 'blue,3');
       expect(updateTotalCubeCount).toHaveBeenCalledWith({blueDiseaseCubes: 24});
     });
 
     it('calls update to reduce the number of cubes by 1', async () => {
-      await treatDisease({firestore, currentCity: 'Atlanta', disease: ['blue', 3]});
+      await treatDisease({firestore, currentCity: 'Atlanta'}, 'blue,3');
       expect(updateCityCubeCount).toHaveBeenCalledWith({blue: 2});
     });
 

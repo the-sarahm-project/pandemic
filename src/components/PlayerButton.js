@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Image } from 'semantic-ui-react';
 
-const PlayerButton = ({ player, playerImage, setSelected }) => {
+const PlayerButton = ({ player, playerImage, setSelected, active }) => {
   return (
     <Button
       className="player-button"
       value={player.id}
       toggle
+      active={active}
       style={{
         borderStyle: 'solid',
         borderColor: 'black',

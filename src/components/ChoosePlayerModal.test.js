@@ -10,7 +10,7 @@ describe('ChoosesCardModal', () => {
 
   describe('has correct initialState', () => {
     const expectedState = {
-      selected: null,
+      selected: '',
       modalOpen: false
     };
 
@@ -36,7 +36,7 @@ describe('ChoosesCardModal', () => {
     });
 
     describe('a Modal with ModalPlayerContent', () => {
-      const expectedProps = ['players', 'playerImage', 'setSelected'];
+      const expectedProps = ['players', 'playerImage', 'setSelected', 'selected'];
       const ModalPlayerContentWrapper = component.find('Modal').childAt(1);
 
       it('actually renders ModalPlayerContent', () => {

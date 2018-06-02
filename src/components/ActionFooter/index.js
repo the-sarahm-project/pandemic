@@ -28,4 +28,6 @@ export { default as Move } from './Move';
 export { default as Treat } from './Treat';
 export { default as Share } from './Share';
 export { default as TreatButton } from './TreatButton';
-// export { default as TreatModal } from './TreatModal';
+export { default as TreatModal } from './TreatModal';
+export { default as TreatModalContent } from './TreatModalContent';
+export { default as DiseaseButton } from './DiseaseButton';

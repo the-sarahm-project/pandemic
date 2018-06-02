@@ -22,7 +22,7 @@ const DiseaseButton = ({ diseaseColor, numCubes, setSelected, active }) => {
         <Image
           wrapped
           size='small'
-          src='assets/images/disease_large_yellow.png'
+          src={`assets/images/disease_large_${diseaseColor}.png`}
           style={{ width: 'auto' }}
         />
         <div

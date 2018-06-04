@@ -11,7 +11,13 @@ const DiseaseCube = ({ color, coords }) => {
     }
   });
   const DiseaseCubeUrl = `assets/images/cube_${color}.png`;
-  return <Marker position={coords} icon={new DiseaseCubeIcon({iconUrl: DiseaseCubeUrl})} zIndexOffset={200} xIndexOffset={4} />;
+  return (
+    <Marker
+      position={coords}
+      icon={new DiseaseCubeIcon({iconUrl: DiseaseCubeUrl})}
+      zIndexOffset={200}
+    />
+  );
 };
 
 export default DiseaseCube;

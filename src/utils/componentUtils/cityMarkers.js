@@ -20,24 +20,26 @@ export const iconContainer = {
   'highlight': new highlightIcon({iconUrl: 'assets/images/city_sel.png'})
 };
 
+// cubeCoords offset is based on LatLng, so distance is stretched on the map.
+// Need to find a way to get pixel distance in React.
 export const getCubeCoords = (cityCoords, cubeNum, totalCubes) => {
   let [latitude, longitude] = cityCoords;
-  const fraction = 3; // arbitrary based on size of cube.
+  const offset = 3; // arbitrary based on size of cube.
   if (cubeNum < totalCubes / 2) { // first half of cubes
     if (cubeNum < totalCubes / 4) { // top right quadrant.
-      latitude += fraction;
-      longitude += fraction;
+      latitude += offset;
+      longitude += offset;
     } else { // bottom right quadrant
-      latitude -= fraction;
-      longitude += fraction;
+      latitude -= offset;
+      longitude += offset;
     }
   } else { // second half of cubes
     if (cubeNum < 3 * totalCubes / 4) { // bottom left quadrant
-      latitude -= fraction;
-      longitude -= fraction;
+      latitude -= offset;
+      longitude -= offset;
     } else { // top left quadrant
-      latitude += fraction;
-      longitude -= fraction;
+      latitude += offset;
+      longitude -= offset;
     }
   }
   return [latitude, longitude];

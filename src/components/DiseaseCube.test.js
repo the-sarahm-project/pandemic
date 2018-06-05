@@ -5,7 +5,7 @@ import DiseaseCube from './DiseaseCube';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('DiseaseCube', () => {
-  const component = shallow(<DiseaseCube coords={[1,1]} />);
+  const component = shallow(<DiseaseCube coords={[1,1]} cube={['red', 3]} />);
   describe('renders', () => {
     it('a Marker', () => {
       expect(component.length).toBe(1);

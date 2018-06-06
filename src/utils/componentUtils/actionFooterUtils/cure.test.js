@@ -179,19 +179,40 @@ describe('cure', () => {
     };
     describe('Disabled', () => {
       it(`is disabled when that color is already cured`, () => {
-        const disabled = cureButtonDisabled(curedTrue, currentCityBlue, currentHandBlue, unusedCityCards);
+        const currentCity = {
+          color: 'blue',
+          researchStation: true
+        };
+        const disabled = cureButtonDisabled(curedTrue, currentCity, currentHandBlue, unusedCityCards);
         expect(disabled).toEqual(true);
       });
 
       it('is disabled when there are not enough cards that match currentCity color', () => {
-        const disabled = cureButtonDisabled(curedFalse, currentCityBlue, currentHandYellow, unusedCityCards);
+        const currentCity = {
+          color: 'blue',
+          researchStation: true
+        };
+        const disabled = cureButtonDisabled(curedFalse, currentCity, currentHandYellow, unusedCityCards);
+        expect(disabled).toEqual(true);
+      });
+
+      it('is disabled when the currentCity does not have a research station', () => {
+        const currentCity = {
+          color: 'blue',
+          researchStation: false
+        };
+        const disabled = cureButtonDisabled(curedFalse, currentCity, currentHandBlue, unusedCityCards);
         expect(disabled).toEqual(true);
       });
     });
 
     describe('Enabled', () => {
-      it(`is enabled when there are enough cards of the current city's color and that color is not cured`, () => {
-        const disabled = cureButtonDisabled(curedFalse, currentCityBlue, currentHandBlue, unusedCityCards);
+      const currentCity = {
+        color: 'blue',
+        researchStation: true
+      };
+      it(`is enabled when there are enough cards of the current city's color and that color is not cured and there is a research station`, () => {
+        const disabled = cureButtonDisabled(curedFalse, currentCity, currentHandBlue, unusedCityCards);
         expect(disabled).toEqual(false);
       });
     });

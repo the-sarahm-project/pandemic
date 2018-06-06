@@ -1,4 +1,4 @@
-import { getGameRef, getCurrentCityRef, getPlayerRef } from '../../index';
+import { getGameRef, getUnusedCityCardRef, getPlayerRef } from '../../index';
 
 // Check if card for the current city exists in a hand
 export const inHand = (hand, cityName) => hand.find(card => card.id === cityName);
@@ -11,7 +11,7 @@ export const shareKnowledge = async (firestore, currentTurn, currentCity, player
   // getSnapshots
   const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
   const targetPlayerSnapshot = await getPlayerRef(game, playerNumber).get();
-  const currentCitySnapshot = await getCurrentCityRef(game, currentCity.id).get();
+  const currentCitySnapshot = await getUnusedCityCardRef(game, currentCity.id).get();
 
   // Different hands
   const currentHand = currentPlayerSnapshot.data().currentHand;

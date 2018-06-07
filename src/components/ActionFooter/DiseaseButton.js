@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Image } from 'semantic-ui-react';
 
-const PlayerButton = ({ player, playerImage, setSelected, active }) => {
+const DiseaseButton = ({ diseaseColor, numCubes, setSelected, active }) => {
   return (
     <Button
-      className="player-button"
-      value={player.id}
+      className="disease-button"
+      value={[diseaseColor, numCubes]}
       toggle
       active={active}
       style={{
@@ -22,7 +22,7 @@ const PlayerButton = ({ player, playerImage, setSelected, active }) => {
         <Image
           wrapped
           size='small'
-          src={playerImage[player.role]}
+          src={`assets/images/disease_large_${diseaseColor}.png`}
           style={{ width: 'auto' }}
         />
         <div
@@ -33,12 +33,11 @@ const PlayerButton = ({ player, playerImage, setSelected, active }) => {
             alignItems: 'flex-start'
           }}
         >
-          <div>Name</div>
-          <div>{player.role}</div>
+          <div>{numCubes}</div>
         </div>
       </div>
     </Button>
   );
 };
 
-export default PlayerButton;
+export default DiseaseButton;

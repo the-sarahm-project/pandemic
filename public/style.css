@@ -142,3 +142,7 @@ img.leaflet-marker-icon.disease-cube-5.leaflet-zoom-animated.leaflet-interactive
   margin-top: -25px !important;
 }
 
+/* TreatModal */
+button.ui.toggle.button.disease-button + button.ui.toggle.button.disease-button {
+  margin-left: 10px;
+}

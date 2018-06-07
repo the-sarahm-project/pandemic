@@ -18,8 +18,21 @@ describe('CityMarkers', () => {
     expect(component.children().length).toEqual(48);
   });
 
-  it('renders the correct number of Markers', () => {
-    expect(component.find('Marker').length).toEqual(48);
+  describe('Markers', () => {
+    it('renders Markers with a Tooltip with a Label', () => {
+      const marker = component.find('Marker').at(0);
+      const tooltip = marker.childAt(0);
+      const label = tooltip.childAt(0);
+      expect(marker.name()).toBe('Marker');
+      expect(tooltip.name()).toBe('Tooltip');
+      expect(label.name()).toBe('Label');
+    });
+
+    it('renders the correct number of Markers', () => {
+      expect(component.find('Marker').length).toEqual(48);
+      expect(component.find('Tooltip').length).toEqual(48);
+      expect(component.find('Label').length).toEqual(48);
+    });
   });
 
   it('renders the correct number of Research Stations', () => {

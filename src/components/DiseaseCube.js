@@ -18,7 +18,7 @@ const DiseaseCube = ({ coords, cube }) => {
       className='disease-cube'
       position={coords}
       icon={new DiseaseCubeIcon({iconUrl: DiseaseCubeUrl})}
-      zIndexOffset={1001} //because playerMarker zIndexOffset is 1000
+      zIndexOffset={987} // make z-index greater than playerMarker.
     />
   );
 };

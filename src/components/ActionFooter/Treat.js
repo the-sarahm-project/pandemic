@@ -1,13 +1,25 @@
 import React from 'react';
-import { Icon, Button } from 'semantic-ui-react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { TreatModal, TreatButton } from './index';
+import { getCurrentCityDiseaseCubes } from '../../utils';
 
-const Treat = () => {
+export const Treat = ({ diseaseCubes }) => {
   return (
-    <Button className="action-button treat-button" >
-      <Icon className="treat-icon action-icon" name="medkit" size="big" />
-      <div className="treat-text action-text">Treat</div>
-    </Button>
+    diseaseCubes && diseaseCubes.length === 1 ?
+      <TreatButton disease={diseaseCubes && diseaseCubes[0]} /> : //diseaseCubes[0] because only 1 cube color.
+      <TreatModal diseases={diseaseCubes} />
   );
 };
 
-export default Treat;
+export const mapStateToProps = (state) => {
+  return {
+    diseaseCubes: getCurrentCityDiseaseCubes(state)
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(Treat);

@@ -1,12 +1,17 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import ChoosePlayerModal from './ChoosePlayerModal';
+import { TreatModal, mapStateToProps } from './TreatModal';
 Enzyme.configure({ adapter: new Adapter() });
+import { dummyState } from '../../utils';
 
-describe('ChoosesCardModal', () => {
+describe('TreatModal', () => {
+  it('receives correct props from mapStateToProps', () => {
+    const expectedProps = ['currentCity'];
+    expect(Object.keys(mapStateToProps(dummyState))).toEqual(expect.arrayContaining(expectedProps));
+  });
 
-  const component = shallow(<ChoosePlayerModal />);
+  const component = shallow(<TreatModal diseases={[]} />);
 
   describe('has correct initialState', () => {
     const expectedState = {
@@ -35,16 +40,16 @@ describe('ChoosesCardModal', () => {
       expect(component.find('Modal').childAt(0).name()).toBe('Header');
     });
 
-    describe('a Modal with ModalPlayerContent', () => {
-      const expectedProps = ['players', 'playerImage', 'setSelected', 'selected'];
-      const ModalPlayerContentWrapper = component.find('Modal').childAt(1);
+    describe('a Modal with TreatModalContent', () => {
+      const expectedProps = ['diseases', 'setSelected', 'selected'];
+      const TreatModalContentWrapper = component.find('Modal').childAt(1);
 
-      it('actually renders ModalPlayerContent', () => {
-        expect(ModalPlayerContentWrapper.name()).toBe('ModalPlayerContent');
+      it('actually renders TreatModalContent', () => {
+        expect(TreatModalContentWrapper.name()).toBe('TreatModalContent');
       });
 
       it('takes in correct props', () => {
-        expect(Object.keys(ModalPlayerContentWrapper.props())).toEqual(expect.arrayContaining(expectedProps));
+        expect(Object.keys(TreatModalContentWrapper.props())).toEqual(expect.arrayContaining(expectedProps));
       });
     });
 

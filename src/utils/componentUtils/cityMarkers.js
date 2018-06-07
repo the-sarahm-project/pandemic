@@ -20,19 +20,21 @@ export const iconContainer = {
   'highlight': new highlightIcon({iconUrl: 'assets/images/city_sel.png'})
 };
 
-export const getDiseaseCubes = city => {
-  const cubes = [];
-  const colors = ['red', 'blue', 'yellow', 'black'];
-  let totalCount = 0;
-  for (const color of colors) {
-    totalCount = addCube(cubes, color, city[color], totalCount);
+export const addCubes = diseaseCubes => {
+  let totalCount = 0, cubes = [];
+  for (const [color, num] of diseaseCubes) {
+    for (let i = 0; i < num; i++) {
+      cubes.push([color, totalCount++]);
+    }
   }
   return cubes;
 };
 
-export const addCube = (cubes, color, count, totalCount) => {
-  for (let i = 0; i < count; i++) {
-    cubes.push([color, totalCount++]);
-  }
-  return totalCount;
+export const getCityDiseaseCubes = city => {
+  let diseaseCubes = [];
+  if (city.red) diseaseCubes.push(['red', city.red]);
+  if (city.blue) diseaseCubes.push(['blue', city.blue]);
+  if (city.yellow) diseaseCubes.push(['yellow', city.yellow]);
+  if (city.black) diseaseCubes.push(['black', city.black]);
+  return addCubes(diseaseCubes);
 };

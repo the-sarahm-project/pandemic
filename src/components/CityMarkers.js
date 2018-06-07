@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { ResearchStation, DiseaseCube } from './index';
-import { iconContainer, getCities, getDiseaseCubes } from '../utils';
+import { iconContainer, getCities, getCityDiseaseCubes } from '../utils';
 
 export const CityMarkers = ({ cities }) => {
   return (
     <div>
       {isLoaded(cities) && Object.values(cities).map(city => {
-        const cubes = getDiseaseCubes(city);
+        const cubes = getCityDiseaseCubes(city);
         return (
           <div key={city.coords}>
             <Marker position={city.coords} icon={iconContainer[city.color]} />

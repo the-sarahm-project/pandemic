@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import ActionFooter, { Move, Cure, Share, Treat } from './index';
+import ActionFooter, { Move, Cure, Share, Build, Treat } from './index';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('App', () => {
@@ -21,7 +21,7 @@ describe('App', () => {
   });
 
   it('renders Build', () => {
-    expect(component.find('Build').name()).toBe('Build');
+    expect(component.find(Build)).toHaveLength(1);
   });
 
   it('renders Share', () => {

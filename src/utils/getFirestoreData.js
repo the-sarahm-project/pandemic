@@ -1,4 +1,4 @@
-import { doc, cureButtonDisabled, shareKnowledgePlayers } from './index';
+import { doc, cureButtonDisabled, shareKnowledgePlayers, buildButtonDisabled } from './index';
 
 /* Firestore Data */
 export const getGame = state => {
@@ -87,6 +87,14 @@ export const getDiseaseCubes = state => {
     if (currentCity.black) diseaseCubes.push(['black', currentCity.black]);
   }
   return diseaseCubes;
+}
+
+// Build
+export const getBuildDisabled = state => {
+  const currentCityId = getCurrentCityId(state);
+  const currentHand = getCurrentHand(state);
+  const remainingResearchStations = getRemainingResearchStations(state);
+  return buildButtonDisabled(remainingResearchStations, currentHand, currentCityId);
 };
 
 // Cure
@@ -116,8 +124,8 @@ export const getGameRef = firestore => {
   return firestore.get(`games/${doc}`);
 };
 
-export const getCurrentCityRef = (game, currentCityId) => {
-  return game.ref.collection('unusedCityCards').doc(currentCityId);
+export const getUnusedCityCardRef = (game, cityId) => {
+  return game.ref.collection('unusedCityCards').doc(cityId);
 };
 
 export const getCityRef = (game, cityId) => {

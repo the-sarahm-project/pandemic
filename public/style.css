@@ -110,3 +110,8 @@ button.ui.toggle.button.player-button + button.ui.toggle.button.player-button {
 button.ui.toggle.button.card-button + button.ui.toggle.button.card-button {
   margin-left: 10px;
 }
+
+/* TreatModal */
+button.ui.toggle.button.disease-button + button.ui.toggle.button.disease-button {
+  margin-left: 10px;
+}

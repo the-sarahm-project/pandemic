@@ -7,7 +7,7 @@ class ChoosePlayerModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null,
+      selected: '',
       modalOpen: false
     };
     this.handleOpen = () => this.setState({ modalOpen: true });
@@ -26,6 +26,7 @@ class ChoosePlayerModal extends React.Component {
           players={players}
           playerImage={playerImage}
           setSelected={selected => this.setState({ selected })}
+          selected={this.state.selected}
         />
         <ModalActions
           action={action}

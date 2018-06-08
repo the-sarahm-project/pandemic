@@ -10,11 +10,11 @@ function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, fir
     isLoaded(currentPlayer) && currentPlayer.isMoving && isLoaded(neighbors) && isLoaded(cities) && neighbors.map(neighbor => {
       return (
         <Marker
-         position={cities[neighbor].coords}
-         key={neighbor}
-         icon={iconContainer.highlight}
-         zIndexOffset={1001}
-         onClick={() => changeCurrentCity(firestore, currentTurn, neighbor)}
+          position={cities[neighbor].coords}
+          key={neighbor}
+          icon={iconContainer.highlight}
+          zIndexOffset={1001}
+          onClick={() => changeCurrentCity(firestore, currentTurn, neighbor)}
         />
       );
     })

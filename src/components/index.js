@@ -17,3 +17,4 @@ export { default as ModalPlayerContent } from './ModalPlayerContent';
 export { default as CityHighlightMarker } from './CityHighlightMarker';
 export { default as CurrentHandHighlightMarker } from './CurrentHandHighlightMarker';
 export { default as CharterHighlightMarker } from './CharterHighlightMarker';
+export { default as DiseaseCube } from './DiseaseCube';

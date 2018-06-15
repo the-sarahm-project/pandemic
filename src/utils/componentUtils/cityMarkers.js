@@ -19,3 +19,22 @@ export const iconContainer = {
   black: new Icon({ iconUrl: 'https://totalsororitymove.com/wp-content/uploads/user_avatars/blackball.png' }),
   'highlight': new highlightIcon({iconUrl: 'assets/images/city_sel.png'})
 };
+
+export const addCubes = diseaseCubes => {
+  let totalCount = 0, cubes = [];
+  for (const [color, num] of diseaseCubes) {
+    for (let i = 0; i < num; i++) {
+      cubes.push([color, totalCount++]);
+    }
+  }
+  return cubes;
+};
+
+export const getCityDiseaseCubes = city => {
+  let diseaseCubes = [];
+  if (city.red) diseaseCubes.push(['red', city.red]);
+  if (city.blue) diseaseCubes.push(['blue', city.blue]);
+  if (city.yellow) diseaseCubes.push(['yellow', city.yellow]);
+  if (city.black) diseaseCubes.push(['black', city.black]);
+  return addCubes(diseaseCubes);
+};

@@ -111,6 +111,37 @@ button.ui.toggle.button.card-button + button.ui.toggle.button.card-button {
   margin-left: 10px;
 }
 
+/* DiseaseCube */
+img.leaflet-marker-icon.disease-cube-0.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: 5px !important;
+  margin-top: -5px !important;
+}
+
+img.leaflet-marker-icon.disease-cube-1.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: -15px !important;
+  margin-top: 5px !important;
+}
+
+img.leaflet-marker-icon.disease-cube-2.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: -35px !important;
+  margin-top: -5px !important;
+}
+
+img.leaflet-marker-icon.disease-cube-3.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: -35px !important;
+  margin-top: -25px !important;
+}
+
+img.leaflet-marker-icon.disease-cube-4.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: -15px !important;
+  margin-top: -35px !important;
+}
+
+img.leaflet-marker-icon.disease-cube-5.leaflet-zoom-animated.leaflet-interactive {
+  margin-left: 5px !important;
+  margin-top: -25px !important;
+}
+
 /* TreatModal */
 button.ui.toggle.button.disease-button + button.ui.toggle.button.disease-button {
   margin-left: 10px;

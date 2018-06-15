@@ -70,11 +70,13 @@ export const dummyState = {
             ...cities,
             Algiers: {
               ...cities.Algiers,
-              researchStation: true
+              researchStation: true,
+              black: 3
             },
             Beijing: {
               ...cities.Beijing,
-              researchStation: true
+              researchStation: true,
+              red: 2
             }
           },
           unusedInfectionCards,

@@ -77,7 +77,7 @@ export const getSameColorCityCards = state => {
   return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
 };
 
-export const getDiseaseCubes = state => {
+export const getCurrentCityDiseaseCubes = state => {
   const currentCity = getCurrentCity(state);
   let diseaseCubes = [];
   if (currentCity) {
@@ -87,7 +87,7 @@ export const getDiseaseCubes = state => {
     if (currentCity.black) diseaseCubes.push(['black', currentCity.black]);
   }
   return diseaseCubes;
-}
+};
 
 // Build
 export const getBuildDisabled = state => {

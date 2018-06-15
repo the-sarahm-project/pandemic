@@ -3,24 +3,24 @@ import { Marker } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { ResearchStation } from './index';
-import { iconContainer, getCities } from '../utils';
+import { ResearchStation, DiseaseCube } from './index';
+import { iconContainer, getCities, getCityDiseaseCubes } from '../utils';
 
 export const CityMarkers = ({ cities }) => {
-  let cityMarkers = [];
-  let researchStations = [];
-  if (isLoaded(cities)) {
-    for (const city of Object.values(cities)) {
-      cityMarkers.push(<Marker key={city.coords} position={city.coords} icon={iconContainer[city.color]} />);
-      if (city.researchStation) {
-        researchStations.push(<ResearchStation key={city.coords} coords={city.coords} />);
-      }
-    }
-  }
   return (
     <div>
-      {cityMarkers}
-      {researchStations}
+      {isLoaded(cities) && Object.values(cities).map(city => {
+        const cubes = getCityDiseaseCubes(city);
+        return (
+          <div key={city.coords}>
+            <Marker position={city.coords} icon={iconContainer[city.color]} />
+            {city.researchStation && <ResearchStation coords={city.coords} researchStation={city.researchStation} />}
+            {cubes.map(cube => {
+              return <DiseaseCube key={`${city.coords}-${cube}`} coords={city.coords} cube={cube} />;
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 };

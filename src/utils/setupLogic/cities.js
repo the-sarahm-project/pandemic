@@ -253,7 +253,7 @@ const cities = {
   },
   Lagos: {
     id: "Lagos",
-    namee: "Lagos",
+    name: "Lagos",
     coords: [8.4103, 6.6357],
     researchStation: false,
     neighbors: ["Khartoum", "Kinshasa", "SaoPaulo"],

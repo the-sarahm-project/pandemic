@@ -142,6 +142,12 @@ img.leaflet-marker-icon.disease-cube-5.leaflet-zoom-animated.leaflet-interactive
   margin-top: -25px !important;
 }
 
+/* City Tooltip */
+.leaflet-tooltip.city-tooltip {
+  position: absolute;
+  z-index: 5;
+}
+
 /* TreatModal */
 button.ui.toggle.button.disease-button + button.ui.toggle.button.disease-button {
   margin-left: 10px;

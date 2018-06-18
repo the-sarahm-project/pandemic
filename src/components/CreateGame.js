@@ -5,8 +5,6 @@ class CreateGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: {},
-      selected: [],
       modalOpen: false
     };
     this.handleOpen = () => this.setState({ modalOpen: true });

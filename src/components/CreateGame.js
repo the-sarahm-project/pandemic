@@ -1,31 +1,33 @@
 import React from 'react';
-import { Button, Segment } from 'semantic-ui-react';
+import { Header, Modal, Button } from 'semantic-ui-react';
+import { CreateGameForm } from './index';
+class CreateGame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: {},
+      selected: [],
+      modalOpen: false
+    };
+    this.handleOpen = () => this.setState({ modalOpen: true });
+    this.handleClose = () => this.setState({ modalOpen: false });
+  }
 
-const CreateGame = () => {
-  return (
-    <Segment
-      raised
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '90vh',
-        height: '50vh'
-      }}
-    >
-      <div
-        style={{
-          fontSize: '3em',
-          marginBottom: '1em'
-        }}
+  render() {
+    return (
+      <Modal
+        trigger={<Button onClick={() => this.handleOpen()}>Create Game</Button>}
+        open={this.state.modalOpen}
+        size='mini'
+        onClose={this.handleClose}
       >
-        Pandemic
-      </div>
-      <Button>Create Game</Button>
-    </Segment>
-
-  );
-};
+        <Header content='Create a Game' textAlign='center' />
+        <Modal.Content>
+          <CreateGameForm />
+        </Modal.Content>
+      </Modal>
+    );
+  }
+}
 
 export default CreateGame;

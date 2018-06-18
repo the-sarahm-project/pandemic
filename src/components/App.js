@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
-import { SidebarCards, Board, ActionFooter, CreateGame } from './index';
+import { SidebarCards, Board, ActionFooter, HomeScreen } from './index';
 import { doc, initAndSetupGame } from '../utils';
 
 export class App extends Component {
@@ -25,7 +25,7 @@ export class App extends Component {
           alignItems: 'center',
           height: '100vh'
         }}>
-          <CreateGame />
+          <HomeScreen />
         </div> :
         <div className="game">
           <SidebarCards />

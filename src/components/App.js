@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../App.css';
-import { SidebarCards, Board, ActionFooter } from './index';
+import { SidebarCards, Board, ActionFooter, CreateGame } from './index';
 import { doc, initAndSetupGame } from '../utils';
 
 export class App extends Component {
@@ -16,12 +16,22 @@ export class App extends Component {
   }
 
   render() {
+    const createGame = true;
     return (
-      <div className="game">
-        <SidebarCards />
-        <Board />
-        <ActionFooter />
-      </div>
+      createGame ?
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh'
+        }}>
+          <CreateGame />
+        </div> :
+        <div className="game">
+          <SidebarCards />
+          <Board />
+          <ActionFooter />
+        </div>
     );
   }
 }

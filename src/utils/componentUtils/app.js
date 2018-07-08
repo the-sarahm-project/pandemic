@@ -4,6 +4,7 @@ import { db } from '../../store';
 export const initAndSetupGame = async (password, numPlayers, difficultyLevel, create) => {
   if (!create) return;
   try {
+    console.log(difficultyLevel);
     const newDoc = await init(db, password, numPlayers, difficultyLevel);
     console.log(newDoc);
     await setupLogic(db.collection('games').doc(newDoc), numPlayers, difficultyLevel);

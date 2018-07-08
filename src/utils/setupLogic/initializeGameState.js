@@ -14,20 +14,20 @@ const init = async (db, password, numPlayers, difficultyLevel) => {
   const cities = Object.entries(collections.cities);
   const unusedInfectionCards = Object.entries(collections.unusedInfectionCards);
   const unusedCityCards = Object.entries(collections.unusedCityCards);
-  const id = game.id;
-  await game.set({id, password});
-  await setGameFields(game, numPlayers, difficultyLevel);
+  await setGameFields(game, password, numPlayers, difficultyLevel);
   await addRemainingEpidemicCards(game, difficultyLevel);
   await addUnusedEventCards(game, unusedEventCards);
   await addPlayers(game, numPlayers);
   await addCities(game, cities);
   await addUnusedInfectionCards(game, unusedInfectionCards);
   await addUnusedCityCards(game, unusedCityCards);
-  return id;
+  return game.id;
 };
 
 const setGameFields = async (game, password, numPlayers, difficultyLevel) => {
   await game.set({
+    id: game.id,
+    password,
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,

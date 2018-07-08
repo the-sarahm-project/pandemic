@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Form, Input } from 'semantic-ui-react';
-
+import { initAndSetupGame } from '../utils';
 class CreateGameForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      password: '',
       numPlayers: '2',
       difficultyLevel: '4'
     };
+    this.handlePasswordChange = (e, { value}) => this.setState({ password: value });
     this.handlePlayerChange = (e, { value }) => this.setState({ numPlayers: value });
     this.handleDifficultyChange = (e, { value }) => this.setState({ difficultyLevel: value });
   }
@@ -15,14 +17,18 @@ class CreateGameForm extends React.Component {
   render() {
     const { numPlayers, difficultyLevel } = this.state;
     return (
-      <Form>
-        <Form.Field>
-          <label>Name</label>
-          <Input placeholder='Name' />
-        </Form.Field>
+      <Form onSubmit={e => {
+        e.preventDefault();
+        initAndSetupGame(this.state.password, this.state.numPlayers, this.state.difficultyLevel, true);
+      }}>
         <Form.Field>
           <label>Password</label>
-          <Input type='password' placeholder='Password' />
+          <Input
+            placeholder='Password'
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+            type='password'
+          />
         </Form.Field>
         <Form.Field>
           <label>Number of Players</label>

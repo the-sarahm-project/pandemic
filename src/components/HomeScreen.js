@@ -4,27 +4,34 @@ import { CreateGame } from './index';
 
 const HomeScreen = () => {
   return (
-    <Segment
-      raised
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '90vh',
-        height: '50vh'
-      }}
-    >
-      <div
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh'
+    }}>
+      <Segment
+        raised
         style={{
-          fontSize: '3em',
-          marginBottom: '1em'
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '90vh',
+          height: '50vh'
         }}
       >
-        Pandemic
-      </div>
-      <CreateGame />
-    </Segment>
+        <div
+          style={{
+            fontSize: '3em',
+            marginBottom: '1em'
+          }}
+        >
+          Pandemic
+        </div>
+        <CreateGame />
+      </Segment>
+    </div>
   );
 };
 

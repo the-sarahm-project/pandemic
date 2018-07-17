@@ -3,7 +3,8 @@ import { Marker } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc, playerIconContainer } from '../utils';
+import { playerIconContainer } from '../utils';
+import history from '../history';
 
 const PlayerMarkers = ({ cities, players }) => {
   return (
@@ -23,6 +24,7 @@ const PlayerMarkers = ({ cities, players }) => {
 };
 
 const mapStateToProps = (state) => {
+  const doc = history.location.pathname.slice(1);
   const game = state.firestore.data.games && state.firestore.data.games[doc];
   const cities = game && game.cities;
   const players = game && game.players;

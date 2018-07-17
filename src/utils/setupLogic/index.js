@@ -1,7 +1,7 @@
 import { flipInfectionCards, getSnapshotData, addResearchStation, getCollectionDocs, createPlayerDeck } from './setupHelper';
 
 //pass in the game state, the number of players, the difficulty level
-async function setupLogic(gameState, numPlayers, difficultyLevel) {
+async function setupLogic(gameState, difficultyLevel) {
   //Watch as one research station is placed in Atlanta.
   await addResearchStation(gameState, 'Atlanta');
 

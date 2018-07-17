@@ -3,11 +3,11 @@ import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { doc } from '../utils';
+import { getCurrentHand, getEventCards } from '../utils';
 
-const PlayerHand = ({ game, currentHand, eventCards } ) => {
+const PlayerHand = ({ currentHand, eventCards } ) => {
   return (
-    isLoaded(game) && isLoaded(eventCards) && isLoaded(currentHand) &&
+    isLoaded(eventCards) && isLoaded(currentHand) &&
     <Container className="cards-container">
       {
         currentHand.map(cardRef => {
@@ -21,14 +21,9 @@ const PlayerHand = ({ game, currentHand, eventCards } ) => {
 };
 
 const mapStateToProps = (state) => {
-  const game = state.firestore.data.games && state.firestore.data.games[doc];
-  const eventCards = game && game.unusedEventCards;
-  const player = game && game.players[1];
-  const currentHand = player && player.currentHand;
   return {
-    game,
-    eventCards,
-    currentHand
+    currentHand: getCurrentHand(state),
+    eventCards: getEventCards(state)
   };
 };
 

@@ -1,15 +1,16 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button, Form, Input } from 'semantic-ui-react';
 import { initAndSetupGame } from '../utils';
 class CreateGameForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      password: '',
+      name: '',
       numPlayers: '2',
       difficultyLevel: '4'
     };
-    this.handlePasswordChange = (e, { value}) => this.setState({ password: value });
+    this.handleNameChange = (e, { value}) => this.setState({ name: value });
     this.handlePlayerChange = (e, { value }) => this.setState({ numPlayers: value });
     this.handleDifficultyChange = (e, { value }) => this.setState({ difficultyLevel: value });
   }
@@ -17,17 +18,17 @@ class CreateGameForm extends React.Component {
   render() {
     const { numPlayers, difficultyLevel } = this.state;
     return (
-      <Form onSubmit={e => {
+      <Form onSubmit={ async e => {
         e.preventDefault();
-        initAndSetupGame(this.state.password, this.state.numPlayers, this.state.difficultyLevel, true);
+        const gameId = await initAndSetupGame(this.state.name, +this.state.numPlayers, +this.state.difficultyLevel, true);
+        this.props.history.push(`/${gameId}`);
       }}>
         <Form.Field>
-          <label>Password</label>
+          <label>Name</label>
           <Input
-            placeholder='Password'
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-            type='password'
+            placeholder='Name'
+            value={this.state.name}
+            onChange={this.handleNameChange}
           />
         </Form.Field>
         <Form.Field>
@@ -82,4 +83,4 @@ class CreateGameForm extends React.Component {
   }
 }
 
-export default CreateGameForm;
+export default withRouter(CreateGameForm);

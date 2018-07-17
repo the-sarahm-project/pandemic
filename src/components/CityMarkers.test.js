@@ -2,10 +2,12 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { CityMarkers, mapStateToProps } from './CityMarkers';
-import { dummyState, doc } from '../utils';
+import { dummyState } from '../utils';
+import history from '../history';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('CityMarkers', () => {
+  const doc = history.location.pathname.slice(1);
   const component = shallow(<CityMarkers />);
   component.setProps({cities: dummyState.firestore.data.games[doc].cities});
   it('receives correct props from mapStateToProps', () => {

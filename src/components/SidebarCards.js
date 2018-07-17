@@ -4,7 +4,7 @@ import PlayerMenu from './PlayerMenu';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { doc } from '../utils';
+import history from '../history';
 
 const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
   return (
@@ -33,6 +33,7 @@ const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
 };
 
 const mapStateToProps = (state) => {
+  const doc = history.location.pathname.slice(1);
   const game = state.firestore.data.games && state.firestore.data.games[doc];
   const unusedCityCards = game && game.unusedCityCards;
   const players = game && game.players;

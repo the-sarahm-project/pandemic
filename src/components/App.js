@@ -1,47 +1,37 @@
-import React, { Component } from 'react';
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import '../App.css';
-import { SidebarCards, Board, ActionFooter, HomeScreen } from './index';
-import { doc, initAndSetupGame } from '../utils';
+import { Game, HomeScreen } from './index';
+import { db } from '../store';
+import history from '../history';
 
-export class App extends Component {
-  async componentDidMount() {
-    const numPlayers = 3, difficultyLevel = 4, create = false;
-    try {
-      await initAndSetupGame(numPlayers, difficultyLevel, create);
-    } catch (err) {
-      console.log(err);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      gameExists: false
+    };
+  }
+
+  async componentWillMount() {
+    const gameId = history.location.pathname.slice(1);
+    const game = gameId && await db.collection('games').doc(gameId).get();
+    if (game.exists || !gameId) {
+      this.setState({ gameExists: true });
+    } else {
+      history.push('/');
     }
   }
 
   render() {
-    const createGame = true;
     return (
-      createGame ?
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh'
-        }}>
-          <HomeScreen />
-        </div> :
-        <div className="game">
-          <SidebarCards />
-          <Board />
-          <ActionFooter />
-        </div>
+
+      <Switch>
+        <Route exact path="/" component={HomeScreen} />
+        {this.state.gameExists && <Route exact path="/:gameid" component={Game} />}
+      </Switch>
     );
   }
 }
 
-export default compose(
-  firestoreConnect(() => [
-    {collection: 'games', doc: doc, subcollections: [{ collection: 'players' }]},
-    {collection: 'games', doc: doc, subcollections: [{ collection: 'unusedEventCards' }]},
-    {collection: 'games', doc: doc, subcollections: [{ collection: 'unusedCityCards' }]},
-    {collection: 'games', doc: doc, subcollections: [{ collection: 'cities' }]},
-    {collection: 'games', doc: doc}
-  ])
-)(App);
+export default App;

@@ -1,7 +1,9 @@
-import { doc, cureButtonDisabled, shareKnowledgePlayers, buildButtonDisabled } from './index';
+import { cureButtonDisabled, shareKnowledgePlayers, buildButtonDisabled } from './index';
+import history from '../history';
 
 /* Firestore Data */
 export const getGame = state => {
+  const doc = history.location.pathname.slice(1);
   return state.firestore.data.games && state.firestore.data.games[doc];
 };
 
@@ -48,6 +50,11 @@ export const getPlayersInSameCity = state => {
     return totalPlayers;
   }, []);
 };
+
+export const getEventCards = state => {
+  const game = getGame(state);
+  return game && game.unusedEventCards;
+}
 
 export const getRemainingResearchStations = state => {
   const game = getGame(state);
@@ -121,6 +128,7 @@ export const getShareKnowledgeDisabled = state => {
 
 /* Firestore Refs */
 export const getGameRef = firestore => {
+  const doc = history.location.pathname.slice(1);
   return firestore.get(`games/${doc}`);
 };
 

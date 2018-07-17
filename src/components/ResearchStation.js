@@ -8,7 +8,7 @@ const ResearchStation = ({ coords }) => {
       iconSize: [50, 50]
     }
   });
-  const researchStationUrl = 'https://vignette.wikia.nocookie.net/sqmegapolis/images/8/82/Nuclear_Research_Center_%28Old%29.png/revision/latest?cb=20130515084457';
+  const researchStationUrl = 'assets/images/station.png';
   return <Marker position={coords} icon={new ResearchStationIcon({iconUrl: researchStationUrl})} />;
 };
 

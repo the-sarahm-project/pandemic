@@ -54,7 +54,7 @@ export const getPlayersInSameCity = state => {
 export const getEventCards = state => {
   const game = getGame(state);
   return game && game.unusedEventCards;
-}
+};
 
 export const getRemainingResearchStations = state => {
   const game = getGame(state);

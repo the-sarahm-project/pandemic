@@ -3,9 +3,9 @@ import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Marker } from 'react-leaflet';
-import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentCity } from '../utils';
+import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentCity, getActionsRemaining, getNextActivePlayer } from '../utils';
 
-function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, firestore }) {
+function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, firestore, actionsRemaining, nextActivePlayer }) {
   return (
     isLoaded(currentPlayer) && currentPlayer.isMoving && isLoaded(neighbors) && isLoaded(cities) && neighbors.map(neighbor => {
       return (
@@ -14,7 +14,7 @@ function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, fir
           key={neighbor}
           icon={iconContainer.highlight}
           zIndexOffset={1001}
-          onClick={() => changeCurrentCity(firestore, currentTurn, neighbor)}
+          onClick={() => changeCurrentCity(firestore, currentTurn, neighbor, actionsRemaining, nextActivePlayer)}
         />
       );
     })
@@ -26,7 +26,9 @@ const mapStateToProps = (state) => {
     currentTurn: getCurrentTurn(state),
     currentPlayer: getCurrentPlayer(state),
     neighbors: getNeighbors(state),
-    cities: getCities(state)
+    cities: getCities(state),
+    actionsRemaining: getActionsRemaining(state),
+    nextActivePlayer: getNextActivePlayer(state)
   };
 };
 

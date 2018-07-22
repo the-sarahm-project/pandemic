@@ -1,4 +1,5 @@
 import { getCurrentTurn, getCities, getCurrentCityId } from '../../index';
+import { updateActionsRemaining } from './index';
 import history from '../../../history';
 
 const doc = history.location.pathname.slice(1);
@@ -10,22 +11,16 @@ export const getNeighbors = (state) => {
   return currentTurn && cities[currentCityId].neighbors;
 };
 
-export const movePlayer = (firestore, currentTurn) => {
-  firestore.get(`games/${doc}`)
-    .then(game => {
-      game.ref.collection('players').doc(`${currentTurn}`).update({isMoving: true});
-    })
-    .catch(console.error);
+export const movePlayer = async (firestore, currentTurn) => {
+  const game = await firestore.get(`games/${doc}`);
+  await game.ref.collection('players').doc(`${currentTurn}`).update({isMoving: true});
 };
 
 //update the current city (move)
-export const changeCurrentCity = (firestore, currentTurn, newCity) => {
-  return firestore.get(`games/${doc}`)
-  .then(game => {
-    game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
-    return game;
-  })
-  .catch(console.error);
+export const changeCurrentCity = async (firestore, currentTurn, newCity, actionsRemaining, nextActivePlayer) => {
+  const game = await firestore.get(`games/${doc}`);
+  await game.ref.collection('players').doc(`${currentTurn}`).update({currentCity: newCity, isMoving: false});
+  await updateActionsRemaining(game, actionsRemaining, nextActivePlayer);
 };
 
 //update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand (flight)

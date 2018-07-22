@@ -1,7 +1,7 @@
 import { getGameRef, getCityRef, getPlayerRef } from '../../index';
 import { removeCards, updateCurrentHand } from './cure';
 
-export const buildResearchStation = async (firestore, currentCityId, currentTurn) => {
+export const buildResearchStation = async (firestore, currentCityId, currentTurn, actionsRemaining) => {
   try {
     const game = await getGameRef(firestore);
     const currentCityRef = await getCityRef(game, currentCityId);

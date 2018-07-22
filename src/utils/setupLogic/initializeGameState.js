@@ -8,13 +8,13 @@ usedEventCards
 import { shuffle } from 'lodash';
 import { collections } from './index';
 
-const init = async (db, name, numPlayers, difficultyLevel) => {
+const init = async (db, numPlayers, difficultyLevel) => {
   const game = await db.collection('games').doc();
   const unusedEventCards = Object.entries(collections.unusedEventCards);
   const cities = Object.entries(collections.cities);
   const unusedInfectionCards = Object.entries(collections.unusedInfectionCards);
   const unusedCityCards = Object.entries(collections.unusedCityCards);
-  await setGameFields(game, name, numPlayers, difficultyLevel);
+  await setGameFields(game, numPlayers, difficultyLevel);
   await addRemainingEpidemicCards(game, difficultyLevel);
   await addUnusedEventCards(game, unusedEventCards);
   await addPlayers(game, numPlayers);
@@ -24,10 +24,9 @@ const init = async (db, name, numPlayers, difficultyLevel) => {
   return game.id;
 };
 
-const setGameFields = async (game, name, numPlayers, difficultyLevel) => {
+const setGameFields = async (game, numPlayers, difficultyLevel) => {
   await game.set({
     id: game.id,
-    name,
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,
@@ -72,7 +71,8 @@ const addPlayers = async (game, numPlayers) => {
     role: "",
     currentCity: "Atlanta",
     currentHand: [],
-    isMoving: false
+    isMoving: false,
+    active: false
   };
   const players = new Array(numPlayers).fill(newPlayer);
   await Promise.all(players.map((player, index) => {

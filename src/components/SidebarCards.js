@@ -4,6 +4,7 @@ import PlayerMenu from './PlayerMenu';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import SetName from './SetName';
 import history from '../history';
 
 const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
@@ -17,6 +18,7 @@ const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
       inverted
       vertical
     >
+      <SetName />
       {
         isLoaded(unusedCityCards) && isLoaded(players) && isLoaded(unusedEventCards) && Object.keys(players).map(playerKey => (
           <PlayerMenu

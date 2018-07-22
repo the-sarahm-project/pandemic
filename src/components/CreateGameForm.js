@@ -1,16 +1,15 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Form, Input } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { initAndSetupGame } from '../utils';
+
 class CreateGameForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
       numPlayers: '2',
       difficultyLevel: '4'
     };
-    this.handleNameChange = (e, { value}) => this.setState({ name: value });
     this.handlePlayerChange = (e, { value }) => this.setState({ numPlayers: value });
     this.handleDifficultyChange = (e, { value }) => this.setState({ difficultyLevel: value });
   }
@@ -20,17 +19,9 @@ class CreateGameForm extends React.Component {
     return (
       <Form onSubmit={ async e => {
         e.preventDefault();
-        const gameId = await initAndSetupGame(this.state.name, +this.state.numPlayers, +this.state.difficultyLevel, true);
+        const gameId = await initAndSetupGame(+this.state.numPlayers, +this.state.difficultyLevel, true);
         this.props.history.push(`/${gameId}`);
       }}>
-        <Form.Field>
-          <label>Name</label>
-          <Input
-            placeholder='Name'
-            value={this.state.name}
-            onChange={this.handleNameChange}
-          />
-        </Form.Field>
         <Form.Field>
           <label>Number of Players</label>
           <Form.Group>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react';
 import { CreateGame } from './index';
 
+
 const HomeScreen = () => {
   return (
     <div style={{

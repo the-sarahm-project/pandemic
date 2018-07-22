@@ -4,9 +4,9 @@ export * from './share';
 export * from './cure';
 export * from './treat';
 
-export const updateActionsRemaining = async (game, actionsRemaining, nextActivePlayer) => {
+export const updateActionsRemaining = async (game, actionsRemaining, nextTurn) => {
   await game.ref.update({ actionsRemaining: actionsRemaining - 1});
   if (actionsRemaining === 1) {
-    await game.ref.update({ currentTurn: nextActivePlayer, actionsRemaining: 3 });
+    await game.ref.update({ currentTurn: nextTurn, actionsRemaining: 3 });
   }
 };

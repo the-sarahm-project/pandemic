@@ -1,10 +1,11 @@
 import { getGameRef, getUnusedCityCardRef, getPlayerRef } from '../../index';
+import { updateActionsRemaining } from './index';
 
 // Check if card for the current city exists in a hand
 export const inHand = (hand, cityName) => hand.find(card => card.id === cityName);
 
 // Shares cards
-export const shareKnowledge = async (firestore, currentTurn, currentCity, playerNumber) => {
+export const shareKnowledge = async (firestore, currentTurn, currentCity, playerNumber, actionsRemaining, nextTurn) => {
   const cityName = currentCity.name;
   const game = await getGameRef(firestore);
 
@@ -26,8 +27,9 @@ export const shareKnowledge = async (firestore, currentTurn, currentCity, player
   const newTargetHand = isInHand ? targetHand.concat(currentCitySnapshot.ref) : filterHand(targetHand, cityName);
 
   // update hands.
-  currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
-  targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
+  await currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
+  await targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
+  await updateActionsRemaining(game, actionsRemaining, nextTurn);
 };
 
 // Gets players to share with

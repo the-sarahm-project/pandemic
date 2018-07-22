@@ -27,7 +27,7 @@ export const getPlayers = state => {
   return game && game.players;
 };
 
-export const getNextActivePlayer = state => {
+export const getNextTurn = state => {
   const currentTurn = getCurrentTurn(state);
   const players = getPlayers(state);
   let newTurn = currentTurn + 1;

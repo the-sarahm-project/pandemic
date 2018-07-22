@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getCurrentCity } from '../../utils';
+import { treatDisease, getCurrentCity, getActionsRemaining, getNextTurn } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export class TreatModal extends React.Component {
   }
 
   render() {
-    const { firestore, diseases, currentCity } = this.props;
+    const { firestore, diseases, currentCity, actionsRemaining, nextTurn } = this.props;
     return (
       <Modal
         trigger={
@@ -41,7 +41,7 @@ export class TreatModal extends React.Component {
           selected={this.state.selected}
         />
         <ModalActions
-          action={treatDisease.bind(this, { firestore, currentCity })}
+          action={treatDisease.bind(this, { firestore, currentCity, actionsRemaining, nextTurn })}
           handleClose={this.handleClose}
           selected={this.state.selected}
         />
@@ -52,7 +52,9 @@ export class TreatModal extends React.Component {
 
 export const mapStateToProps = (state) => {
   return {
-    currentCity: getCurrentCity(state)
+    currentCity: getCurrentCity(state),
+    actionsRemaining: getActionsRemaining(state),
+    nextTurn: getNextTurn(state)
   };
 };
 

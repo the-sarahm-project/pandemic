@@ -65,7 +65,7 @@ class SetName extends React.Component {
 const mapStateToProps = (state) => {
   return {
     players: getPlayers(state)
-  }
+  };
 };
 
 export default withRouter(compose(firestoreConnect(), connect(mapStateToProps))(SetName));

@@ -14,6 +14,17 @@ class Game extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.firebase.auth().signInAnonymously().catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode);
+      console.log(errorMessage);
+      // ...
+    });
+  }
+
   async componentWillMount() {
     const gameId = history.location.pathname.slice(1);
     const game = gameId && await db.collection('games').doc(gameId).get();

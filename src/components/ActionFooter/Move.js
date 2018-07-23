@@ -3,11 +3,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { movePlayer, getCurrentTurn } from '../../utils';
+import { movePlayer, getCurrentTurn, getActionsRemaining, getNextTurn } from '../../utils';
 
-export const Move = ({ currentTurn, firestore }) => {
+export const Move = ({ currentTurn, firestore, actionsRemaining, nextTurn }) => {
   return (
-    <Button className="action-button move-button" onClick={() => movePlayer(firestore, currentTurn)}>
+    <Button className="action-button move-button" onClick={async () => await movePlayer(firestore, currentTurn, actionsRemaining, nextTurn)}>
       <div className="move-icons">
         <Icon className="car-icon action-icon" name="car" size="big" />/
         <Icon className="plane-icon action-icon" name="plane" size="big" />
@@ -19,7 +19,9 @@ export const Move = ({ currentTurn, firestore }) => {
 
 export const mapStateToProps = (state) => {
   return {
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    actionsRemaining: getActionsRemaining(state),
+    nextTurn: getNextTurn(state)
   };
 };
 

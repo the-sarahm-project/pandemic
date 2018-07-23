@@ -5,10 +5,10 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { TreatModal, TreatButton } from './index';
 import { getCurrentCityDiseaseCubes } from '../../utils';
 
-export const Treat = ({ diseaseCubes }) => {
+export const Treat = ({ diseaseCubes, checkClicked }) => {
   return (
     diseaseCubes && diseaseCubes.length === 1 ?
-      <TreatButton disease={diseaseCubes && diseaseCubes[0]} /> : //diseaseCubes[0] because only 1 cube color.
+      <TreatButton checkClicked={checkClicked} disease={diseaseCubes && diseaseCubes[0]} /> : //diseaseCubes[0] because only 1 cube color.
       <TreatModal diseases={diseaseCubes} />
   );
 };

@@ -27,6 +27,18 @@ export const getPlayers = state => {
   return game && game.players;
 };
 
+export const getNextTurn = state => {
+  const currentTurn = getCurrentTurn(state);
+  const players = getPlayers(state);
+  let newTurn = currentTurn + 1;
+  if (newTurn > Object.keys(players).length) newTurn = 1;
+  while (newTurn !== currentTurn && !players[newTurn].active) {
+    newTurn++;
+    if (newTurn > Object.keys(players).length) newTurn = 1;
+  }
+  return newTurn;
+};
+
 export const getCurrentPlayer = state => {
   const players = getPlayers(state);
   const currentTurn = getCurrentTurn(state);
@@ -75,6 +87,11 @@ export const getCurrentCity = state => {
   const cities = getCities(state);
   const currentCityId = getCurrentCityId(state);
   return cities && cities[currentCityId];
+};
+
+export const getActionsRemaining = state => {
+  const game = getGame(state);
+  return game && game.actionsRemaining;
 };
 
 export const getSameColorCityCards = state => {

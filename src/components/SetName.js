@@ -30,7 +30,7 @@ class SetName extends React.Component {
             this.setState({ userid: key });
             break;
           } else if (!value.active) {
-            game.ref.collection('players').doc(key).update({ active: true, id: user.uid });
+            game.ref.collection('players').doc(key).update({ active: true, uid: user.uid });
             user.id = key;
             this.setState({ userid: key });
             break;

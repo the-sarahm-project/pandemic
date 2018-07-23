@@ -1,7 +1,8 @@
 import { getGameRef, getCityRef, getPlayerRef } from '../../index';
 import { removeCards, updateCurrentHand } from './cure';
+import { updateActionsRemaining } from './index';
 
-export const buildResearchStation = async (firestore, currentCityId, currentTurn) => {
+export const buildResearchStation = async (firestore, currentCityId, currentTurn, actionsRemaining, nextTurn) => {
   try {
     const game = await getGameRef(firestore);
     const currentCityRef = await getCityRef(game, currentCityId);
@@ -15,6 +16,7 @@ export const buildResearchStation = async (firestore, currentCityId, currentTurn
     await updateCurrentHand(currentPlayerSnapshot, cardToRemove);
     //remove card from unusedCityCards
     await removeCards(cardToRemove);
+    await updateActionsRemaining(game, actionsRemaining, nextTurn);
   } catch(err) {
     console.log(err);
   }

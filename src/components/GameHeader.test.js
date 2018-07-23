@@ -2,10 +2,13 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { GameHeader, mapStateToProps } from './GameHeader';
-import { dummyState, doc } from '../utils';
+import { dummyState } from '../utils';
+import history from '../history';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('GameHeader', () => {
+  const doc = history.location.pathname.slice(1);
   const component = shallow(<GameHeader />);
   const game = dummyState.firestore.data.games[doc];
   component.setProps({game, playerDeck: ['card1', 'card2', 'card3']});

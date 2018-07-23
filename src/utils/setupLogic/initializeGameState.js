@@ -8,13 +8,13 @@ usedEventCards
 import { shuffle } from 'lodash';
 import { collections } from './index';
 
-const init = async (db, numPlayers, difficultyLevel) => {
+const init = async (db, name, numPlayers, difficultyLevel) => {
   const game = await db.collection('games').doc();
   const unusedEventCards = Object.entries(collections.unusedEventCards);
   const cities = Object.entries(collections.cities);
   const unusedInfectionCards = Object.entries(collections.unusedInfectionCards);
   const unusedCityCards = Object.entries(collections.unusedCityCards);
-  await setGameFields(game, numPlayers, difficultyLevel);
+  await setGameFields(game, name, numPlayers, difficultyLevel);
   await addRemainingEpidemicCards(game, difficultyLevel);
   await addUnusedEventCards(game, unusedEventCards);
   await addPlayers(game, numPlayers);
@@ -24,8 +24,10 @@ const init = async (db, numPlayers, difficultyLevel) => {
   return game.id;
 };
 
-const setGameFields = async (game, numPlayers, difficultyLevel) => {
+const setGameFields = async (game, name, numPlayers, difficultyLevel) => {
   await game.set({
+    id: game.id,
+    name,
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,
@@ -109,5 +111,10 @@ const addUnusedCityCards = async (game, unusedCityCards) => {
     return unusedCityCardsCollection.doc(unusedCityCardKey).set(unusedCityCardValue);
   }));
 };
+
+// const addOneToGameCode = code => {
+//   const newVal = (parseInt(code, 36) + 1) % 1679616; // 1679615 combinations of 4 letters/numbers.
+//   return newVal.toString(36).padStart(4, 0); // fill with zeroes.
+// };
 
 export default init;

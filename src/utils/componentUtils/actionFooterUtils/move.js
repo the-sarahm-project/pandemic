@@ -1,4 +1,7 @@
-import { doc, getCurrentTurn, getCities, getCurrentCityId } from '../../index';
+import { getCurrentTurn, getCities, getCurrentCityId } from '../../index';
+import history from '../../../history';
+
+const doc = history.location.pathname.slice(1);
 
 export const getNeighbors = (state) => {
   const currentTurn = getCurrentTurn(state);

@@ -5,7 +5,7 @@ import { updateActionsRemaining } from './index';
 export const inHand = (hand, cityName) => hand.find(card => card.id === cityName);
 
 // Shares cards
-export const shareKnowledge = async (firestore, currentTurn, currentCity, playerNumber, actionsRemaining, nextTurn) => {
+export const shareKnowledge = async (firestore, currentTurn, currentCity, actionsRemaining, nextTurn, playerNumber) => {
   const cityName = currentCity.name;
   const game = await getGameRef(firestore);
 

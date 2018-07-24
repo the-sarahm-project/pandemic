@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import history from '../history';
-import { getPlayers } from '../utils';
+import { getPlayers, setUserOnState } from '../utils';
 
 class SetName extends React.Component {
   constructor(props) {
@@ -19,25 +19,7 @@ class SetName extends React.Component {
   }
 
   componentDidMount() {
-    const { players, firebase } = this.props;
-    const doc = history.location.pathname.slice(1);
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        // User is signed in.
-        const game = await this.props.firestore.get(`games/${doc}`);
-        for (const [key, value] of Object.entries(players)) {
-          if (value.id === user.uid) {
-            this.setState({ userid: key });
-            break;
-          } else if (!value.active) {
-            game.ref.collection('players').doc(key).update({ active: true, uid: user.uid });
-            user.id = key;
-            this.setState({ userid: key });
-            break;
-          }
-        }
-      }
-    });
+    setUserOnState.call(this);
   }
 
   render() {

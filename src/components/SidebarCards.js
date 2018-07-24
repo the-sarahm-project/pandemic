@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import SetName from './SetName';
-import history from '../history';
+import { getUnusedCityCards, getPlayers, getUnusedEventCards } from '../utils';
 
 const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
   return (
@@ -35,15 +35,10 @@ const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
 };
 
 const mapStateToProps = (state) => {
-  const doc = history.location.pathname.slice(1);
-  const game = state.firestore.data.games && state.firestore.data.games[doc];
-  const unusedCityCards = game && game.unusedCityCards;
-  const players = game && game.players;
-  const unusedEventCards = game && game.unusedEventCards;
   return {
-    unusedCityCards,
-    players,
-    unusedEventCards
+    unusedCityCards: getUnusedCityCards(state),
+    players: getPlayers(state),
+    unusedEventCards: getUnusedEventCards(state)
   };
 };
 

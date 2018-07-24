@@ -83,6 +83,11 @@ export const getUnusedCityCards = state => {
   return game && game.unusedCityCards;
 };
 
+export const getUnusedEventCards = state => {
+  const game = getGame(state);
+  return game && game.unusedEventCards;
+};
+
 export const getCurrentCity = state => {
   const cities = getCities(state);
   const currentCityId = getCurrentCityId(state);

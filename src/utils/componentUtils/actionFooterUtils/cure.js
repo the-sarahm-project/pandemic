@@ -2,7 +2,7 @@ import { differenceWith, isEqual } from 'lodash';
 import { getGameRef, getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
 
-export const cureDisease = async (firestore, currentTurn, currentCity, cardsToRemove, actionsRemaining, nextTurn) => {
+export const cureDisease = async (firestore, currentTurn, currentCity, actionsRemaining, nextTurn, cardsToRemove) => {
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
     alert(message);
@@ -36,14 +36,10 @@ export const updateCurrentHand = (currentPlayerSnapshot, cardsToRemove) => {
   return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
 };
 
-export const cureButtonDisabled = (game, currentCity, currentHand, unusedCityCards) => {
+export const cureButtonDisabled = (game, currentCity, maxSameColorCityCards) => {
   const currentCityColor = currentCity && currentCity.color;
   const researchStation = currentCity && currentCity.researchStation;
   const cured = game && game[`${currentCityColor}CureMarker`];
-  //filter the cards to check if the card is an event card or a city card && if the color matches the current city
-  const enoughCards = currentHand && currentHand.filter(card => {
-    return unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCityColor);
-  }).length;
-  return enoughCards < 5 || cured || !researchStation;
+  return !maxSameColorCityCards || cured || !researchStation;
 };
 

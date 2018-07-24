@@ -10,7 +10,7 @@ export const shareKnowledge = async (firestore, currentTurn, currentCity, action
   const game = await getGameRef(firestore);
 
   // getSnapshots
-  const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
+  const currentPlayerSnapshot = await getPlayerRef(game, currentTurn).get();
   const targetPlayerSnapshot = await getPlayerRef(game, playerNumber).get();
   const currentCitySnapshot = await getUnusedCityCardRef(game, currentCity.id).get();
 

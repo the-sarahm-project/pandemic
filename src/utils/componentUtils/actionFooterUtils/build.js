@@ -6,7 +6,7 @@ export const buildResearchStation = async (firestore, currentCityId, currentTurn
   try {
     const game = await getGameRef(firestore);
     const currentCityRef = await getCityRef(game, currentCityId);
-    const currentPlayerSnapshot = await getPlayerRef(game, `${currentTurn}`).get();
+    const currentPlayerSnapshot = await getPlayerRef(game, currentTurn).get();
     const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === currentCityId);
     // set research station to true for that city.
     await currentCityRef.update({ researchStation: true });

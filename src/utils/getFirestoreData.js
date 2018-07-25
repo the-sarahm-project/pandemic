@@ -83,6 +83,11 @@ export const getUnusedCityCards = state => {
   return game && game.unusedCityCards;
 };
 
+export const getUnusedEventCards = state => {
+  const game = getGame(state);
+  return game && game.unusedEventCards;
+};
+
 export const getCurrentCity = state => {
   const cities = getCities(state);
   const currentCityId = getCurrentCityId(state);
@@ -94,11 +99,21 @@ export const getActionsRemaining = state => {
   return game && game.actionsRemaining;
 };
 
-export const getSameColorCityCards = state => {
+export const getMaxSameColorCityCards = state => {
   const currentHand = getCurrentHand(state);
   const unusedCityCards = getUnusedCityCards(state);
-  const currentCity = getCurrentCity(state);
-  return currentHand && currentHand.filter(card => unusedCityCards[card.id] && (unusedCityCards[card.id].color === currentCity.color));
+  // count same color cards
+  const colorCount = {};
+  for (const cardRef of currentHand) {
+    const card = unusedCityCards[cardRef.id];
+    colorCount[card.color] = colorCount[card.color] ? colorCount[card.color].concat(cardRef) : [cardRef];
+  }
+  for (const cards of Object.values(colorCount)) {
+    if (cards.length >= 5) {
+      return cards;
+    }
+  }
+  return [];
 };
 
 export const getCurrentCityDiseaseCubes = state => {
@@ -124,10 +139,9 @@ export const getBuildDisabled = state => {
 // Cure
 export const getCureDisabled = state => {
   const currentCity = getCurrentCity(state);
-  const currentHand = getCurrentHand(state);
-  const unusedCityCards = getUnusedCityCards(state);
   const game = getGame(state);
-  return cureButtonDisabled(game, currentCity, currentHand, unusedCityCards);
+  const maxSameColorCityCards = getMaxSameColorCityCards(state);
+  return cureButtonDisabled(game, currentCity, maxSameColorCityCards.length);
 };
 
 // Share
@@ -158,5 +172,5 @@ export const getCityRef = (game, cityId) => {
 };
 
 export const getPlayerRef = (game, player) => {
-  return game.ref.collection('players').doc(player);
+  return game.ref.collection('players').doc(`${player}`);
 };

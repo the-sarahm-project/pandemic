@@ -31,7 +31,7 @@ const setGameFields = async (game, numPlayers, difficultyLevel) => {
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker
     remainingResearchStations: 6,
-    currentTurn: Math.floor(Math.random() * numPlayers) + 1,
+    currentTurn: 1,
     numPlayers,
     difficultyLevel,
     redDiseaseCubes: 24,
@@ -73,7 +73,8 @@ const addPlayers = async (game, numPlayers) => {
     currentCity: "Atlanta",
     currentHand: [],
     isMoving: false,
-    active: false
+    active: false,
+    uid: null
   };
   const players = new Array(numPlayers).fill(newPlayer);
   await Promise.all(players.map((player, index) => {

@@ -9,6 +9,7 @@ const Board = () => {
   const maxBounds = [[70, -100], [-60, 120]];
   return (
     <Map
+      zoomControl={false}
       center={center}
       zoom={zoomLevel}
       minZoom={zoomLevel}

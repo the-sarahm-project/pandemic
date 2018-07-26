@@ -1,10 +1,15 @@
 import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import CurrentHandMenu from './CurrentHandMenu';
-import { playerColors } from '../utils';
+import { playerColors, getCurrentTurn } from '../utils';
 
 //this is each player's information on the sidebar
-const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) => {
+const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, currentTurn }) => {
+  const player = players[playerKey];
+  const name = player.active ? `${player.name}` : 'Inactive';
   return (
     <Menu
       vertical
@@ -14,13 +19,13 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) =
     >
       <Menu.Item
         className="menu-player"
-        style={{ background: (players[playerKey].active) ? 'red' : 'black' }}
+        style={{ background: currentTurn === +playerKey ? 'green' : 'black' }}
       >
-        <Icon className="menu-player-icon" name="user" color={playerColors[players[playerKey].role]} />
-        {`${players[playerKey].name} - ${players[playerKey].role}`}
+        <Icon className="menu-player-icon" name="user" color={playerColors[player.role]} />
+        {`${name} - ${player.role}`}
       </Menu.Item>
       <Menu.Item className="menu-player">
-        {players[playerKey].currentHand.map(cardRef => {
+        {player.currentHand.map(cardRef => {
           const { name, color } = unusedCityCards[cardRef.id] ? unusedCityCards[cardRef.id] : unusedEventCards[cardRef.id];
           return (
             <CurrentHandMenu key={cardRef.id} name={name} color={color} />
@@ -31,4 +36,13 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey }) =
   );
 };
 
-export default PlayerMenu;
+const mapStateToProps = (state) => {
+  return {
+    currentTurn: getCurrentTurn(state)
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(PlayerMenu);

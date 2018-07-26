@@ -1,13 +1,13 @@
 import React from 'react';
 import { compose } from 'redux';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Marker } from 'react-leaflet';
 import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentCity, getActionsRemaining, getNextTurn } from '../utils';
 
-function CityHighlightMarker({cities, currentTurn, currentPlayer, neighbors, firestore, actionsRemaining, nextTurn }) {
+function CityHighlightMarker({ firestore, cities, currentTurn, currentPlayer, neighbors, actionsRemaining, nextTurn }) {
   return (
-    isLoaded(currentPlayer) && currentPlayer.isMoving && isLoaded(neighbors) && isLoaded(cities) && neighbors.map(neighbor => {
+    currentPlayer.isMoving && neighbors.map(neighbor => {
       return (
         <Marker
           position={cities[neighbor].coords}

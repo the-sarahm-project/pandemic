@@ -31,7 +31,7 @@ class SetName extends React.Component {
         const game = await this.props.firestore.get(`games/${doc}`);
         await game.ref.collection('players').doc(userid).update({ name });
       }}>
-        <Form.Group style={{margin: '0 0 1em .5em'}}>
+        <Form.Group style={{margin: '.5em 0 .5em .5em'}}>
           <Input
             placeholder='Name'
             value={this.state.name}

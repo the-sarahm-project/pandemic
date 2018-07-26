@@ -1,16 +1,16 @@
 import React from 'react';
 import { Marker } from 'react-leaflet';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentHandCity } from '../utils';
+import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentHandCity, getActionsRemaining, getNextTurn, getCurrentHand } from '../utils';
 
-const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn }) => {
+const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn, actionsRemaining, nextTurn, currentHand }) => {
   const isNeighbor = cardRefId => neighbors.find(neighbor => neighbor === cardRefId);
   const isCurrentCity = cardRefId => cardRefId === currentPlayer.currentCity;
   const isCityCard = cardRefId => cities[cardRefId];
   return (
-    isLoaded(currentPlayer) && currentPlayer.isMoving && currentPlayer.currentHand.reduce((markers, cardRef) => {
+    currentPlayer.isMoving && currentPlayer.currentHand.reduce((markers, cardRef) => {
       if (!isNeighbor(cardRef.id) && !isCurrentCity(cardRef.id) && isCityCard(cardRef.id)) {
         markers.push(
           <Marker
@@ -18,7 +18,7 @@ const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, citie
             key={cardRef.id}
             icon={iconContainer.highlight}
             zIndexOffset={1001}
-            onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id)}
+            onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id, currentHand, actionsRemaining, nextTurn)}
           />
         );
       }
@@ -32,7 +32,10 @@ const mapStateToProps = (state) => {
     currentPlayer: getCurrentPlayer(state),
     neighbors: getNeighbors(state),
     cities: getCities(state),
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    actionsRemaining: getActionsRemaining(state),
+    nextTurn: getNextTurn(state),
+    currentHand: getCurrentHand(state)
   };
 };
 

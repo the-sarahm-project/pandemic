@@ -21,3 +21,4 @@ export { default as HomeScreen } from './HomeScreen';
 export { default as CreateGame } from './CreateGame';
 export { default as CreateGameForm } from './CreateGameForm';
 export { default as Game } from './Game';
+export { default as DisplayActionsRemaining } from './DisplayActionsRemaining';

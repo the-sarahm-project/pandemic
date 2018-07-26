@@ -128,6 +128,13 @@ export const getCurrentCityDiseaseCubes = state => {
   return diseaseCubes;
 };
 
+export const getNeighbors = (state) => {
+  const currentTurn = getCurrentTurn(state);
+  const cities = getCities(state);
+  const currentCityId = getCurrentCityId(state);
+  return currentTurn && cities[currentCityId].neighbors;
+};
+
 // Build
 export const getBuildDisabled = state => {
   const currentCityId = getCurrentCityId(state);

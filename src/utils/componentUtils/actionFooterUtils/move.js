@@ -2,9 +2,9 @@ import { getPlayerRef, getUnusedCityCardRef } from '../../index';
 import { updateActionsRemaining } from './index';
 import { getGameRef } from '../../getFirestoreData';
 
-export const movePlayer = async (firestore, currentTurn) => {
+export const movePlayer = async (firestore, currentTurn, isMoving) => {
   const game = await getGameRef(firestore);
-  await getPlayerRef(game, currentTurn).update({ isMoving: true });
+  await getPlayerRef(game, currentTurn).update({ isMoving: !isMoving });
 };
 
 //update the current city (move)

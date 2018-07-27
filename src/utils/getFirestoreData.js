@@ -140,6 +140,21 @@ export const getIsMoving = state => {
   return currentPlayer && currentPlayer.isMoving;
 };
 
+export const getCurrentId = props => {
+  const {firebase, firestore, players } = props;
+  const uid = firebase.auth().currentUser.uid;
+  for (const [key, value] of Object.entries(players)) {
+    // user is in game.
+    if (value.uid === uid) {
+      return key;
+    // user is not in game.
+    } else if (!value.active) {
+      getPlayerRef(firestore, key).update({ active: true, uid });
+      return key;
+    }
+  }
+};
+
 // Build
 export const getBuildDisabled = state => {
   const currentCityId = getCurrentCityId(state);
@@ -183,6 +198,7 @@ export const getCityRef = (game, cityId) => {
   return game.ref.collection('cities').doc(cityId);
 };
 
-export const getPlayerRef = (game, player) => {
+export const getPlayerRef = async (firestore, player) => {
+  const game = await getGameRef(firestore);
   return game.ref.collection('players').doc(`${player}`);
 };

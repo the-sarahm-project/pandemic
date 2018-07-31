@@ -19,7 +19,7 @@ const PlayerHand = ({ players, firebase }) => {
     }
     </Container>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {

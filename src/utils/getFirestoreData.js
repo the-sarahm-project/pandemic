@@ -231,5 +231,5 @@ export const getCityRef = async cityId => {
 
 export const getPlayerRef = async player => {
   const game = await getGameRef();
-  return game.ref.collection('players').doc(`${player}`);
+  return await game.ref.collection('players').doc(`${player}`);
 };

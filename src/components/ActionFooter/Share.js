@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChoosePlayerModal } from '../index';
-import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getCurrentCity, getActionsRemaining, getNextTurn } from '../../utils';
+import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getOwnCity, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn } from '../../utils';
 
-export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, currentCity, firestore, actionsRemaining, nextTurn }) => {
+export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, ownCity, ownId, actionsRemaining, nextTurn }) => {
   return (
     <ChoosePlayerModal
       ModalTrigger={(
@@ -20,7 +20,8 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
       )}
       disabled={shareKnowledgeDisabled}
       players={shareKnowledgePlayers}
-      action={shareKnowledge.bind(this, firestore, currentTurn, currentCity, actionsRemaining, nextTurn)}
+      action={shareKnowledge.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
+      clickable={isCurrentTurn(currentTurn)}
     />
   );
 };
@@ -30,9 +31,10 @@ export const mapStateToProps = (state) => {
     currentTurn: getCurrentTurn(state),
     shareKnowledgeDisabled: getShareKnowledgeDisabled(state),
     shareKnowledgePlayers: getShareKnowledgePlayers(state),
-    currentCity: getCurrentCity(state),
+    ownCity: getOwnCity(state),
     actionsRemaining: getActionsRemaining(state),
-    nextTurn: getNextTurn(state)
+    nextTurn: getNextTurn(state),
+    ownId: getOwnId(state)
   };
 };
 

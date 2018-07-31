@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getCurrentCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn } from '../../utils';
 
-export const Cure = ({ currentTurn, firestore, cureDisabled, currentCity, maxSameColorCityCards, actionsRemaining, nextTurn }) => {
+export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards, actionsRemaining, nextTurn, ownId }) => {
   return (
     <ChooseCardModal
       ModalTrigger={(
@@ -21,7 +21,8 @@ export const Cure = ({ currentTurn, firestore, cureDisabled, currentCity, maxSam
       )}
       disabled={cureDisabled}
       cards={maxSameColorCityCards}
-      action={cureDisease.bind(this, firestore, currentTurn, currentCity, actionsRemaining, nextTurn)}
+      action={cureDisease.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
+      clickable={isCurrentTurn(currentTurn)}
     />
   );
 };
@@ -30,10 +31,11 @@ export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     cureDisabled: getCureDisabled(state),
-    currentCity: getCurrentCity(state),
+    ownCity: getOwnCity(state),
     maxSameColorCityCards: getMaxSameColorCityCards(state),
     actionsRemaining: getActionsRemaining(state),
-    nextTurn: getNextTurn(state)
+    nextTurn: getNextTurn(state),
+    ownId: getOwnId()
   };
 };
 

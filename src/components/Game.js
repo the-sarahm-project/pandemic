@@ -2,7 +2,7 @@ import React from 'react';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { SidebarCards, Board, ActionFooter } from './index';
+import Login from './Login';
 import { db } from '../store';
 import history from '../history';
 
@@ -14,22 +14,13 @@ class Game extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.firebase.auth().signInAnonymously().catch(function(error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode);
-      console.log(errorMessage);
-      // ...
-    });
-  }
-
-  async componentWillMount() {
+  /* eslint-disable react/no-did-mount-set-state */
+  async componentDidMount() {
+    await this.props.firebase.auth().signInAnonymously();
     const gameId = history.location.pathname.slice(1);
     const game = gameId && await db.collection('games').doc(gameId).get();
     if (game.exists) {
-      this.setState({ gameExists: true });
+      await this.setState({ gameExists: true });
     } else {
       history.push('/');
     }
@@ -37,12 +28,7 @@ class Game extends React.Component {
 
   render() {
     return (
-      this.state.gameExists &&
-        <div className="game">
-          <SidebarCards />
-          <Board />
-          <ActionFooter />
-        </div>
+      this.state.gameExists && <Login />
     );
   }
 }
@@ -54,5 +40,5 @@ export default withRouter(compose(
     {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'unusedCityCards' }]},
     {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'cities' }]},
     {collection: 'games', doc: history.location.pathname.slice(1)}
-  ])
+  ]),
 )(Game));

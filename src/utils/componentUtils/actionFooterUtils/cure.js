@@ -2,20 +2,20 @@ import { differenceWith, isEqual } from 'lodash';
 import { getGameRef, getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
 
-export const cureDisease = async (firestore, currentTurn, currentCity, actionsRemaining, nextTurn, cardsToRemove) => {
+export const cureDisease = async (currentTurn, currentCity, actionsRemaining, nextTurn, cardsToRemove) => {
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
     alert(message);
     return message;
   }
   try {
-    const game = await getGameRef(firestore);
-    const currentPlayerSnapshot = await getPlayerRef(game, currentTurn).get();
+    const game = await getGameRef();
+    const currentPlayerSnapshot = await getPlayerRef(currentTurn).get();
     await updateCurrentHand(currentPlayerSnapshot, cardsToRemove);
     await setCureMarker(game, currentCity.color);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
-    await updateActionsRemaining(game, actionsRemaining, nextTurn);
+    await updateActionsRemaining(actionsRemaining, nextTurn);
   } catch (err) {
     console.log(err);
   }

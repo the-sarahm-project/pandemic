@@ -1,5 +1,4 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -7,16 +6,14 @@ import { getActionsRemaining } from '../utils';
 
 const DisplayActionsRemaining = ({ actionsRemaining }) => {
   return (
-    <Segment
+    <div
       style={{
-        position: 'fixed',
-        bottom: 0,
-        width: '100%'
+        position: 'absolute',
+        bottom: 0
       }}
-      inverted
     >
       {`Actions Remaining: ${actionsRemaining}`}
-    </Segment>
+    </div>
   );
 };
 

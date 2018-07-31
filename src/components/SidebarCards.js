@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import SetName from './SetName';
-import DisplayActionsRemaining from './DisplayActionsRemaining';
 import { getUnusedCityCards, getPlayers, getUnusedEventCards } from '../utils';
 
 const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
@@ -18,6 +17,7 @@ const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
       icon="labeled"
       inverted
       vertical
+      style={{ overflowX: 'hidden' }}
     >
       <SetName />
       {
@@ -31,7 +31,6 @@ const SidebarCards = ({ unusedCityCards, players, unusedEventCards }) => {
           />
         ))
       }
-      <DisplayActionsRemaining />
     </Sidebar>
   );
 };

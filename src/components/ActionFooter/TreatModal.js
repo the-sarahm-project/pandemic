@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getCurrentCity, getActionsRemaining, getNextTurn } from '../../utils';
+import { treatDisease, getOwnCity, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -19,14 +19,16 @@ export class TreatModal extends React.Component {
   }
 
   render() {
-    const { firestore, diseases, currentCity, actionsRemaining, nextTurn } = this.props;
+    const { diseases, ownCity, actionsRemaining, nextTurn, currentTurn } = this.props;
+    const open = () => this.handleOpen();
+    const onClick = getOnClick(currentTurn, open);
     return (
       <Modal
         trigger={
           <Button
             className="action-button treat-button"
             disabled={!diseases.length}
-            onClick={() => this.handleOpen()}
+            onClick={onClick}
           >
             <Icon className="treat-icon action-icon" name="medkit" size="big" />
             <div className="treat-text action-text">Treat</div>
@@ -41,7 +43,7 @@ export class TreatModal extends React.Component {
           selected={this.state.selected}
         />
         <ModalActions
-          action={treatDisease.bind(this, { firestore, currentCity, actionsRemaining, nextTurn })}
+          action={treatDisease.bind(this, { ownCity, actionsRemaining, nextTurn })}
           handleClose={this.handleClose}
           selected={this.state.selected}
         />
@@ -52,9 +54,10 @@ export class TreatModal extends React.Component {
 
 export const mapStateToProps = (state) => {
   return {
-    currentCity: getCurrentCity(state),
+    ownCity: getOwnCity(state),
     actionsRemaining: getActionsRemaining(state),
-    nextTurn: getNextTurn(state)
+    nextTurn: getNextTurn(state),
+    currentTurn: getCurrentTurn(state)
   };
 };
 

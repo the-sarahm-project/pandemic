@@ -5,6 +5,7 @@ import Cure from './Cure';
 import Move from './Move';
 import Treat from './Treat';
 import Share from './Share';
+import DisplayActionsRemaining from '../DisplayActionsRemaining';
 
 class ActionFooter extends React.Component {
   constructor(props) {
@@ -17,13 +18,13 @@ class ActionFooter extends React.Component {
 
   async checkClicked(func) {
     if (!this.getClicked()) {
-      await this.setClicked();
+      await this.toggleClicked();
       await func();
-      await this.setClicked();
+      await this.toggleClicked();
     }
   }
 
-  setClicked() {
+  toggleClicked() {
     const clicked = this.state.clicked;
     this.setState({ clicked: !clicked });
   }
@@ -35,6 +36,7 @@ class ActionFooter extends React.Component {
   render() {
     return (
       <Sidebar className="action-footer" direction="bottom" visible={true} width="very wide">
+        <DisplayActionsRemaining />
         <div className="action-container">
           <Move />
           <Build checkClicked={this.checkClicked} />

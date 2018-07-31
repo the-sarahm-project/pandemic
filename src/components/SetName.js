@@ -4,34 +4,45 @@ import { Form, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import history from '../history';
-import { getPlayers, setUserOnState } from '../utils';
+import { getPlayers, getPlayerRef } from '../utils';
 
 class SetName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      userid: ''
+      id: ''
     };
-    this.handleNameChange = (e, { value }) => this.setState({ name: value });
-    this.handleUserIDChange = (e, { value }) => this.setState({ userid: value });
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
+  handleNameChange(e, { value }) {
+    if (value.length < 13) this.setState({ name: value });
+  }
+
+  /* eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
-    setUserOnState.call(this);
+    const { players, firebase } = this.props;
+    const id = firebase.auth().currentUser.id;
+    this.setState({ name: players[id].name, id });
+  }
+
+  async updatePlayer(name, id) {
+    const playerRef = await getPlayerRef(id);
+    await playerRef.update({ name });
   }
 
   render() {
-    const { name, userid } = this.state;
-    const doc = history.location.pathname.slice(1);
+    const { name, id } = this.state;
     return (
-      <Form onSubmit={ async e => {
-        e.preventDefault();
-        const game = await this.props.firestore.get(`games/${doc}`);
-        await game.ref.collection('players').doc(userid).update({ name });
-      }}>
-        <Form.Group style={{margin: '.5em 0 .5em .5em'}}>
+      <Form
+        style={{ display: 'flex', justifyContent: 'center' }}
+        onSubmit={ async e => {
+          e.preventDefault();
+          await this.updatePlayer(name, id);
+        }}
+      >
+        <Form.Group style={{margin: '.5em 0em 1em .5em'}}>
           <Input
             placeholder='Name'
             value={this.state.name}

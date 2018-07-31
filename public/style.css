@@ -32,7 +32,7 @@ img.ui.small.image.hand-card {
   width: 50%;
   display: flex;
   justify-content: space-around;
-  padding-top: .5em;
+  padding: .75em 0 .5em 0
 }
 
 .ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
@@ -46,6 +46,10 @@ img.ui.small.image.hand-card {
 
 button.ui.button.action-button.share-button {
   height: 100%;
+}
+
+button.ui.button.action-button {
+  min-width: fit-content
 }
 
 /* Game Header */
@@ -95,6 +99,10 @@ button.ui.button.action-button.share-button {
 
 .ui.bottom.very.wide.visible.sidebar.action-footer {
   max-width: calc(100% - 249.1px);
+}
+
+.ui.fluid.inverted.vertical.tabular.menu {
+  width: calc(100% + 2px)!important;
 }
 
 /* PlayerModal */

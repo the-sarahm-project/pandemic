@@ -3,14 +3,15 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { treatDisease, getCurrentCity, getActionsRemaining, getNextTurn } from '../../utils';
+import { treatDisease, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, getOwnCity } from '../../utils';
 
-export const TreatButton = ({ firestore, currentCity, disease = '', actionsRemaining, nextTurn, checkClicked }) => {
+export const TreatButton = ({ ownCity, disease = '', actionsRemaining, nextTurn, checkClicked, currentTurn }) => {
+  const treat = () => treatDisease({ ownCity, actionsRemaining, nextTurn }, disease.toString());
   return (
     <Button
       className="action-button treat-button"
       disabled={!disease}
-      onClick={() => checkClicked(() => treatDisease({ firestore, currentCity, actionsRemaining, nextTurn }, disease.toString()))}
+      onClick={() => checkClicked(getOnClick(currentTurn, treat))}
     >
       <Icon className="treat-icon action-icon" name="medkit" size="big" />
       <div className="treat-text action-text">Treat</div>
@@ -20,9 +21,10 @@ export const TreatButton = ({ firestore, currentCity, disease = '', actionsRemai
 
 export const mapStateToProps = (state) => {
   return {
-    currentCity: getCurrentCity(state),
+    ownCity: getOwnCity(state),
     actionsRemaining: getActionsRemaining(state),
-    nextTurn: getNextTurn(state)
+    nextTurn: getNextTurn(state),
+    currentTurn: getCurrentTurn(state)
   };
 };
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getActionsRemaining } from '../utils';
+import { getActionsRemaining, getSelf, getCurrentPlayer } from '../utils';
 
-const DisplayActionsRemaining = ({ actionsRemaining }) => {
+const DisplayActionsRemaining = ({ actionsRemaining, self, currentPlayer }) => {
   return (
     <div
       style={{
@@ -12,14 +12,18 @@ const DisplayActionsRemaining = ({ actionsRemaining }) => {
         bottom: 0
       }}
     >
-      {`Actions Remaining: ${actionsRemaining}`}
+      <div>{`Your Name: ${self.name}`}</div>
+      <div>{`Current Turn: ${currentPlayer.name}`}</div>
+      <div>{`Actions Remaining: ${actionsRemaining}`}</div>
     </div>
   );
 };
 
 export const mapStateToProps = (state) => {
   return {
-    actionsRemaining: getActionsRemaining(state)
+    actionsRemaining: getActionsRemaining(state),
+    self: getSelf(state),
+    currentPlayer: getCurrentPlayer(state)
   };
 };
 

@@ -25,7 +25,8 @@ class Login extends React.Component {
         return await this.setState({ loggedIn: true });
       } else if (!value.active) {
         currentUser.id = +key;
-        await getPlayerRef(key).update({ active: true, uid });
+        const playerRef = await getPlayerRef(key);
+        await playerRef.update({ active: true, uid });
         return await this.setState({ loggedIn: true });
       }
     }

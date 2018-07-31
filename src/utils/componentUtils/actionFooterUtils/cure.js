@@ -2,7 +2,7 @@ import { differenceWith, isEqual } from 'lodash';
 import { getGameRef, getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
 
-export const cureDisease = async (currentTurn, currentCity, actionsRemaining, nextTurn, cardsToRemove) => {
+export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, cardsToRemove) => {
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
     alert(message);
@@ -10,9 +10,10 @@ export const cureDisease = async (currentTurn, currentCity, actionsRemaining, ne
   }
   try {
     const game = await getGameRef();
-    const currentPlayerSnapshot = await getPlayerRef(currentTurn).get();
-    await updateCurrentHand(currentPlayerSnapshot, cardsToRemove);
-    await setCureMarker(game, currentCity.color);
+    const playerRef = await getPlayerRef(ownId);
+    const playerSnapshot = await playerRef.get();
+    await updateCurrentHand(playerSnapshot, cardsToRemove);
+    await setCureMarker(game, ownCity.color);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
     await updateActionsRemaining(actionsRemaining, nextTurn);

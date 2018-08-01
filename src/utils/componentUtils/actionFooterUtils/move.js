@@ -14,8 +14,8 @@ export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, 
 };
 
 //update the currentCity, remove the city from unusedCityCards, and also remove from player's currentHand (flight)
-export const changeCurrentHandCity = async (firestore, currentTurn, newCity, currentHand, actionsRemaining, nextTurn) => {
-  await changeCurrentCity(firestore, currentTurn, newCity, actionsRemaining, nextTurn);
+export const changeCurrentHandCity = async (currentTurn, newCity, currentHand, actionsRemaining, nextTurn) => {
+  await changeCurrentCity(currentTurn, newCity, actionsRemaining, nextTurn);
   const newHand = currentHand.filter(card => card.id !== newCity);
   const playerRef = await getPlayerRef(currentTurn);
   await playerRef.update({currentHand: newHand});

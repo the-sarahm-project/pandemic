@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { getCurrentPlayer, getNeighbors, getCities, iconContainer, getCurrentTurn, changeCurrentHandCity, getActionsRemaining, getNextTurn, getCurrentHand } from '../utils';
 
-const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, cities, currentTurn, actionsRemaining, nextTurn, currentHand }) => {
+const CurrentHandHighlightMarker = ({ currentPlayer, neighbors, cities, currentTurn, actionsRemaining, nextTurn, currentHand }) => {
   const isNeighbor = cardRefId => neighbors.find(neighbor => neighbor === cardRefId);
   const isCurrentCity = cardRefId => cardRefId === currentPlayer.currentCity;
   const isCityCard = cardRefId => cities[cardRefId];
@@ -18,7 +18,7 @@ const CurrentHandHighlightMarker = ({ firestore, currentPlayer, neighbors, citie
             key={cardRef.id}
             icon={iconContainer.highlight}
             zIndexOffset={1001}
-            onClick={() => changeCurrentHandCity(firestore, currentTurn, cardRef.id, currentHand, actionsRemaining, nextTurn)}
+            onClick={() => changeCurrentHandCity(currentTurn, cardRef.id, currentHand, actionsRemaining, nextTurn)}
           />
         );
       }

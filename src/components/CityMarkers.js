@@ -5,9 +5,10 @@ import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { Label } from 'semantic-ui-react';
 import { ResearchStation, DiseaseCube } from './index';
-import { iconContainer, getCities, getCityDiseaseCubes } from '../utils';
+import { iconContainer, getCities, getCityDiseaseCubes, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn } from '../utils';
 
-export const CityMarkers = ({ cities }) => {
+export const CityMarkers = ({ cities, self, actionsRemaining, nextTurn }) => {
+  const isHighlighted = self.isMoving && cities[self.currentCity].researchStation;
   return (
     <div>
       {isLoaded(cities) && Object.values(cities).map(city => {
@@ -23,6 +24,13 @@ export const CityMarkers = ({ cities }) => {
             {cubes.map(cube => {
               return <DiseaseCube key={`${city.coords}-${cube}`} coords={city.coords} cube={cube} />;
             })}
+            {isHighlighted && city.researchStation &&
+              <Marker
+                position={city.coords}
+                icon={iconContainer.highlight}
+                zIndexOffset={1001}
+                onClick={() => changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn)}
+              />}
           </div>
         );
       })}
@@ -32,7 +40,10 @@ export const CityMarkers = ({ cities }) => {
 
 export const mapStateToProps = (state) => {
   return {
-    cities: getCities(state)
+    cities: getCities(state),
+    self: getSelf(state),
+    actionsRemaining: getActionsRemaining(state),
+    nextTurn: getNextTurn(state)
   };
 };
 

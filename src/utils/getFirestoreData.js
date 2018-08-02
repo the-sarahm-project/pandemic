@@ -22,7 +22,7 @@ export const getCurrentTurn = state => {
 
 export const getOwnId = () => {
   return firebase.auth().currentUser.id;
-}
+};
 
 export const getCities = state => {
   const game = getGame(state);
@@ -56,7 +56,7 @@ export const getSelf = state => {
   const players = getPlayers(state);
   const ownId = firebase.auth().currentUser.id;
   return players && players[ownId];
-}
+};
 
 export const getCurrentCityId = state => {
   const players = getPlayers(state);
@@ -68,7 +68,7 @@ export const getOwnCityId = state => {
   const players = getPlayers(state);
   const ownId = firebase.auth().currentUser.id;
   return players && players[ownId].currentCity;
-}
+};
 
 export const getPlayersInSameCity = state => {
   const players = getPlayers(state);
@@ -100,7 +100,7 @@ export const getCurrentHand = state => {
 export const getOwnHand = state => {
   const self = getSelf(state);
   return self && self.currentHand;
-}
+};
 
 export const getUnusedCityCards = state => {
   const game = getGame(state);
@@ -122,7 +122,7 @@ export const getOwnCity = state => {
   const cities = getCities(state);
   const ownCityId = getOwnCityId(state);
   return cities && cities[ownCityId];
-}
+};
 
 export const getActionsRemaining = state => {
   const game = getGame(state);

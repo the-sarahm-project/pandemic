@@ -1,13 +1,26 @@
 import store from '../../../store';
-import { getGameRef } from '../../getFirestoreData';
+import { getGameRef, getPlayerRef, getGameSnapshot } from '../../getFirestoreData';
 
 export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   const game = await getGameRef();
   const remainingActions = actionsRemaining - 1;
-  !remainingActions
-    ? await game.ref.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false })
-    : await game.ref.update({ actionsRemaining: remainingActions });
+  if (remainingActions) {
+    await game.update({ actionsRemaining: remainingActions });
+  } else {
+    await drawCards();
+    await game.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false });
+  }
+};
 
+export const drawCards = async () => {
+  const gameSnapshot = await getGameSnapshot();
+  const game = await gameSnapshot.ref;
+  const { currentTurn, playerDeck } = gameSnapshot.data();
+  const playerRef = await getPlayerRef(currentTurn);
+  const playerSnapshot = await playerRef.get();
+  const newCards = playerDeck.splice(-2, 2);
+  playerRef.update({ currentHand: [...playerSnapshot.data().currentHand, ...newCards] });
+  game.update({ playerDeck });
 };
 
 export const getOnClick = (currentTurn, onClick) => {

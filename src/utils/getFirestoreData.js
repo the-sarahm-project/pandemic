@@ -215,21 +215,32 @@ export const getShareKnowledgeDisabled = state => {
 
 /* Firestore Refs */
 export const getGameRef = async () => {
-  const doc = history.location.pathname.slice(1);
-  return await firestore.get(`games/${doc}`);
+  const gameSnapshot = await getGameSnapshot();
+  return await gameSnapshot.ref;
 };
 
 export const getUnusedCityCardRef = async cityId => {
   const game = await getGameRef();
-  return await game.ref.collection('unusedCityCards').doc(cityId);
+  return await game.collection('unusedCityCards').doc(cityId);
 };
 
 export const getCityRef = async cityId => {
   const game = await getGameRef();
-  return await game.ref.collection('cities').doc(cityId);
+  return await game.collection('cities').doc(cityId);
 };
 
-export const getPlayerRef = async player => {
+export const getPlayerRef = async playerId => {
   const game = await getGameRef();
-  return await game.ref.collection('players').doc(`${player}`);
+  return await game.collection('players').doc(`${playerId}`);
+};
+
+/* Firestore Snapshots */
+export const getGameSnapshot = async () => {
+  const doc = history.location.pathname.slice(1);
+  return await firestore.get(`games/${doc}`);
+};
+
+export const getPlayerSnapshot = async (playerId) => {
+  const playerRef = await getPlayerRef(playerId);
+  return await playerRef.get();
 };

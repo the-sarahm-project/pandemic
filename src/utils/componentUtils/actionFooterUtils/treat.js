@@ -11,7 +11,7 @@ export const treatDisease = async function({ ownCity, actionsRemaining, nextTurn
     await ownCitySnapshot.ref.update({[color]: numCubes - 1});
     const colorDiseaseCube = `${color}DiseaseCubes`;
     //update remaining disease cube count
-    await game.ref.update({[colorDiseaseCube]: game.data()[colorDiseaseCube] + 1});
+    await game.update({[colorDiseaseCube]: game.data()[colorDiseaseCube] + 1});
     await updateActionsRemaining(actionsRemaining, nextTurn);
   } catch(err) {
     console.log(err);

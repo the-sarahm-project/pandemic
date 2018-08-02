@@ -2,21 +2,27 @@ import React from 'react';
 import { Marker, Tooltip } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { Label } from 'semantic-ui-react';
 import { ResearchStation, DiseaseCube } from './index';
-import { iconContainer, getCities, getCityDiseaseCubes, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn } from '../utils';
+import { iconContainer, getCities, getCityDiseaseCubes, getSelf, getActionsRemaining, getNextTurn, getOwnHand, getNeighbors } from '../utils';
+import CityHighlightMarker from './CityHighlightMarker';
 
-export const CityMarkers = ({ cities, self, actionsRemaining, nextTurn }) => {
-  const isHighlighted = self.isMoving && cities[self.currentCity].researchStation;
+export const CityMarkers = ({ cities }) => {
   return (
     <div>
-      {isLoaded(cities) && Object.values(cities).map(city => {
+      {Object.values(cities).map(city => {
         const cubes = getCityDiseaseCubes(city);
         return (
           <div key={city.coords}>
             <Marker position={city.coords} icon={iconContainer[city.color]}>
-              <Tooltip className='city-tooltip' offset={[0, 20, 2000]} permanent={true} direction='bottom' opacity={.9}>
+              <Tooltip
+                className='city-tooltip'
+                offset={[0, 20, 2000]}
+                permanent={true}
+                direction='bottom'
+                opacity={.9}
+              >
                 <Label basic size='mini'>{city.name}</Label>
               </Tooltip>
             </Marker>
@@ -24,13 +30,7 @@ export const CityMarkers = ({ cities, self, actionsRemaining, nextTurn }) => {
             {cubes.map(cube => {
               return <DiseaseCube key={`${city.coords}-${cube}`} coords={city.coords} cube={cube} />;
             })}
-            {isHighlighted && city.researchStation &&
-              <Marker
-                position={city.coords}
-                icon={iconContainer.highlight}
-                zIndexOffset={1001}
-                onClick={() => changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn)}
-              />}
+            <CityHighlightMarker city={city} />
           </div>
         );
       })}
@@ -43,7 +43,9 @@ export const mapStateToProps = (state) => {
     cities: getCities(state),
     self: getSelf(state),
     actionsRemaining: getActionsRemaining(state),
-    nextTurn: getNextTurn(state)
+    nextTurn: getNextTurn(state),
+    ownHand: getOwnHand(state),
+    neightbors: getNeighbors(state)
   };
 };
 

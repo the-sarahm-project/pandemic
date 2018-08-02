@@ -18,8 +18,9 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, cur
       tabular
     >
       <Menu.Item style={{ background: 'black' }} className="menu-player">
+        <div style={{ color: 'white' }}>{`${player.role}`}</div>
         <Icon className="menu-player-icon" name="user" color={playerColors[player.role]} />
-        <span style={{ color: currentTurn === +playerKey ? 'green' : 'white' }}>{`${name} - ${player.role}`}</span>
+        <span style={{ color: currentTurn === +playerKey ? 'green' : 'white' }}>{`${name}`}</span>
       </Menu.Item>
       <Menu.Item className="menu-player">
         {player.currentHand.map(cardRef => {

@@ -26,7 +26,7 @@ const init = async (db, numPlayers, difficultyLevel) => {
 
 const setGameFields = async (game, numPlayers, difficultyLevel) => {
   await game.set({
-    actionsRemaining: 3,
+    actionsRemaining: 4,
     id: game.id,
     infectionRate: 0, //the infection rate marker
     numOutbreaks: 0, //the outbreak rate marker

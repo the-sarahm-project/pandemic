@@ -3,10 +3,11 @@ import { getGameRef } from '../../getFirestoreData';
 
 export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   const game = await getGameRef();
-  await game.ref.update({ actionsRemaining: actionsRemaining - 1});
-  if (actionsRemaining === 1) {
-    await game.ref.update({ currentTurn: nextTurn, actionsRemaining: 3, isMoving: false });
-  }
+  const remainingActions = actionsRemaining - 1;
+  !remainingActions
+    ? await game.ref.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false })
+    : await game.ref.update({ actionsRemaining: remainingActions });
+
 };
 
 export const getOnClick = (currentTurn, onClick) => {

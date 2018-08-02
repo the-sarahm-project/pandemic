@@ -18,7 +18,7 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, cur
       tabular
     >
       <Menu.Item style={{ background: 'black' }} className="menu-player">
-        <div style={{ color: 'white' }}>{`${player.role}`}</div>
+        <div style={{ color: 'white', textDecoration: 'underline' }}>{`${player.role}`}</div>
         <Icon className="menu-player-icon" name="user" color={playerColors[player.role]} />
         <span style={{ color: currentTurn === +playerKey ? 'green' : 'white' }}>{`${name}`}</span>
       </Menu.Item>

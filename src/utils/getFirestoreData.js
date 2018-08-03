@@ -215,21 +215,63 @@ export const getShareKnowledgeDisabled = state => {
 
 /* Firestore Refs */
 export const getGameRef = async () => {
-  const doc = history.location.pathname.slice(1);
-  return await firestore.get(`games/${doc}`);
+  const gameSnapshot = await getGameSnapshot();
+  return gameSnapshot.ref;
 };
 
 export const getUnusedCityCardRef = async cityId => {
   const game = await getGameRef();
-  return await game.ref.collection('unusedCityCards').doc(cityId);
+  return await game.collection('unusedCityCards').doc(cityId);
+};
+
+export const getUnusedCityCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('unusedCityCards');
+};
+
+export const getUnusedInfectionCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('unusedInfectionCards');
+};
+
+export const getTrashedInfectionCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('trashedInfectionCards');
 };
 
 export const getCityRef = async cityId => {
   const game = await getGameRef();
-  return await game.ref.collection('cities').doc(cityId);
+  return await game.collection('cities').doc(cityId);
 };
 
-export const getPlayerRef = async player => {
+export const getPlayerRef = async playerId => {
   const game = await getGameRef();
-  return await game.ref.collection('players').doc(`${player}`);
+  return await game.collection('players').doc(`${playerId}`);
 };
+
+/* Firestore Snapshots */
+export const getGameSnapshot = async () => {
+  const doc = history.location.pathname.slice(1);
+  return await firestore.get(`games/${doc}`);
+};
+
+export const getPlayerSnapshot = async (playerId) => {
+  const playerRef = await getPlayerRef(playerId);
+  return await playerRef.get();
+};
+
+export const getUnusedCityCardsSnapshot = async () => {
+  const unusedCityCardsRef = await getUnusedCityCardsRef();
+  return await unusedCityCardsRef.get();
+};
+
+export const getUnusedInfectionCardsSnapshot = async () => {
+  const unusedInfectionCardsRef = await getUnusedInfectionCardsRef();
+  return await unusedInfectionCardsRef.get();
+};
+
+export const getTrashedInfectionCardsSnapshot = async () => {
+  const trashedInfectionCardsRef = await getTrashedInfectionCardsRef();
+  return await trashedInfectionCardsRef.get();
+};
+

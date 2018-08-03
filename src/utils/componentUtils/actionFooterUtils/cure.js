@@ -23,7 +23,7 @@ export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, ca
 };
 
 export const setCureMarker = (game, color) => {
-  return game.ref.update({ [`${color}CureMarker`]: true });
+  return game.update({ [`${color}CureMarker`]: true });
 };
 
 export const removeCards = cardsToRemove => {

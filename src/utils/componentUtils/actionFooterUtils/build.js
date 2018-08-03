@@ -25,7 +25,7 @@ export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, n
 
 export const setRemainingResearchStations = async game => {
   const remainingResearchStations = game.data().remainingResearchStations;
-  return await game.ref.update({ remainingResearchStations: remainingResearchStations - 1 });
+  return await game.update({ remainingResearchStations: remainingResearchStations - 1 });
 };
 
 export const buildButtonDisabled = (remainingResearchStations, currentHand, ownCityId) => {

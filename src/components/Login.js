@@ -5,6 +5,8 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { SidebarCards, Board, ActionFooter } from './index';
 import { getPlayers, getPlayerRef } from '../utils';
+import Chance from 'chance';
+const chance = new Chance();
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class Login extends React.Component {
       } else if (!value.active) {
         currentUser.id = +key;
         const playerRef = await getPlayerRef(key);
-        await playerRef.update({ active: true, uid });
+        await playerRef.update({ active: true, uid, name: chance.first() });
         return await this.setState({ loggedIn: true });
       }
     }

@@ -9,7 +9,7 @@ import { playerColors, getCurrentTurn } from '../utils';
 //this is each player's information on the sidebar
 const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, currentTurn }) => {
   const player = players[playerKey];
-  const name = player.active ? `${player.name}` : 'Inactive';
+  const roleColor = player.active ? 'white' : 'red';
   return (
     <Menu
       vertical
@@ -18,9 +18,16 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, cur
       tabular
     >
       <Menu.Item style={{ background: 'black' }} className="menu-player">
-        <div style={{ color: 'white' }}>{`${player.role}`}</div>
+        <div style={{ color: roleColor }}>
+          {!player.active && <span>Inactive - </span>}
+          <span style={{ textDecoration: 'underline' }}>{player.role}</span>
+          {+currentTurn === player.id &&
+            <span style={{ position: 'absolute', marginTop: '-.3em' }}>
+              <Icon size="small" color="yellow" name="star" />
+            </span>}
+        </div>
         <Icon className="menu-player-icon" name="user" color={playerColors[player.role]} />
-        <span style={{ color: currentTurn === +playerKey ? 'green' : 'white' }}>{`${name}`}</span>
+        <span style={{ color: 'white' }}>{player.name}</span>
       </Menu.Item>
       <Menu.Item className="menu-player">
         {player.currentHand.map(cardRef => {

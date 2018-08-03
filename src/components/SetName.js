@@ -39,6 +39,7 @@ class SetName extends React.Component {
         style={{ display: 'flex', justifyContent: 'center' }}
         onSubmit={ async e => {
           e.preventDefault();
+          if (!name.length) return alert('Name cannot be blank!');
           await this.updatePlayer(name, id);
         }}
       >

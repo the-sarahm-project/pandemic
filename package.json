@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "babel-jest": "^22.4.4",
+    "chance": "^1.0.16",
     "eslint-config-fullstack": "^4.0.0",
     "eslint-plugin-react": "^7.10.0",
     "firebase": "^4.13.1",

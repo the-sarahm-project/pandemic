@@ -216,12 +216,27 @@ export const getShareKnowledgeDisabled = state => {
 /* Firestore Refs */
 export const getGameRef = async () => {
   const gameSnapshot = await getGameSnapshot();
-  return await gameSnapshot.ref;
+  return gameSnapshot.ref;
 };
 
 export const getUnusedCityCardRef = async cityId => {
   const game = await getGameRef();
   return await game.collection('unusedCityCards').doc(cityId);
+};
+
+export const getUnusedCityCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('unusedCityCards');
+};
+
+export const getUnusedInfectionCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('unusedInfectionCards');
+};
+
+export const getTrashedInfectionCardsRef = async () => {
+  const game = await getGameRef();
+  return await game.collection('trashedInfectionCards');
 };
 
 export const getCityRef = async cityId => {
@@ -244,3 +259,19 @@ export const getPlayerSnapshot = async (playerId) => {
   const playerRef = await getPlayerRef(playerId);
   return await playerRef.get();
 };
+
+export const getUnusedCityCardsSnapshot = async () => {
+  const unusedCityCardsRef = await getUnusedCityCardsRef();
+  return await unusedCityCardsRef.get();
+};
+
+export const getUnusedInfectionCardsSnapshot = async () => {
+  const unusedInfectionCardsRef = await getUnusedInfectionCardsRef();
+  return await unusedInfectionCardsRef.get();
+};
+
+export const getTrashedInfectionCardsSnapshot = async () => {
+  const trashedInfectionCardsRef = await getTrashedInfectionCardsRef();
+  return await trashedInfectionCardsRef.get();
+};
+

@@ -3,6 +3,7 @@ import { updateActionsRemaining } from './index';
 
 export const treatDisease = async function({ ownCity, actionsRemaining, nextTurn }, disease ) {
   try {
+    console.log(`Treating Disease at ${ownCity.id}!`);
     const gameSnapshot = await getGameSnapshot();
     const cityRef = await getCityRef(ownCity.id);
     const ownCitySnapshot = await cityRef.get();

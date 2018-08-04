@@ -6,6 +6,7 @@ export const inHand = (hand, cityName) => hand.find(card => card.id === cityName
 
 // Shares cards
 export const shareKnowledge = async (ownId, ownCity, actionsRemaining, nextTurn, playerNumber) => {
+  console.log('Sharing Knowledge!');
   const cityName = ownCity.name;
 
   // getSnapshots

@@ -4,7 +4,9 @@ import { updateActionsRemaining } from './index';
 
 export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, nextTurn) => {
   try {
-    const game = await getGameRef();
+    console.log('Building Research Station!');
+    const gameRef = await getGameRef();
+    const gameSnapshot = await gameRef.get();
     const currentCityRef = await getCityRef(ownCityId);
     const playerRef = await getPlayerRef(ownId);
     const currentPlayerSnapshot = await playerRef.get();
@@ -12,7 +14,7 @@ export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, n
     // set research station to true for that city.
     await currentCityRef.update({ researchStation: true });
     // update remaining research stations count
-    await setRemainingResearchStations(game);
+    await setRemainingResearchStations(gameRef, gameSnapshot);
     // remove card from current hand
     await updateCurrentHand(currentPlayerSnapshot, cardToRemove);
     //remove card from unusedCityCards
@@ -23,11 +25,11 @@ export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, n
   }
 };
 
-export const setRemainingResearchStations = async game => {
-  const remainingResearchStations = game.data().remainingResearchStations;
-  return await game.update({ remainingResearchStations: remainingResearchStations - 1 });
+export const setRemainingResearchStations = async (gameRef, gameSnapshot) => {
+  const remainingResearchStations = gameSnapshot.data().remainingResearchStations;
+  return await gameRef.update({ remainingResearchStations: remainingResearchStations - 1 });
 };
 
-export const buildButtonDisabled = (remainingResearchStations, currentHand, ownCityId) => {
-  return remainingResearchStations <= 0 || !(currentHand && currentHand.find(card => card.id === ownCityId));
+export const buildButtonDisabled = (remainingResearchStations, currentHand, ownCity) => {
+  return remainingResearchStations <= 0 || !(currentHand && currentHand.find(card => card.id === ownCity.id)) || ownCity.researchStation;
 };

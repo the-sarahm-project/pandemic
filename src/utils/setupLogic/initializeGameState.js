@@ -48,8 +48,8 @@ const setGameFields = async (game, numPlayers, difficultyLevel) => {
 const addRemainingEpidemicCards = async (game, difficultyLevel) => {
   const addEpidemicCards = new Array(difficultyLevel).fill();
   const epidemicCardsCollection = game.collection('epidemicCards');
-  await Promise.all(addEpidemicCards.map(() => {
-    return epidemicCardsCollection.add({ name: 'Epidemic'});
+  await Promise.all(addEpidemicCards.map((_, index) => {
+    return epidemicCardsCollection.doc(`epidemic${index}`).set({ name: 'Epidemic'});
   }));
 };
 

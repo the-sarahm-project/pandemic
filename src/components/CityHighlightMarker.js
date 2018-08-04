@@ -24,7 +24,7 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
       else {
         selectedCard[0].id !== self.currentCity ?
           shuttleFlight(self.id, selectedCard[0].id, ownHand, actionsRemaining, nextTurn) :
-          charterFlight(self, selectedCard[0].id, ownHand, actionsRemaining, nextTurn);
+          charterFlight(self, city.id, ownHand, actionsRemaining, nextTurn);
       }
     } else {
       isCityInHand ?

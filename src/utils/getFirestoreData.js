@@ -186,10 +186,10 @@ export const getIsMoving = state => {
 
 // Build
 export const getBuildDisabled = state => {
-  const ownCityId = getOwnCityId(state);
+  const ownCity = getOwnCity(state);
   const ownHand = getOwnHand(state);
   const remainingResearchStations = getRemainingResearchStations(state);
-  return buildButtonDisabled(remainingResearchStations, ownHand, ownCityId);
+  return buildButtonDisabled(remainingResearchStations, ownHand, ownCity);
 };
 
 // Cure

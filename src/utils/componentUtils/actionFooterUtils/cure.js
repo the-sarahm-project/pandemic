@@ -3,6 +3,7 @@ import { getGameRef, getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
 
 export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, cardsToRemove) => {
+  console.log('Curing Disease!');
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
     alert(message);
@@ -32,6 +33,7 @@ export const removeCards = cardsToRemove => {
 };
 
 export const updateCurrentHand = (currentPlayerSnapshot, cardsToRemove) => {
+  console.log('Updating Hand!');
   const currentHand = currentPlayerSnapshot.data().currentHand;
   const newCurrentHand = differenceWith(currentHand, cardsToRemove, isEqual);
   return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });

@@ -4,6 +4,7 @@ import { updateActionsRemaining } from './index';
 
 export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, nextTurn) => {
   try {
+    console.log('Building Research Station!');
     const gameRef = await getGameRef();
     const gameSnapshot = await gameRef.get();
     const currentCityRef = await getCityRef(ownCityId);

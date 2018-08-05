@@ -219,33 +219,27 @@ export const getGameRef = async () => {
   return gameSnapshot.ref;
 };
 
-export const getUnusedCityCardRef = async cityId => {
-  const game = await getGameRef();
-  return await game.collection('unusedCityCards').doc(cityId);
+export const getUnusedCityCardRef = async (cityId, gameRef) => {
+  return await gameRef.collection('unusedCityCards').doc(cityId);
 };
 
-export const getUnusedCityCardsRef = async () => {
-  const game = await getGameRef();
-  return await game.collection('unusedCityCards');
+export const getUnusedCityCardsRef = async gameRef => {
+  return await gameRef.collection('unusedCityCards');
 };
 
-export const getUnusedInfectionCardsRef = async () => {
-  const game = await getGameRef();
-  return await game.collection('unusedInfectionCards');
+export const getUnusedInfectionCardsRef = async gameRef => {
+  return await gameRef.collection('unusedInfectionCards');
 };
 
-export const getTrashedInfectionCardsRef = async () => {
-  const game = await getGameRef();
-  return await game.collection('trashedInfectionCards');
+export const getTrashedInfectionCardsRef = async gameRef => {
+  return await gameRef.collection('trashedInfectionCards');
 };
 
-export const getCityRef = async cityId => {
-  const game = await getGameRef();
+export const getCityRef = async (cityId, game) => {
   return await game.collection('cities').doc(cityId);
 };
 
-export const getPlayerRef = async playerId => {
-  const game = await getGameRef();
+export const getPlayerRef = async (playerId, game) => {
   return await game.collection('players').doc(`${playerId}`);
 };
 
@@ -255,23 +249,23 @@ export const getGameSnapshot = async () => {
   return await firestore.get(`games/${doc}`);
 };
 
-export const getPlayerSnapshot = async (playerId) => {
-  const playerRef = await getPlayerRef(playerId);
+export const getPlayerSnapshot = async (playerId, gameRef) => {
+  const playerRef = await getPlayerRef(playerId, gameRef);
   return await playerRef.get();
 };
 
-export const getUnusedCityCardsSnapshot = async () => {
-  const unusedCityCardsRef = await getUnusedCityCardsRef();
+export const getUnusedCityCardsSnapshot = async gameRef => {
+  const unusedCityCardsRef = await getUnusedCityCardsRef(gameRef);
   return await unusedCityCardsRef.get();
 };
 
-export const getUnusedInfectionCardsSnapshot = async () => {
-  const unusedInfectionCardsRef = await getUnusedInfectionCardsRef();
+export const getUnusedInfectionCardsSnapshot = async gameRef => {
+  const unusedInfectionCardsRef = await getUnusedInfectionCardsRef(gameRef);
   return await unusedInfectionCardsRef.get();
 };
 
-export const getTrashedInfectionCardsSnapshot = async () => {
-  const trashedInfectionCardsRef = await getTrashedInfectionCardsRef();
+export const getTrashedInfectionCardsSnapshot = async gameRef => {
+  const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
   return await trashedInfectionCardsRef.get();
 };
 

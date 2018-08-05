@@ -1,5 +1,6 @@
 import { getUnusedCityCardRef, getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
+import { getGameRef } from '../../getFirestoreData';
 
 // Check if card for the current city exists in a hand
 export const inHand = (hand, cityName) => hand.find(card => card.id === cityName);
@@ -10,11 +11,12 @@ export const shareKnowledge = async (ownId, ownCity, actionsRemaining, nextTurn,
   const cityName = ownCity.name;
 
   // getSnapshots
-  const ownPlayerRef = await getPlayerRef(ownId);
+  const gameRef = await getGameRef();
+  const ownPlayerRef = await getPlayerRef(ownId, gameRef);
   const currentPlayerSnapshot = await ownPlayerRef.get();
-  const targetPlayerRef = await getPlayerRef(playerNumber);
+  const targetPlayerRef = await getPlayerRef(playerNumber, gameRef);
   const targetPlayerSnapshot = await targetPlayerRef.get();
-  const ownCityRef = await getUnusedCityCardRef(ownCity.id);
+  const ownCityRef = await getUnusedCityCardRef(ownCity.id, gameRef);
   const ownCitySnapshot = await ownCityRef.get();
 
   // Different hands

@@ -1,11 +1,13 @@
-import { getGameSnapshot, getCityRef } from '../../index';
+import { getCityRef } from '../../index';
 import { updateActionsRemaining } from './index';
+import { getGameRef } from '../../getFirestoreData';
 
 export const treatDisease = async function({ ownCity, actionsRemaining, nextTurn }, disease ) {
   try {
     console.log(`Treating Disease at ${ownCity.id}!`);
-    const gameSnapshot = await getGameSnapshot();
-    const cityRef = await getCityRef(ownCity.id);
+    const gameRef = await getGameRef();
+    const gameSnapshot = await gameRef.get();
+    const cityRef = await getCityRef(ownCity.id, gameRef);
     const ownCitySnapshot = await cityRef.get();
     const [color, numCubes] = disease.split(',');
     // update city's disease cube count.

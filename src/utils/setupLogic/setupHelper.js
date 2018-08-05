@@ -30,13 +30,17 @@ export function removeFrom(gameState, cityRef, collection) {
 /*-----------------INFECT FIRST 9 CITIES ---------------------*/
 
 //flip 1 infection card a certain number of cubes, passing in the game state, the name of the city's document in its reference, the city's data object, and the number of cubes
-function addCubes(gameState, docName, cityData, num) {
-  return gameState.collection('cities').doc(docName).update(cityData.color, num);
+async function addCubes(gameState, docName, cityData, num) {
+  const gameSnapshot = await gameState.get();
+  const color = cityData.color;
+  gameState.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - num });
+  return gameState.collection('cities').doc(docName).update(color, num);
 }
 
 //infect one city - obtain the reference name. Add the cubes to that city, add the card to the trashed pile and remove the card from the unused pile.
 async function infectOne(gameState, cityData, num) {
   const docName = cityData.name.replace(/\W/g, '');
+  console.log(`Infecting ${docName} with ${num} Disease Cubes!`);
   await addCubes(gameState, docName, cityData, num);
   await addTo(gameState, docName, cityData, 'trashedInfectionCards');
   await removeFrom(gameState, docName, 'unusedInfectionCards');
@@ -46,13 +50,16 @@ async function infectOne(gameState, cityData, num) {
 export async function flipInfectionCards(gameState, num) {
   let snapshots = await gameState.collection('unusedInfectionCards').orderBy('insertOrder', 'desc').limit(3).get();
   let data = await getSnapshotData(snapshots);
-  await Promise.all(data.map(data => infectOne(gameState, data, num)));
+  for (const snapshot of data) {
+    await infectOne(gameState, snapshot, num);
+  }
 }
 
 /*-------------  PLAYER: CURRENT HAND ---------------*/
 
 //distribute cards to each player depending on the number of players
 export async function distributeCards(gameState, playerDeck, players, playersDocs) {
+  console.log('Distributing Cards!');
   const numPlayers = Object.keys(players).length;
   const numCards = cardsPerPlayer(numPlayers);
   for (let i = 0; i < numPlayers; i++) {
@@ -100,6 +107,7 @@ export async function createPlayerDeck(gameState, players, difficultyLevel, play
 //shuffle those cards with the epidemic card.
 //put them back together as your new deck.
 function splitShuffle(playerDeck, numPiles, epCards) {
+  console.log('Shuffling Cards!');
   const separatePiles = [];
   playerDeck.forEach((card, i) => {
     separatePiles[i % numPiles] = separatePiles[i % numPiles] || [];

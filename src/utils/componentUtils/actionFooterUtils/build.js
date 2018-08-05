@@ -7,8 +7,8 @@ export const buildResearchStation = async (ownCityId, ownId, actionsRemaining, n
     console.log('Building Research Station!');
     const gameRef = await getGameRef();
     const gameSnapshot = await gameRef.get();
-    const currentCityRef = await getCityRef(ownCityId);
-    const playerRef = await getPlayerRef(ownId);
+    const currentCityRef = await getCityRef(ownCityId, gameRef);
+    const playerRef = await getPlayerRef(ownId, gameRef);
     const currentPlayerSnapshot = await playerRef.get();
     const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === ownCityId);
     // set research station to true for that city.

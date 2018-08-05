@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { SidebarCards, Board, ActionFooter } from './index';
-import { getPlayers, getPlayerRef } from '../utils';
+import { getPlayers, getPlayerRef, getGameRef } from '../utils';
 import Chance from 'chance';
 const chance = new Chance();
 
@@ -26,8 +26,9 @@ class Login extends React.Component {
         currentUser.id = +key;
         return await this.setState({ loggedIn: true });
       } else if (!value.active) {
+        const gameRef = await getGameRef();
         currentUser.id = +key;
-        const playerRef = await getPlayerRef(key);
+        const playerRef = await getPlayerRef(key, gameRef);
         await playerRef.update({ active: true, uid, name: chance.first() });
         return await this.setState({ loggedIn: true });
       }

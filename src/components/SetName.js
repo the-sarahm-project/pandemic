@@ -4,7 +4,7 @@ import { Form, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getPlayers, getPlayerRef } from '../utils';
+import { getPlayers, getPlayerRef, getGameRef } from '../utils';
 
 class SetName extends React.Component {
   constructor(props) {
@@ -28,7 +28,8 @@ class SetName extends React.Component {
   }
 
   async updatePlayer(name, id) {
-    const playerRef = await getPlayerRef(id);
+    const gameRef = await getGameRef();
+    const playerRef = await getPlayerRef(id, gameRef);
     await playerRef.update({ name });
   }
 

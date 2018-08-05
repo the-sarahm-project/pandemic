@@ -10,11 +10,11 @@ export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, ca
     return message;
   }
   try {
-    const game = await getGameRef();
-    const playerRef = await getPlayerRef(ownId);
+    const gameRef = await getGameRef();
+    const playerRef = await getPlayerRef(ownId, gameRef);
     const playerSnapshot = await playerRef.get();
     await updateCurrentHand(playerSnapshot, cardsToRemove);
-    await setCureMarker(game, ownCity.color);
+    await setCureMarker(gameRef, ownCity.color);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
     await updateActionsRemaining(actionsRemaining, nextTurn);

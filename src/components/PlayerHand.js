@@ -17,6 +17,7 @@ const PlayerHand = ({ players, firebase }) => {
       action={removeCardFromHand.bind(this, id, playerHand)}
       closeOnDimmerClick={false}
       closeOnEscape={false}
+      cancelDisabled={true}
     /> :
     <Container className="cards-container">
     {

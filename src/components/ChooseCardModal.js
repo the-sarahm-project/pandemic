@@ -30,7 +30,7 @@ class ChooseCardModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick, closeOnEscape } = this.props;
+    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick=true, closeOnEscape=true, cancelDisabled } = this.props;
     let trigger;
     // handle trigger on Marker.
     if (ModalTrigger) {
@@ -39,8 +39,8 @@ class ChooseCardModal extends React.Component {
     }
     return (
       <Modal
-        closeOnDimmerClick={closeOnDimmerClick || true}
-        closeOnEscape={closeOnEscape || true}
+        closeOnDimmerClick={closeOnDimmerClick}
+        closeOnEscape={closeOnEscape}
         onClose={this.handleClose}
         trigger={trigger && <div className="choose-card-modal" onClick={() => !disabled && clickable && this.handleOpen()}>{trigger}</div>}
         open={this.state.modalOpen}
@@ -55,6 +55,7 @@ class ChooseCardModal extends React.Component {
           action={action}
           handleClose={this.handleClose}
           selected={this.state.selected}
+          cancelDisabled={cancelDisabled}
         />
       </Modal>
     );

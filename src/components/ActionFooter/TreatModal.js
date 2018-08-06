@@ -21,7 +21,7 @@ export class TreatModal extends React.Component {
   render() {
     const { diseases, ownCity, actionsRemaining, nextTurn, currentTurn } = this.props;
     const open = () => this.handleOpen();
-    const onClick = getOnClick(currentTurn, open);
+    const onClick = getOnClick(actionsRemaining, currentTurn, open);
     return (
       <Modal
         trigger={

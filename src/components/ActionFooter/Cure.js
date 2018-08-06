@@ -15,7 +15,7 @@ export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards
       className="action-button cure-button"
       disabled={cureDisabled}
       style={{height: '100%'}}
-      onClick={getOnClick(currentTurn, cure)}
+      onClick={getOnClick(actionsRemaining, currentTurn, cure)}
     >
       <Icon className="lab-icon action-icon" name="lab" size="big" />
       <div className="cure-text action-text">Cure</div>

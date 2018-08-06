@@ -11,7 +11,7 @@ export const Build = ({ ownCityId, buildButtonDisabled, ownId, actionsRemaining,
     <Button
       className="action-button build-button"
       disabled={buildButtonDisabled}
-      onClick={() => checkClicked(getOnClick(currentTurn, build))}
+      onClick={() => checkClicked(getOnClick(actionsRemaining, currentTurn, build))}
     >
       <Icon className="build-icon action-icon" name="building" size="big" />
       <div className="build-text action-text">Build</div>

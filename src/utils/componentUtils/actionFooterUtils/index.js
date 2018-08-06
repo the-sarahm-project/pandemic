@@ -7,9 +7,8 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   const gameSnapshot = await getGameSnapshot();
   const gameRef = gameSnapshot.ref;
   const remainingActions = actionsRemaining - 1;
-  if (remainingActions) {
-    await gameRef.update({ actionsRemaining: remainingActions });
-  } else {
+  await gameRef.update({ actionsRemaining: remainingActions });
+  if (!remainingActions) {
     console.log('Ending Turn!');
     const unusedInfectionCardsRef = await getUnusedInfectionCardsRef(gameRef);
     const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
@@ -120,8 +119,8 @@ export const infectCity = async (gameRef, color, id, visited) => {
   }
 };
 
-export const getOnClick = (currentTurn, onClick) => {
-  return isCurrentTurn(currentTurn) ? onClick : () => {};
+export const getOnClick = (actionsRemaining, currentTurn, onClick) => {
+  return actionsRemaining && isCurrentTurn(currentTurn) ? onClick : () => {};
 };
 
 export const isCurrentTurn = currentTurn => {

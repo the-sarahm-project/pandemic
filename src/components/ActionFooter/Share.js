@@ -21,7 +21,7 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
       disabled={shareKnowledgeDisabled}
       players={shareKnowledgePlayers}
       action={shareKnowledge.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
-      clickable={isCurrentTurn(currentTurn)}
+      clickable={actionsRemaining && isCurrentTurn(currentTurn)}
     />
   );
 };

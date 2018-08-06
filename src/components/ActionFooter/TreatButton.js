@@ -11,7 +11,7 @@ export const TreatButton = ({ ownCity, disease = '', actionsRemaining, nextTurn,
     <Button
       className="action-button treat-button"
       disabled={!disease}
-      onClick={() => checkClicked(getOnClick(currentTurn, treat))}
+      onClick={() => checkClicked(getOnClick(actionsRemaining, currentTurn, treat))}
     >
       <Icon className="treat-icon action-icon" name="medkit" size="big" />
       <div className="treat-text action-text">Treat</div>

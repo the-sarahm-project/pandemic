@@ -15,7 +15,7 @@ export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, 
   const gameRef = await getGameRef();
   const playerRef = await getPlayerRef(currentTurn, gameRef);
   await playerRef.update({currentCity: newCity, isMoving: false});
-  await updateActionsRemaining(actionsRemaining, nextTurn);
+  return await updateActionsRemaining(actionsRemaining, nextTurn);
 };
 
 // discard a city card to fly to that city

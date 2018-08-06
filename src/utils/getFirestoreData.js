@@ -140,12 +140,12 @@ export const getMaxSameColorCityCards = state => {
     const card = unusedCityCards[cardRef.id];
     colorCount[card.color] = colorCount[card.color] ? colorCount[card.color].concat(cardRef) : [cardRef];
   }
-  for (const cards of Object.values(colorCount)) {
+  for (const [color, cards] of Object.entries(colorCount)) {
     if (cards.length >= 5) {
-      return cards;
+      return [color, cards];
     }
   }
-  return [];
+  return ['', 0];
 };
 
 export const getCurrentCityDiseaseCubes = state => {
@@ -196,8 +196,8 @@ export const getBuildDisabled = state => {
 export const getCureDisabled = state => {
   const ownCity = getOwnCity(state);
   const game = getGame(state);
-  const maxSameColorCityCards = getMaxSameColorCityCards(state);
-  return cureButtonDisabled(game, ownCity, maxSameColorCityCards.length);
+  const [color, maxSameColorCityCards] = getMaxSameColorCityCards(state);
+  return cureButtonDisabled(game, ownCity, color, maxSameColorCityCards.length);
 };
 
 // Share

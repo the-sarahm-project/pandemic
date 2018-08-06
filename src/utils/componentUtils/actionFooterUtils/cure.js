@@ -39,10 +39,9 @@ export const updateCurrentHand = (currentPlayerSnapshot, cardsToRemove) => {
   return currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
 };
 
-export const cureButtonDisabled = (game, currentCity, maxSameColorCityCards) => {
-  const currentCityColor = currentCity && currentCity.color;
+export const cureButtonDisabled = (game, currentCity, color, maxSameColorCityCards) => {
   const researchStation = currentCity && currentCity.researchStation;
-  const cured = game && game[`${currentCityColor}CureMarker`];
+  const cured = game && game[`${color}CureMarker`];
   return !maxSameColorCityCards || cured || !researchStation;
 };
 

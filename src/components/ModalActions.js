@@ -16,8 +16,8 @@ const ModalActions = ({ action, handleClose, selected }) => {
         color='green'
         inverted
         onClick={() => {
-          action(selected);
-          handleClose();
+          const completed = action(selected);
+          if (completed.PromiseValue) handleClose();
         }}
       >
         <Icon name='checkmark' /> Select

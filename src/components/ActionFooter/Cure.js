@@ -4,11 +4,23 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn, getOnClick } from '../../utils';
 
 export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards, actionsRemaining, nextTurn, ownId }) => {
+  maxSameColorCityCards = maxSameColorCityCards[1]; // 0 is color
+  const cure = () => cureDisease(ownId, ownCity, actionsRemaining, nextTurn, maxSameColorCityCards);
   return (
-    <ChooseCardModal
+    maxSameColorCityCards.length === 5 ?
+    <Button
+      className="action-button cure-button"
+      disabled={cureDisabled}
+      style={{height: '100%'}}
+      onClick={getOnClick(currentTurn, cure)}
+    >
+      <Icon className="lab-icon action-icon" name="lab" size="big" />
+      <div className="cure-text action-text">Cure</div>
+    </Button>
+    : <ChooseCardModal
       ModalTrigger={(
         <Button
           className="action-button cure-button"

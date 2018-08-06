@@ -3,12 +3,21 @@ import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getPlayers } from '../utils';
+import { getPlayers, removeCardFromHand } from '../utils';
+import ChooseCardModal from './ChooseCardModal';
 
 const PlayerHand = ({ players, firebase }) => {
   const id = firebase.auth().currentUser.id;
   const playerHand = id ? players[id].currentHand : [];
   return (
+    playerHand.length > 7 ?
+    <ChooseCardModal
+      cards={playerHand}
+      header='Choose Card(s) to Remove'
+      action={removeCardFromHand.bind(this, id, playerHand)}
+      closeOnDimmerClick={false}
+      closeOnEscape={false}
+    /> :
     <Container className="cards-container">
     {
       playerHand.map(cardRef => {

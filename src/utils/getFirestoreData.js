@@ -184,6 +184,16 @@ export const getIsMoving = state => {
   return currentPlayer && currentPlayer.isMoving;
 };
 
+export const tooManyCards = state => {
+  const players = getPlayers(state);
+  for (const player of Object.values(players)) {
+    if (player.currentHand.length > 7) {
+      return true;
+    }
+  }
+  return false;
+};
+
 // Build
 export const getBuildDisabled = state => {
   const ownCity = getOwnCity(state);

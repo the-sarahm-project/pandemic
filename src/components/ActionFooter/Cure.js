@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn, getOnClick, getCurrentHand } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn, getOnClick, tooManyCards } from '../../utils';
 
-export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards, actionsRemaining, nextTurn, ownId, currentHand }) => {
+export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards, actionsRemaining, nextTurn, ownId, tooManyCards }) => {
   maxSameColorCityCards = maxSameColorCityCards[1]; // 0 is color
   const cure = () => cureDisease(ownId, ownCity, actionsRemaining, nextTurn, maxSameColorCityCards);
   return (
@@ -15,7 +15,7 @@ export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards
       className="action-button cure-button"
       disabled={cureDisabled}
       style={{height: '100%'}}
-      onClick={getOnClick(actionsRemaining, currentTurn, cure, currentHand)}
+      onClick={getOnClick(actionsRemaining, currentTurn, cure, tooManyCards)}
     >
       <Icon className="lab-icon action-icon" name="lab" size="big" />
       <div className="cure-text action-text">Cure</div>
@@ -48,7 +48,7 @@ export const mapStateToProps = (state) => {
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
     ownId: getOwnId(),
-    currentHand: getCurrentHand(state)
+    tooManyCards: tooManyCards(state)
   };
 };
 

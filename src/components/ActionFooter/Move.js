@@ -3,14 +3,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { movePlayer, getCurrentTurn, getIsMoving, getOnClick, getActionsRemaining, getCurrentHand } from '../../utils';
+import { movePlayer, getCurrentTurn, getIsMoving, getOnClick, getActionsRemaining, tooManyCards } from '../../utils';
 
-export const Move = ({ actionsRemaining, currentTurn, isMoving, currentHand }) => {
+export const Move = ({ actionsRemaining, currentTurn, isMoving, tooManyCards }) => {
   const move = async () => movePlayer(currentTurn, isMoving);
   return (
     <Button
       className="action-button move-button"
-      onClick={getOnClick(actionsRemaining, currentTurn, move, currentHand)}
+      onClick={getOnClick(actionsRemaining, currentTurn, move, tooManyCards)}
     >
       <div className="move-icons">
         <Icon className="car-icon action-icon" name="car" size="big" />/
@@ -26,7 +26,7 @@ export const mapStateToProps = (state) => {
     currentTurn: getCurrentTurn(state),
     isMoving: getIsMoving(state),
     actionsRemaining: getActionsRemaining(state),
-    currentHand: getCurrentHand(state)
+    tooManyCards: tooManyCards(state)
   };
 };
 

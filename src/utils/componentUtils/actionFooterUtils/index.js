@@ -119,8 +119,8 @@ export const infectCity = async (gameRef, color, id, visited) => {
   }
 };
 
-export const getOnClick = (actionsRemaining, currentTurn, onClick, currentHand) => {
-  return actionsRemaining && isCurrentTurn(currentTurn) && currentHand.length <= 7
+export const getOnClick = (actionsRemaining, currentTurn, onClick, tooManyCards) => {
+  return actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards
     ? onClick
     : () => {
       if (!actionsRemaining) {

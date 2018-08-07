@@ -35,6 +35,7 @@ export const shareKnowledge = async (ownId, ownCity, actionsRemaining, nextTurn,
   await currentPlayerSnapshot.ref.update({ currentHand: newCurrentHand });
   await targetPlayerSnapshot.ref.update({ currentHand: newTargetHand});
   await updateActionsRemaining(actionsRemaining, nextTurn);
+  return true;
 };
 
 // Gets players to share with

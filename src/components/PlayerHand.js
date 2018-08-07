@@ -3,11 +3,9 @@ import { Image, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getPlayers } from '../utils';
+import { getOwnHand } from '../utils';
 
-const PlayerHand = ({ players, firebase }) => {
-  const id = firebase.auth().currentUser.id;
-  const playerHand = id ? players[id].currentHand : [];
+const PlayerHand = ({ playerHand }) => {
   return (
     <Container className="cards-container">
     {
@@ -23,7 +21,7 @@ const PlayerHand = ({ players, firebase }) => {
 
 const mapStateToProps = (state) => {
   return {
-    players: getPlayers(state)
+    playerHand: getOwnHand(state)
   };
 };
 

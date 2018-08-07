@@ -7,9 +7,8 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   const gameSnapshot = await getGameSnapshot();
   const gameRef = gameSnapshot.ref;
   const remainingActions = actionsRemaining - 1;
-  if (remainingActions) {
-    await gameRef.update({ actionsRemaining: remainingActions });
-  } else {
+  await gameRef.update({ actionsRemaining: remainingActions });
+  if (!remainingActions) {
     console.log('Ending Turn!');
     const unusedInfectionCardsRef = await getUnusedInfectionCardsRef(gameRef);
     const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
@@ -120,8 +119,18 @@ export const infectCity = async (gameRef, color, id, visited) => {
   }
 };
 
-export const getOnClick = (currentTurn, onClick) => {
-  return isCurrentTurn(currentTurn) ? onClick : () => {};
+export const getOnClick = (actionsRemaining, currentTurn, onClick, tooManyCards) => {
+  return actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards
+    ? onClick
+    : () => {
+      if (!actionsRemaining) {
+        alert('No actions remaining!');
+      } else if (!isCurrentTurn(currentTurn)) {
+        alert('Not your turn!');
+      } else {
+        alert('You need to discard cards!');
+      }
+    };
 };
 
 export const isCurrentTurn = currentTurn => {
@@ -133,3 +142,4 @@ export * from './move';
 export * from './share';
 export * from './cure';
 export * from './treat';
+export * from './discard';

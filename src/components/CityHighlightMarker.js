@@ -18,7 +18,7 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
     (isCityInHand || isCurrentCityInHand || isResearchStation || isNeighbor);
 
   const changeCity = () => changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn);
-  const changeHandCity = (selectedCard) => {
+  const changeHandCity = async (selectedCard) => {
     if (Array.isArray(selectedCard)) {
       if (selectedCard.length > 1) return alert('Please select a single card to discard');
       else {

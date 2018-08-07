@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChoosePlayerModal } from '../index';
-import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getOwnCity, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn } from '../../utils';
+import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getOwnCity, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn, tooManyCards } from '../../utils';
 
-export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, ownCity, ownId, actionsRemaining, nextTurn }) => {
+export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, ownCity, ownId, actionsRemaining, nextTurn, tooManyCards }) => {
   return (
     <ChoosePlayerModal
       ModalTrigger={(
@@ -21,7 +21,7 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
       disabled={shareKnowledgeDisabled}
       players={shareKnowledgePlayers}
       action={shareKnowledge.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
-      clickable={isCurrentTurn(currentTurn)}
+      clickable={!tooManyCards && actionsRemaining && isCurrentTurn(currentTurn)}
     />
   );
 };
@@ -34,7 +34,8 @@ export const mapStateToProps = (state) => {
     ownCity: getOwnCity(state),
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
-    ownId: getOwnId(state)
+    ownId: getOwnId(state),
+    tooManyCards: tooManyCards(state)
   };
 };
 

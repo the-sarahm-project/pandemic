@@ -3,15 +3,15 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { buildResearchStation, getOwnCityId, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, getOwnId } from '../../utils';
+import { buildResearchStation, getOwnCityId, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, getOwnId, getCurrentHand } from '../../utils';
 
-export const Build = ({ ownCityId, buildButtonDisabled, ownId, actionsRemaining, nextTurn, checkClicked, currentTurn }) => {
+export const Build = ({ ownCityId, buildButtonDisabled, ownId, actionsRemaining, nextTurn, checkClicked, currentTurn, currentHand }) => {
   const build = () => buildResearchStation(ownCityId, ownId, actionsRemaining, nextTurn);
   return (
     <Button
       className="action-button build-button"
       disabled={buildButtonDisabled}
-      onClick={() => checkClicked(getOnClick(actionsRemaining, currentTurn, build))}
+      onClick={() => checkClicked(getOnClick(actionsRemaining, currentTurn, build, currentHand))}
     >
       <Icon className="build-icon action-icon" name="building" size="big" />
       <div className="build-text action-text">Build</div>
@@ -26,7 +26,8 @@ export const mapStateToProps = (state) => {
     ownId: getOwnId(),
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    currentHand: getCurrentHand(state)
   };
 };
 

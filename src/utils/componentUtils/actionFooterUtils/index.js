@@ -119,8 +119,18 @@ export const infectCity = async (gameRef, color, id, visited) => {
   }
 };
 
-export const getOnClick = (actionsRemaining, currentTurn, onClick) => {
-  return actionsRemaining && isCurrentTurn(currentTurn) ? onClick : () => {};
+export const getOnClick = (actionsRemaining, currentTurn, onClick, currentHand) => {
+  return actionsRemaining && isCurrentTurn(currentTurn) && currentHand.length <= 7
+    ? onClick
+    : () => {
+      if (!actionsRemaining) {
+        alert('No actions remaining!');
+      } else if (!isCurrentTurn(currentTurn)) {
+        alert('Not your turn!');
+      } else {
+        alert('You need to discard cards!');
+      }
+    };
 };
 
 export const isCurrentTurn = currentTurn => {
@@ -132,3 +142,4 @@ export * from './move';
 export * from './share';
 export * from './cure';
 export * from './treat';
+export * from './discard';

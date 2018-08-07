@@ -15,9 +15,9 @@ const ModalActions = ({ action, handleClose, selected, cancelDisabled }) => {
       <Button
         color='green'
         inverted
-        onClick={() => {
-          const completed = action(selected);
-          if (completed.PromiseValue) handleClose();
+        onClick={async () => {
+          const completed = await action(selected);
+          if (completed) handleClose();
         }}
       >
         <Icon name='checkmark' /> Select

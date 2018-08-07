@@ -48,6 +48,10 @@ button.ui.button.action-button.share-button {
   height: 100%;
 }
 
+button.ui.button.action-button.trash-button {
+  height: 100%;
+}
+
 button.ui.button.action-button {
   min-width: fit-content
 }

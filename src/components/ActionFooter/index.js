@@ -6,6 +6,7 @@ import Move from './Move';
 import Treat from './Treat';
 import Share from './Share';
 import DisplayActionsRemaining from '../DisplayActionsRemaining';
+import DiscardCards from './DiscardCards';
 
 class ActionFooter extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class ActionFooter extends React.Component {
           <Share />
           <Treat checkClicked={this.checkClicked} />
           <Cure />
+          <DiscardCards />
         </div>
       </Sidebar>
     );
@@ -60,3 +62,4 @@ export { default as TreatButton } from './TreatButton';
 export { default as TreatModal } from './TreatModal';
 export { default as TreatModalContent } from './TreatModalContent';
 export { default as DiseaseButton } from './DiseaseButton';
+export { default as DiscardCards } from './DiscardCards';

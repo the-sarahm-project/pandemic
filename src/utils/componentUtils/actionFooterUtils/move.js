@@ -15,21 +15,22 @@ export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, 
   const gameRef = await getGameRef();
   const playerRef = await getPlayerRef(currentTurn, gameRef);
   await playerRef.update({currentCity: newCity, isMoving: false});
-  return await updateActionsRemaining(actionsRemaining, nextTurn);
+  await updateActionsRemaining(actionsRemaining, nextTurn);
+  return true;
 };
 
 // discard a city card to fly to that city
 export const shuttleFlight = async (currentTurn, newCity, currentHand, actionsRemaining, nextTurn) => {
   console.log('Shuttle Flight!');
   await removeCityCard(currentTurn, currentHand, newCity);
-  await changeCurrentCity(currentTurn, newCity, actionsRemaining, nextTurn);
+  return await changeCurrentCity(currentTurn, newCity, actionsRemaining, nextTurn);
 };
 
 // discard a city card matching the current player's city to fly to any other city
 export const charterFlight = async (player, newCity, currentHand, actionsRemaining, nextTurn) => {
   console.log('Charter Flight!');
   await removeCityCard(player.id, currentHand, player.currentCity);
-  await changeCurrentCity(player.id, newCity, actionsRemaining, nextTurn);
+  return await changeCurrentCity(player.id, newCity, actionsRemaining, nextTurn);
 };
 
 export const removeCityCard = async(currentTurn, currentHand, newCity) => {

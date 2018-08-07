@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getOwnCity, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick } from '../../utils';
+import { treatDisease, getOwnCity, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, getCurrentHand } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -19,9 +19,9 @@ export class TreatModal extends React.Component {
   }
 
   render() {
-    const { diseases, ownCity, actionsRemaining, nextTurn, currentTurn } = this.props;
+    const { diseases, ownCity, actionsRemaining, nextTurn, currentTurn, currentHand } = this.props;
     const open = () => this.handleOpen();
-    const onClick = getOnClick(actionsRemaining, currentTurn, open);
+    const onClick = getOnClick(actionsRemaining, currentTurn, open, currentHand);
     return (
       <Modal
         trigger={
@@ -57,7 +57,8 @@ export const mapStateToProps = (state) => {
     ownCity: getOwnCity(state),
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    currentHand: getCurrentHand(state)
   };
 };
 

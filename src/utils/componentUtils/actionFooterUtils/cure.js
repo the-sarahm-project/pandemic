@@ -7,7 +7,7 @@ export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, ca
   if (cardsToRemove.length !== 5) {
     const message = 'Please select 5 cards';
     alert(message);
-    return message;
+    return false;
   }
   try {
     const gameRef = await getGameRef();
@@ -18,6 +18,7 @@ export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, ca
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
     await updateActionsRemaining(actionsRemaining, nextTurn);
+    return true;
   } catch (err) {
     console.log(err);
   }

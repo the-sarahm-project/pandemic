@@ -1,6 +1,8 @@
 import { differenceWith, isEqual } from 'lodash';
-import { getGameRef, getPlayerRef } from '../../index';
+import { getPlayerRef } from '../../index';
 import { updateActionsRemaining } from './index';
+import { getGameSnapshot } from '../../getFirestoreData';
+import { checkCured } from '../endGameConditions';
 
 export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, cardsToRemove) => {
   console.log('Curing Disease!');
@@ -10,11 +12,14 @@ export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, ca
     return false;
   }
   try {
-    const gameRef = await getGameRef();
+
+    const gameSnapshot = getGameSnapshot();
+    const gameRef = gameSnapshot.ref;
     const playerRef = await getPlayerRef(ownId, gameRef);
     const playerSnapshot = await playerRef.get();
     await updateCurrentHand(playerSnapshot, cardsToRemove);
     await setCureMarker(gameRef, ownCity.color);
+    checkCured(gameSnapshot);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
     await updateActionsRemaining(actionsRemaining, nextTurn);

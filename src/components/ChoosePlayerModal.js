@@ -22,12 +22,20 @@ class ChoosePlayerModal extends React.Component {
     const player = players.find(player => player.id === +this.state.selected) || {};
     const currentCityCard = self.currentHand.find(card => card.id === self.currentCity) || [];
     const currentHand = player.role === 'Researcher' ? player.currentHand.concat(currentCityCard) : self.currentHand;
+    let onClick;
+    if (!disabled && clickable) {
+      onClick = this.handleOpen;
+    } else if (!disabled) {
+      onClick = () => alert('Not your turn, or discard cards');
+    } else {
+      onClick = () => {};
+    }
     return (
       <Modal
         closeOnDimmerClick
         closeOnEscape
         onClose={this.handleClose}
-        trigger={<div onClick={() => !disabled && clickable ? this.handleOpen() : alert('Not your turn, or discard cards')}>{ModalTrigger}</div>}
+        trigger={<div onClick={onClick}>{ModalTrigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content='Choose a Player' />

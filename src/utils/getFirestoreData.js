@@ -72,7 +72,7 @@ export const getOwnCityId = state => {
 
 export const getPlayersInSameCity = state => {
   const players = getPlayers(state);
-  const currentCityId = getCurrentCityId(state);
+  const currentCityId = getOwnCityId(state);
   const ownId = firebase.auth().currentUser.id;
   return players && Object.values(players).reduce((totalPlayers, player) => {
     if (player.id !== ownId && player.currentCity === currentCityId ) {

@@ -15,16 +15,6 @@ class ChooseCardModal extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log(prevProps);
-  //   console.log(this.props);
-  //   if (prevProps.ModalTrigger !== this.props.ModalTrigger) {
-  //     if (!this.props.ModalTrigger) {
-  //       this.handleOpen();
-  //     }
-  //   }
-  // }
-
   handleOpen() {
     this.setState({ modalOpen: true });
   }
@@ -41,12 +31,20 @@ class ChooseCardModal extends React.Component {
       trigger = {...ModalTrigger};
       trigger.props = {...trigger.props, onClick: () => !disabled && clickable && this.handleOpen()};
     }
+    let onClick;
+    if (!disabled && clickable) {
+      onClick = this.handleOpen;
+    } else if (!disabled) {
+      onClick = () => alert('Not your turn, or discard cards');
+    } else {
+      onClick = () => {};
+    }
     return (
       <Modal
         closeOnDimmerClick={closeOnDimmerClick}
         closeOnEscape={closeOnEscape}
         onClose={this.handleClose}
-        trigger={trigger && <div className="choose-card-modal" onClick={() => !disabled && clickable ? this.handleOpen() : alert('Not your turn, or discard cards')}>{trigger}</div>}
+        trigger={trigger && <div className="choose-card-modal" onClick={onClick}>{trigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content={header || 'Choose Cards'} />

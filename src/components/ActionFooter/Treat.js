@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { TreatModal, TreatButton } from './index';
-import { getCurrentCityDiseaseCubes } from '../../utils';
+import { getOwnCityDiseaseCubes } from '../../utils';
 
 export const Treat = ({ diseaseCubes, checkClicked }) => {
   return (
@@ -15,7 +15,7 @@ export const Treat = ({ diseaseCubes, checkClicked }) => {
 
 export const mapStateToProps = (state) => {
   return {
-    diseaseCubes: getCurrentCityDiseaseCubes(state)
+    diseaseCubes: getOwnCityDiseaseCubes(state)
   };
 };
 

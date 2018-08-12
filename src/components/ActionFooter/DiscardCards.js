@@ -19,6 +19,7 @@ export const DiscardCards = ({ playerHand, firebase }) => {
           <div className="trash-text action-text">Trash</div>
         </Button>
       )}
+      disabled={playerHand.length <= 7}
       cards={playerHand}
       header='Choose Card(s) to Remove'
       action={removeCardFromHand.bind(this, id, playerHand)}

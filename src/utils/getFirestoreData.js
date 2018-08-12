@@ -215,7 +215,7 @@ export const getShareKnowledgePlayers = state => {
   const playersInSameCity = getPlayersInSameCity(state);
   const ownCityId = getOwnCityId(state);
   const self = getSelf(state);
-  return shareKnowledgePlayers(playersInSameCity, ownCityId, self);
+  return self.role === 'Researcher' ? playersInSameCity : shareKnowledgePlayers(playersInSameCity, ownCityId, self);
 };
 
 export const getShareKnowledgeDisabled = state => {
@@ -263,6 +263,12 @@ export const getPlayerSnapshot = async (playerId, gameRef) => {
   const playerRef = await getPlayerRef(playerId, gameRef);
   return await playerRef.get();
 };
+
+export const getUnusedCityCardSnapshot = async (cityId, gameRef) => {
+  const cityRef = await getUnusedCityCardRef(cityId, gameRef);
+  return await cityRef.get();
+};
+
 
 export const getUnusedCityCardsSnapshot = async gameRef => {
   const unusedCityCardsRef = await getUnusedCityCardsRef(gameRef);

@@ -7,3 +7,4 @@ export * from './playerMenu';
 export * from './chooseCardModal';
 export * from './app';
 export * from './actionFooterUtils/index';
+export * from './endGameConditions';

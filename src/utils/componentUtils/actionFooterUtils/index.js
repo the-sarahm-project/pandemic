@@ -1,6 +1,7 @@
 import { shuffle } from 'lodash';
 import store from '../../../store';
 import { getPlayerRef, getGameSnapshot, getUnusedInfectionCardsRef, getTrashedInfectionCardsRef, getCityRef } from '../../getFirestoreData';
+import { checkOutbreaks, checkDiseaseCubes, checkPlayerCards } from '../endGameConditions';
 
 export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   console.log('Updating Actions Remaining!');
@@ -14,7 +15,7 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
     const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
     const { currentTurn, playerDeck } = gameSnapshot.data();
     const playerRef = await getPlayerRef(currentTurn, gameRef);
-    await drawCards(gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef);
+    await drawCards(gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef, gameSnapshot);
     await infectCities(gameRef, trashedInfectionCardsRef, unusedInfectionCardsRef) ;
     await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false });
     console.log(`Player ${nextTurn}'s Turn!`);
@@ -35,6 +36,7 @@ export const drawCards = async (gameRef, playerRef, playerDeck, unusedInfectionC
     }
     await playerRef.update({ currentHand: [...playerSnapshot.data().currentHand, newCard] });
     await gameRef.update({ playerDeck });
+    checkPlayerCards(playerDeck.length);
     i++;
   }
 };
@@ -55,6 +57,7 @@ export const epidemic = async (gameRef, unusedInfectionCardsRef, trashedInfectio
   if (!diseaseCubes) {
     await cityRef.update({ [color]: 3 });
     await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - (3 - diseaseCubes) });
+    checkDiseaseCubes(gameSnapshot);
   } else {
     await cityRef.update({ [color]: 3 });
     await infectCity(gameRef, color, id, {});
@@ -105,6 +108,8 @@ export const infectCity = async (gameRef, color, id, visited) => {
   console.log(`Infecting ${id}!`);
   if (citySnapshot.data()[color] === 3) {
     console.log(`Outbreak at ${id}!`);
+    await gameRef.update({ numOutbreaks: gameSnapshot.data().numOutbreaks + 1 });
+    checkOutbreaks(gameSnapshot);
     const neighbors = citySnapshot.data().neighbors;
     for (const neighbor of neighbors) {
       if (!(neighbor in visited)) {
@@ -116,6 +121,7 @@ export const infectCity = async (gameRef, color, id, visited) => {
     // update disease cube
     await cityRef.update({ [color]: citySnapshot.data()[color] + 1 });
     await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - 1 });
+    checkDiseaseCubes(gameSnapshot);
   }
 };
 

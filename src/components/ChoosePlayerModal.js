@@ -18,14 +18,14 @@ class ChoosePlayerModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, players, action, disabled, clickable, self } = this.props;
+    const { ModalTrigger, players, action, disabled, clickable, self, actionsRemaining } = this.props;
     const player = players.find(player => player.id === +this.state.selected) || {};
     const currentCityCard = self.currentHand.find(card => card.id === self.currentCity) || [];
     const currentHand = player.role === 'Researcher' ? player.currentHand.concat(currentCityCard) : self.currentHand;
     let onClick;
-    if (!disabled && clickable) {
+    if (!disabled && clickable && actionsRemaining) {
       onClick = this.handleOpen;
-    } else if (!disabled) {
+    } else if (!disabled && actionsRemaining) {
       onClick = () => alert('Not your turn, or discard cards');
     } else {
       onClick = () => {};

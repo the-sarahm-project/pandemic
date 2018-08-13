@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import ChooseCardModal from '../ChooseCardModal';
-import { removeCardFromHand, getOwnHand } from '../../utils';
+import { removeCardFromHand, getOwnHand, getActionsRemaining } from '../../utils';
 
-export const DiscardCards = ({ playerHand, firebase }) => {
+export const DiscardCards = ({ playerHand, firebase, actionsRemaining }) => {
   const id = firebase.auth().currentUser.id;
   return (
     <ChooseCardModal
@@ -19,6 +19,7 @@ export const DiscardCards = ({ playerHand, firebase }) => {
           <div className="trash-text action-text">Trash</div>
         </Button>
       )}
+      actionsRemaining={actionsRemaining}
       disabled={playerHand.length <= 7}
       cards={playerHand}
       header='Choose Card(s) to Remove'
@@ -29,7 +30,8 @@ export const DiscardCards = ({ playerHand, firebase }) => {
 
 export const mapStateToProps = (state) => {
   return {
-    playerHand: getOwnHand(state)
+    playerHand: getOwnHand(state),
+    actionsRemaining: getActionsRemaining(state)
   };
 };
 

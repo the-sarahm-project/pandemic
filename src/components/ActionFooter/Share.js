@@ -18,6 +18,7 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
           <div className="share-text action-text">Share</div>
         </Button>
       )}
+      actionsRemaining={actionsRemaining}
       disabled={shareKnowledgeDisabled}
       players={shareKnowledgePlayers}
       action={shareKnowledge.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}

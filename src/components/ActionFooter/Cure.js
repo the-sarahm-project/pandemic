@@ -31,6 +31,7 @@ export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards
           <div className="cure-text action-text">Cure</div>
         </Button>
       )}
+      actionsRemaining={actionsRemaining}
       disabled={cureDisabled}
       cards={maxSameColorCityCards}
       action={cureDisease.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}

@@ -24,7 +24,7 @@ class ChooseCardModal extends React.Component {
   }
 
   render() {
-    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick=true, closeOnEscape=true, cancelDisabled } = this.props;
+    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick=true, closeOnEscape=true, cancelDisabled, actionsRemaining } = this.props;
     let trigger;
     // handle trigger on Marker.
     if (ModalTrigger) {
@@ -32,9 +32,9 @@ class ChooseCardModal extends React.Component {
       trigger.props = {...trigger.props, onClick: () => !disabled && clickable && this.handleOpen()};
     }
     let onClick;
-    if (!disabled && clickable) {
+    if (!disabled && clickable && actionsRemaining) {
       onClick = this.handleOpen;
-    } else if (!disabled) {
+    } else if (!disabled && actionsRemaining) {
       onClick = () => alert('Not your turn, or discard cards');
     } else {
       onClick = () => {};

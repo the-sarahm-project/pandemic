@@ -44,6 +44,6 @@ export const updateHands = async (gameRef, currentPlayerSnapshot, targetPlayerSn
 export const shareKnowledgePlayers = (playersInSameCity, ownCity, currentPlayer) => {
   // If the currentPlayer has the current city's card
   if (currentPlayer && inHand(currentPlayer.currentHand, ownCity)) return playersInSameCity;
-  // If another player in the same city has the current city's card or has Researcher roles
-  return playersInSameCity && playersInSameCity.filter(player => player.role === 'Researcher' || inHand(player.currentHand, ownCity));
+  // If another player in the same city has the current city's card or has Researcher role
+  return playersInSameCity && playersInSameCity.filter(player => player.role === 'Researcher' && player.currentHand.length || inHand(player.currentHand, ownCity));
 };

@@ -215,7 +215,13 @@ export const getShareKnowledgePlayers = state => {
   const playersInSameCity = getPlayersInSameCity(state);
   const ownCityId = getOwnCityId(state);
   const self = getSelf(state);
-  return self.role === 'Researcher' ? playersInSameCity : shareKnowledgePlayers(playersInSameCity, ownCityId, self);
+  if (self.role === 'Researcher' && !self.currentHand.length) {
+    return [];
+  } else if (self.role === 'Researcher') {
+    return playersInSameCity;
+  } else {
+    return shareKnowledgePlayers(playersInSameCity, ownCityId, self);
+  }
 };
 
 export const getShareKnowledgeDisabled = state => {

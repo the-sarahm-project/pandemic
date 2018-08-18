@@ -130,6 +130,7 @@ export const getActionsRemaining = state => {
 };
 
 export const getMaxSameColorCityCards = state => {
+  const self = getSelf(state);
   const ownHand = getOwnHand(state);
   const unusedCityCards = getUnusedCityCards(state);
   const eventCards = getEventCards(state);
@@ -140,8 +141,9 @@ export const getMaxSameColorCityCards = state => {
     const card = unusedCityCards[cardRef.id];
     colorCount[card.color] = colorCount[card.color] ? colorCount[card.color].concat(cardRef) : [cardRef];
   }
+  const maxCards = self.role === 'Scientist' ? 4 : 5;
   for (const [color, cards] of Object.entries(colorCount)) {
-    if (cards.length >= 5) {
+    if (cards.length >= maxCards) {
       return [color, cards];
     }
   }

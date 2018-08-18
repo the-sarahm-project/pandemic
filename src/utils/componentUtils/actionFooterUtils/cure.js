@@ -4,21 +4,23 @@ import { updateActionsRemaining } from './index';
 import { getGameSnapshot } from '../../getFirestoreData';
 import { checkCured } from '../endGameConditions';
 
-export const cureDisease = async (ownId, ownCity, actionsRemaining, nextTurn, cardsToRemove) => {
+export const cureDisease = async (self, actionsRemaining, nextTurn, cardsToRemove) => {
+  const ownId = self.id;
   console.log('Curing Disease!');
-  if (cardsToRemove.length !== 5) {
-    const message = 'Please select 5 cards';
+  const enoughCards = self.role === 'Scientist' ? 4 : 5;
+  if (cardsToRemove.length !== enoughCards) {
+    const message = `Please select ${enoughCards} cards`;
     alert(message);
     return false;
   }
   try {
-
-    const gameSnapshot = getGameSnapshot();
+    const gameSnapshot = await getGameSnapshot();
     const gameRef = gameSnapshot.ref;
     const playerRef = await getPlayerRef(ownId, gameRef);
     const playerSnapshot = await playerRef.get();
+    const cardSnapshot = await cardsToRemove[0].get(); // to get the color of the city cards
     await updateCurrentHand(playerSnapshot, cardsToRemove);
-    await setCureMarker(gameRef, ownCity.color);
+    await setCureMarker(gameRef, cardSnapshot.data().color);
     checkCured(gameSnapshot);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);

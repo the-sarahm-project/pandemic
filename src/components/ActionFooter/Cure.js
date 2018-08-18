@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getOwnCity, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, getOwnId, isCurrentTurn, getOnClick, tooManyCards } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getSelf, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, isCurrentTurn, getOnClick, tooManyCards } from '../../utils';
 
-export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards, actionsRemaining, nextTurn, ownId, tooManyCards }) => {
+export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, actionsRemaining, nextTurn, tooManyCards }) => {
   maxSameColorCityCards = maxSameColorCityCards[1]; // 0 is color
-  const cure = () => cureDisease(ownId, ownCity, actionsRemaining, nextTurn, maxSameColorCityCards);
+  const cure = () => cureDisease(self, actionsRemaining, nextTurn, maxSameColorCityCards);
   return (
-    maxSameColorCityCards.length === 5 ?
+    maxSameColorCityCards.length === 5 || (self.role === 'Scientist' && maxSameColorCityCards.length === 4) ?
     <Button
       className="action-button cure-button"
       disabled={cureDisabled}
@@ -34,7 +34,7 @@ export const Cure = ({ currentTurn, cureDisabled, ownCity, maxSameColorCityCards
       actionsRemaining={actionsRemaining}
       disabled={cureDisabled}
       cards={maxSameColorCityCards}
-      action={cureDisease.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
+      action={cureDisease.bind(this, self, actionsRemaining, nextTurn)}
       clickable={isCurrentTurn(currentTurn)}
     />
   );
@@ -44,11 +44,10 @@ export const mapStateToProps = (state) => {
   return {
     currentTurn: getCurrentTurn(state),
     cureDisabled: getCureDisabled(state),
-    ownCity: getOwnCity(state),
     maxSameColorCityCards: getMaxSameColorCityCards(state),
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
-    ownId: getOwnId(),
+    self: getSelf(state),
     tooManyCards: tooManyCards(state)
   };
 };

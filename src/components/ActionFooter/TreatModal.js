@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getOwnCity, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards } from '../../utils';
+import { treatDisease, getSelf, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export class TreatModal extends React.Component {
   }
 
   render() {
-    const { diseases, ownCity, actionsRemaining, nextTurn, currentTurn, tooManyCards } = this.props;
+    const { diseases, self, actionsRemaining, nextTurn, currentTurn, tooManyCards } = this.props;
     const open = () => this.handleOpen();
     const onClick = getOnClick(actionsRemaining, currentTurn, open, tooManyCards);
     return (
@@ -43,7 +43,7 @@ export class TreatModal extends React.Component {
           selected={this.state.selected}
         />
         <ModalActions
-          action={treatDisease.bind(this, { ownCity, actionsRemaining, nextTurn })}
+          action={treatDisease.bind(this, { self, actionsRemaining, nextTurn })}
           handleClose={this.handleClose}
           selected={this.state.selected}
         />
@@ -54,7 +54,7 @@ export class TreatModal extends React.Component {
 
 export const mapStateToProps = (state) => {
   return {
-    ownCity: getOwnCity(state),
+    self: getSelf(state),
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
     currentTurn: getCurrentTurn(state),

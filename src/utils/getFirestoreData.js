@@ -186,6 +186,11 @@ export const getIsMoving = state => {
   return currentPlayer && currentPlayer.isMoving;
 };
 
+export const getRole = state => {
+  const self = getSelf(state);
+  return self.role;
+}
+
 export const tooManyCards = state => {
   const players = getPlayers(state);
   for (const player of Object.values(players)) {
@@ -198,10 +203,11 @@ export const tooManyCards = state => {
 
 // Build
 export const getBuildDisabled = state => {
+  const role = getRole(state);
   const ownCity = getOwnCity(state);
   const ownHand = getOwnHand(state);
   const remainingResearchStations = getRemainingResearchStations(state);
-  return buildButtonDisabled(remainingResearchStations, ownHand, ownCity);
+  return buildButtonDisabled(remainingResearchStations, ownHand, ownCity, role);
 };
 
 // Cure

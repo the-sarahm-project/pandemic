@@ -10,12 +10,12 @@ export const movePlayer = async (currentTurn, isMoving) => {
 };
 
 // update the current city (move)
-export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, nextTurn, hasSpecial) => {
+export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, nextTurn, hasOESpecial) => {
   console.log(`Changing Cities to ${newCity}!`);
   const gameRef = await getGameRef();
   const playerRef = await getPlayerRef(currentTurn, gameRef);
-  hasSpecial
-    ? await playerRef.update({currentCity: newCity, isMoving: false, hasSpecial: !hasSpecial })
+  hasOESpecial
+    ? await playerRef.update({currentCity: newCity, isMoving: false, hasOESpecial: !hasOESpecial })
     : await playerRef.update({currentCity: newCity, isMoving: false });
   await updateActionsRemaining(actionsRemaining, nextTurn);
   return true;
@@ -24,25 +24,25 @@ export const changeCurrentCity = async (currentTurn, newCity, actionsRemaining, 
 // discard a city card to fly to that city
 export const shuttleFlight = async (currentTurn, newCity, currentHand, actionsRemaining, nextTurn, clickedCity) => {
   console.log('Shuttle Flight!');
-  let cityToChange = '', hasSpecial = false;
+  let cityToChange = '', hasOESpecial = false;
   if (clickedCity !== newCity) {
-    hasSpecial = true;
+    hasOESpecial = true;
     cityToChange = clickedCity;
   }
   await removeCityCard(currentTurn, currentHand, newCity);
-  return await changeCurrentCity(currentTurn, cityToChange, actionsRemaining, nextTurn, hasSpecial);
+  return await changeCurrentCity(currentTurn, cityToChange, actionsRemaining, nextTurn, hasOESpecial);
 };
 
 // discard a city card matching the current player's city to fly to any other city
 export const charterFlight = async (player, newCity, currentHand, actionsRemaining, nextTurn, clickedCity) => {
   console.log('Charter Flight!');
-  let cityToChange = '', hasSpecial = false;
+  let cityToChange = '', hasOESpecial = false;
   if (clickedCity !== newCity) {
-    hasSpecial = true;
+    hasOESpecial = true;
     cityToChange = clickedCity;
   }
   await removeCityCard(player.id, currentHand, player.currentCity);
-  return await changeCurrentCity(player.id, cityToChange, actionsRemaining, nextTurn, hasSpecial);
+  return await changeCurrentCity(player.id, cityToChange, actionsRemaining, nextTurn, hasOESpecial);
 };
 
 export const removeCityCard = async(currentTurn, currentHand, newCity) => {

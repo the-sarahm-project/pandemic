@@ -78,15 +78,15 @@ const addPlayers = async (game, numPlayers) => {
   };
   const players = new Array(numPlayers).fill(newPlayer);
   await Promise.all(players.map((player, index) => {
-    let hasSpecial = false;
+    let hasOESpecial = false;
     if (gameRoles[index] === 'Operations Expert') {
-      hasSpecial = true;
+      hasOESpecial = true;
     }
     return playersCollection.doc(`${index + 1}`).set({
       ...player,
       id: index + 1,
       role: gameRoles[index],
-      hasSpecial
+      hasOESpecial
     });
   }));
 };

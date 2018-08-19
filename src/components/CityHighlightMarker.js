@@ -16,7 +16,7 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
 
   // Operations Expert - move from a research station to any other city by discarding a card.
   const isOperationsExpert = self.role === 'Operations Expert';
-  const isOperationsExpertSpecial = isOperationsExpert && self.hasSpecial && cities[self.currentCity].researchStation;
+  const isOperationsExpertSpecial = isOperationsExpert && self.hasOESpecial && cities[self.currentCity].researchStation;
 
   // whether to display highlight.
   const isHighlighted = self.isMoving && isNotSelf &&

@@ -3,10 +3,24 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Marker } from 'react-leaflet';
-import { iconContainer, getCities, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn, getOwnHand, getNeighbors, shuttleFlight, charterFlight, isCurrentTurn, getCurrentTurn } from '../utils';
+import { iconContainer, getCities, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn, getOwnHand, getNeighbors, shuttleFlight, charterFlight, isCurrentTurn, getCurrentTurn, getGameRef, getCityRef, getGame } from '../utils';
 import ChooseCardModal from './ChooseCardModal';
 
-const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, ownHand, neighbors, currentTurn }) => {
+const checkMedic = async (self, city, game, cities) => {
+  if (self.role === 'Medic') {
+    const gameRef = await getGameRef();
+    const cityRef = await getCityRef(city, gameRef);
+    const colors = ['blue', 'black', 'yellow', 'red'];
+    for (const color of colors) {
+      if (game[`${color}CureMarker`]) {
+        cityRef.update({ [color]: 0 });
+        gameRef.update({ [`${color}DiseaseCubes`]: game[`${color}DiseaseCubes`] + cities[city][color] });
+      }
+    }
+  }
+};
+
+const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextTurn, ownHand, neighbors, currentTurn }) => {
   const isNotSelf = city.id !== self.currentCity;
   const isCityInHand = ownHand.find(card => card.id === city.id);
   const isCurrentCityInHand = ownHand.find(card => card.id === self.currentCity);
@@ -22,7 +36,10 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
   const isHighlighted = self.isMoving && isNotSelf &&
     (isCityInHand || isCurrentCityInHand || isResearchStation || isNeighbor || isOperationsExpertSpecial);
 
-  const changeCity = () => changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn);
+  const changeCity = () => {
+    checkMedic(self, city.id, game, cities);
+    return changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn);
+  };
   const changeHandCity = async (selectedCard, clickedCity) => {
     if (Array.isArray(selectedCard)) {
       if (selectedCard.length > 1) return alert('Please select a single card to discard');
@@ -30,11 +47,13 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
         selectedCard[0].id !== self.currentCity ?
           shuttleFlight(self.id, selectedCard[0].id, ownHand, actionsRemaining, nextTurn, clickedCity) :
           charterFlight(self, city.id, ownHand, actionsRemaining, nextTurn, clickedCity);
+        checkMedic(self, clickedCity, game, cities);
       }
     } else {
       isCityInHand ?
         shuttleFlight(self.id, city.id, ownHand, actionsRemaining, nextTurn) :
         charterFlight(self, city.id, ownHand, actionsRemaining, nextTurn);
+      checkMedic(self, city.id, game, cities);
     }
   };
   // just change cities or remove cards.
@@ -65,10 +84,11 @@ const CityHighlightMarker = ({ city, cities, self, actionsRemaining, nextTurn, o
       onClick={getMoveFunc}
     />)
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
+    game: getGame(state),
     cities: getCities(state),
     self: getSelf(state),
     actionsRemaining: getActionsRemaining(state),

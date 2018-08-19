@@ -16,8 +16,8 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
     const { currentTurn, playerDeck } = gameSnapshot.data();
     const playerRef = await getPlayerRef(currentTurn, gameRef);
     await drawCards(gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef, gameSnapshot);
-    await infectCities(gameRef, trashedInfectionCardsRef, unusedInfectionCardsRef) ;
-    await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false, hasSpecial: true });
+    await infectCities(gameRef, trashedInfectionCardsRef, unusedInfectionCardsRef);
+    await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false });
     console.log(`Player ${nextTurn}'s Turn!`);
   }
 };
@@ -34,7 +34,7 @@ export const drawCards = async (gameRef, playerRef, playerDeck, unusedInfectionC
       await epidemic(gameRef, unusedInfectionCardsRef, trashedInfectionCardsRef);
       newCard = playerDeck.pop();
     }
-    await playerRef.update({ currentHand: [...playerSnapshot.data().currentHand, newCard] });
+    await playerRef.update({ currentHand: [...playerSnapshot.data().currentHand, newCard], hasOESpecial: true });
     await gameRef.update({ playerDeck });
     checkPlayerCards(playerDeck.length);
     i++;

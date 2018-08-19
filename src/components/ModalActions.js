@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 
-const ModalActions = ({ action, handleClose, selected, cancelDisabled }) => {
+const ModalActions = ({ action, handleClose, selected, cancelDisabled, city }) => {
   return (
     <div>
       <Button
@@ -16,7 +16,7 @@ const ModalActions = ({ action, handleClose, selected, cancelDisabled }) => {
         color='green'
         inverted
         onClick={async () => {
-          const completed = action(selected);
+          const completed = action(selected, city);
           if (completed) handleClose();
         }}
       >

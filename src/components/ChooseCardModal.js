@@ -9,14 +9,15 @@ class ChooseCardModal extends React.Component {
     this.state = {
       active: {},
       selected: [],
-      modalOpen: false
+      modalOpen: false,
+      city: ''
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleOpen() {
-    this.setState({ modalOpen: true });
+  handleOpen(event) {
+    this.setState({ city: event.target.options.id, modalOpen: true });
   }
 
   handleClose() {
@@ -29,11 +30,11 @@ class ChooseCardModal extends React.Component {
     // handle trigger on Marker.
     if (ModalTrigger) {
       trigger = {...ModalTrigger};
-      trigger.props = {...trigger.props, onClick: () => !disabled && clickable && this.handleOpen()};
+      trigger.props = {...trigger.props, onClick: (event) => !disabled && clickable && this.handleOpen(event)};
     }
     let onClick;
     if (!disabled && clickable && actionsRemaining) {
-      onClick = this.handleOpen;
+      onClick = (event) => this.handleOpen(event);
     } else if (!disabled && actionsRemaining) {
       onClick = () => alert('Not your turn, or discard cards');
     } else {
@@ -59,6 +60,7 @@ class ChooseCardModal extends React.Component {
             handleClose={this.props.handleClose || this.handleClose}
             selected={this.state.selected}
             cancelDisabled={cancelDisabled}
+            city={this.state.city}
           />
         </Modal.Actions>
       </Modal>

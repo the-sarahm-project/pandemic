@@ -36,6 +36,6 @@ export const setRemainingResearchStations = async (gameRef, gameSnapshot) => {
 };
 
 export const buildButtonDisabled = (remainingResearchStations, currentHand, ownCity, role) => {
-  if (remainingResearchStations <= 0) return true;
-  return role === 'Operations Expert' ? !currentHand.length : !(currentHand && currentHand.find(card => card.id === ownCity.id)) || ownCity.researchStation;
+  if (remainingResearchStations <= 0 || ownCity.researchStation) return true;
+  return role === 'Operations Expert' ? !currentHand.length : !(currentHand && currentHand.find(card => card.id === ownCity.id));
 };

@@ -14,7 +14,7 @@ const checkMedic = async (self, city, game, cities) => {
     for (const color of colors) {
       if (game[`${color}CureMarker`]) {
         cityRef.update({ [color]: 0 });
-        gameRef.update({ [`${color}DiseaseCubes`]: game[`${color}DiseaseCubes`] + cities[city][color] });
+        gameRef.update({ [`${color}DiseaseCubes`]: game[`${color}DiseaseCubes`] + cities[city][color], medicCurrentCity: city });
       }
     }
   }

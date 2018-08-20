@@ -54,13 +54,18 @@ export const epidemic = async (gameRef, unusedInfectionCardsRef, trashedInfectio
   const citySnapshot = await cityRef.get();
   const diseaseCubes = citySnapshot.data()[color];
   const gameSnapshot = await gameRef.get();
-  if (!diseaseCubes) {
-    await cityRef.update({ [color]: 3 });
-    await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - (3 - diseaseCubes) });
-    checkDiseaseCubes(gameSnapshot);
-  } else {
-    await cityRef.update({ [color]: 3 });
-    await infectCity(gameRef, color, id, {});
+  // ignore city if medic is there and the disease is cured.
+  const medicCurrentCity = gameSnapshot.data().medicCurrentCity;
+  const cured = gameSnapshot.data()[`${color}CureMarker`];
+  if (medicCurrentCity !== id && !cured) {
+    if (!diseaseCubes) {
+      await cityRef.update({ [color]: 3 });
+      await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - (3 - diseaseCubes) });
+      checkDiseaseCubes(gameSnapshot);
+    } else {
+      await cityRef.update({ [color]: 3 });
+      await infectCity(gameRef, color, id, {});
+    }
   }
   // shuffle trashed
   console.log('Shuffling Trashed Infection Cards!');
@@ -105,23 +110,27 @@ export const infectCity = async (gameRef, color, id, visited) => {
   const gameSnapshot = await gameRef.get();
   const cityRef = await getCityRef(id, gameRef);
   const citySnapshot = await cityRef.get();
+  const medicCurrentCity = gameSnapshot.data().medicCurrentCity;
+  const cured = gameSnapshot.data()[`${color}CureMarker`];
   console.log(`Infecting ${id}!`);
-  if (citySnapshot.data()[color] === 3) {
-    console.log(`Outbreak at ${id}!`);
-    await gameRef.update({ numOutbreaks: gameSnapshot.data().numOutbreaks + 1 });
-    checkOutbreaks(gameSnapshot);
-    const neighbors = citySnapshot.data().neighbors;
-    for (const neighbor of neighbors) {
-      if (!(neighbor in visited)) {
-        visited[neighbor] = true;
-        await infectCity(gameRef, color, neighbor, visited);
+  if (medicCurrentCity !== id && !cured) {
+    if (citySnapshot.data()[color] === 3) {
+      console.log(`Outbreak at ${id}!`);
+      await gameRef.update({ numOutbreaks: gameSnapshot.data().numOutbreaks + 1 });
+      checkOutbreaks(gameSnapshot);
+      const neighbors = citySnapshot.data().neighbors;
+      for (const neighbor of neighbors) {
+        if (!(neighbor in visited)) {
+          visited[neighbor] = true;
+          await infectCity(gameRef, color, neighbor, visited);
+        }
       }
+    } else {
+      // update disease cube
+      await cityRef.update({ [color]: citySnapshot.data()[color] + 1 });
+      await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - 1 });
+      checkDiseaseCubes(gameSnapshot);
     }
-  } else {
-    // update disease cube
-    await cityRef.update({ [color]: citySnapshot.data()[color] + 1 });
-    await gameRef.update({ [`${color}DiseaseCubes`]: gameSnapshot.data()[`${color}DiseaseCubes`] - 1 });
-    checkDiseaseCubes(gameSnapshot);
   }
 };
 

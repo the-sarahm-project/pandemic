@@ -12,8 +12,16 @@ export const Move = ({ actionsRemaining, currentTurn, isMoving, tooManyCards }) 
       className="action-button move-button"
       onClick={getOnClick(actionsRemaining, currentTurn, move, tooManyCards)}
     >
-      <div className="move-icons">
-        <Icon className="car-icon action-icon" name="car" size="big" />/
+      <div style={{display: 'flex'}} className="move-icons">
+        <Icon className="car-icon action-icon" name="car" size="big" />
+          <span style={{
+            fontSize: 'xx-large',
+            marginTop: '6px',
+            marginLeft: '2px',
+            display: 'inline-block'
+          }}>
+            /
+          </span>
         <Icon className="plane-icon action-icon" name="plane" size="big" />
       </div>
       <div className="move-text action-text">Move</div>

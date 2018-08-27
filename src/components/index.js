@@ -22,3 +22,4 @@ export { default as CreateGameForm } from './CreateGameForm';
 export { default as Game } from './Game';
 export { default as DisplayActionsRemaining } from './DisplayActionsRemaining';
 export { default as Login } from './Login';
+export { default as PlayerHighlightMarkers } from './PlayerHighLightMarkers';

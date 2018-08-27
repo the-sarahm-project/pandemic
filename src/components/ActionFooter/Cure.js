@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getSelf, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, isCurrentTurn, getOnClick, tooManyCards } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getSelf, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, isCurrentTurn, getOnClick, tooManyCards, getDispatching } from '../../utils';
 
-export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, actionsRemaining, nextTurn, tooManyCards }) => {
+export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, actionsRemaining, nextTurn, tooManyCards, dispatching }) => {
   maxSameColorCityCards = maxSameColorCityCards[1]; // 0 is color
   const cure = () => cureDisease(self, actionsRemaining, nextTurn, maxSameColorCityCards);
   return (
@@ -15,9 +15,9 @@ export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, a
       className="action-button cure-button"
       disabled={cureDisabled}
       style={{height: '100%'}}
-      onClick={getOnClick(actionsRemaining, currentTurn, cure, tooManyCards)}
+      onClick={getOnClick(actionsRemaining, currentTurn, cure, tooManyCards, dispatching)}
     >
-      <Icon className="lab-icon action-icon" name="lab" size="big" />
+      <Icon className="lab-icon action-icon" name="lab" size="large" />
       <div className="cure-text action-text">Cure</div>
     </Button>
     : <ChooseCardModal
@@ -27,7 +27,7 @@ export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, a
           disabled={cureDisabled}
           style={{height: '100%'}}
         >
-          <Icon className="lab-icon action-icon" name="lab" size="big" />
+          <Icon className="lab-icon action-icon" name="lab" size="large" />
           <div className="cure-text action-text">Cure</div>
         </Button>
       )}
@@ -48,7 +48,8 @@ export const mapStateToProps = (state) => {
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
     self: getSelf(state),
-    tooManyCards: tooManyCards(state)
+    tooManyCards: tooManyCards(state),
+    dispatching: getDispatching(state)
   };
 };
 

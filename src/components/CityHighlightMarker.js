@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Marker } from 'react-leaflet';
-import { iconContainer, getCities, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn, getOwnHand, getNeighbors, shuttleFlight, charterFlight, isCurrentTurn, getCurrentTurn, getGameRef, getCityRef, getGame } from '../utils';
+import { iconContainer, getCities, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn, getOwnHand, shuttleFlight, charterFlight, isCurrentTurn, getCurrentTurn, getGameRef, getCityRef, getGame, getDispatchTarget, getPlayerCities } from '../utils';
 import ChooseCardModal from './ChooseCardModal';
 
 const checkMedic = async (self, city, game, cities) => {
@@ -20,7 +20,10 @@ const checkMedic = async (self, city, game, cities) => {
   }
 };
 
-const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextTurn, ownHand, neighbors, currentTurn }) => {
+const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextTurn, ownHand, currentTurn, dispatchTarget, playerCities }) => {
+  // check for dispatcher.
+  self = dispatchTarget ? dispatchTarget : self;
+  const neighbors = cities[self.currentCity].neighbors;
   const isNotSelf = city.id !== self.currentCity;
   const isCityInHand = ownHand.find(card => card.id === city.id);
   const isCurrentCityInHand = ownHand.find(card => card.id === self.currentCity);
@@ -32,10 +35,11 @@ const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextT
   const isOperationsExpert = self.role === 'Operations Expert';
   const isOperationsExpertSpecial = isOperationsExpert && self.hasOESpecial && cities[self.currentCity].researchStation;
 
+  // Dispatcher - also highlight cities with players in them.
+  const playerCity = Object.keys(playerCities).includes(city.id);
   // whether to display highlight.
   const isHighlighted = self.isMoving && isNotSelf &&
-    (isCityInHand || isCurrentCityInHand || isResearchStation || isNeighbor || isOperationsExpertSpecial);
-
+    (isCityInHand || isCurrentCityInHand || isResearchStation || isNeighbor || isOperationsExpertSpecial || playerCity);
   const changeCity = () => {
     checkMedic(self, city.id, game, cities);
     return changeCurrentCity(self.id, city.id, actionsRemaining, nextTurn);
@@ -57,11 +61,11 @@ const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextT
     }
   };
   // just change cities or remove cards.
-  const getMoveFunc = (isResearchStation || isNeighbor) ? changeCity : changeHandCity;
+  const getMoveFunc = (isResearchStation || isNeighbor || playerCity) ? changeCity : changeHandCity;
   const cards = isOperationsExpert && isCurrentCityResearchStation ? ownHand : ownHand.filter(card => card.id === city.id || card.id === self.currentCity);
   return (
     // If a user can both shuttleFlight or charterFlight, let user choose which card to discard.
-    isHighlighted && ((isOperationsExpert && isCurrentCityResearchStation) || (isCityInHand && isCurrentCityInHand) ?
+    isHighlighted && (!isNeighbor && ((isOperationsExpert && isCurrentCityResearchStation) || (isCityInHand && isCurrentCityInHand)) ?
     <ChooseCardModal
       ModalTrigger={(
         <Marker
@@ -94,8 +98,9 @@ const mapStateToProps = (state) => {
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
     ownHand: getOwnHand(state),
-    neighbors: getNeighbors(state),
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    dispatchTarget: getDispatchTarget(state),
+    playerCities: getPlayerCities(state)
   };
 };
 

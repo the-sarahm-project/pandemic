@@ -189,7 +189,7 @@ export const getIsMoving = state => {
 export const getRole = state => {
   const self = getSelf(state);
   return self.role;
-}
+};
 
 export const tooManyCards = state => {
   const players = getPlayers(state);
@@ -199,6 +199,33 @@ export const tooManyCards = state => {
     }
   }
   return false;
+};
+
+// in the process of choosing player to dispatch.
+export const getIsDispatching = state => {
+  const game = getGame(state);
+  return game.isDispatching;
+};
+
+// getting the chosen player.
+export const getDispatchTarget = state => {
+  const game = getGame(state);
+  return game.dispatchTarget;
+};
+
+// either choosing player or in the process of moving a player.
+export const getDispatching = state => {
+  return getIsDispatching(state) || getDispatchTarget(state);
+};
+
+export const getPlayerCities = state => {
+  const players = getPlayers(state);
+  const playerCities = {};
+  for (const player of Object.values(players)) {
+    const currentCity = player.currentCity;
+    playerCities[currentCity] = playerCities[currentCity] ? playerCities[currentCity].concat(player) : [player];
+  }
+  return playerCities;
 };
 
 // Build
@@ -283,7 +310,6 @@ export const getUnusedCityCardSnapshot = async (cityId, gameRef) => {
   return await cityRef.get();
 };
 
-
 export const getUnusedCityCardsSnapshot = async gameRef => {
   const unusedCityCardsRef = await getUnusedCityCardsRef(gameRef);
   return await unusedCityCardsRef.get();
@@ -298,4 +324,3 @@ export const getTrashedInfectionCardsSnapshot = async gameRef => {
   const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
   return await trashedInfectionCardsRef.get();
 };
-

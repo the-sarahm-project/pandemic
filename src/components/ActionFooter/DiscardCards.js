@@ -15,7 +15,7 @@ export const DiscardCards = ({ playerHand, firebase, actionsRemaining }) => {
           className="action-button trash-button"
           disabled={playerHand.length <= 7}
         >
-          <Icon className="trash-icon action-icon" name="trash" size="big" />
+          <Icon className="trash-icon action-icon" name="trash" size="large" />
           <div className="trash-text action-text">Trash</div>
         </Button>
       )}

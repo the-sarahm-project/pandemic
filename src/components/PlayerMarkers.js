@@ -3,8 +3,7 @@ import { Marker } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
-import { playerIconContainer } from '../utils';
-import history from '../history';
+import { playerIconContainer, getCities, getPlayers, getIsDispatching, getDispatchTarget } from '../utils';
 
 const PlayerMarkers = ({ cities, players }) => {
   return (
@@ -13,8 +12,9 @@ const PlayerMarkers = ({ cities, players }) => {
       const [latitude, longitude] = cities[players[playerKey].currentCity].coords;
       return (
         <Marker
-          position={[latitude + 3, longitude]}
           key={playerKey}
+          id={playerKey}
+          position={[latitude + 3, longitude]}
           icon={playerIconContainer[players[playerKey].role]}
           zIndexOffset={1000}
         />
@@ -24,13 +24,11 @@ const PlayerMarkers = ({ cities, players }) => {
 };
 
 const mapStateToProps = (state) => {
-  const doc = history.location.pathname.slice(1);
-  const game = state.firestore.data.games && state.firestore.data.games[doc];
-  const cities = game && game.cities;
-  const players = game && game.players;
   return {
-    cities,
-    players
+    cities: getCities(state),
+    players: getPlayers(state),
+    isDispatching: getIsDispatching(state),
+    dispatchTarget: getDispatchTarget(state)
   };
 };
 

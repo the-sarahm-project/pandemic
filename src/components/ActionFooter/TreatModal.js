@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getSelf, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards } from '../../utils';
+import { treatDisease, getSelf, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards, getDispatching } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -19,9 +19,9 @@ export class TreatModal extends React.Component {
   }
 
   render() {
-    const { diseases, self, actionsRemaining, nextTurn, currentTurn, tooManyCards } = this.props;
+    const { diseases, self, actionsRemaining, nextTurn, currentTurn, tooManyCards, dispatching } = this.props;
     const open = () => this.handleOpen();
-    const onClick = getOnClick(actionsRemaining, currentTurn, open, tooManyCards);
+    const onClick = getOnClick(actionsRemaining, currentTurn, open, tooManyCards, dispatching);
     return (
       <Modal
         trigger={
@@ -30,7 +30,7 @@ export class TreatModal extends React.Component {
             disabled={!diseases.length}
             onClick={onClick}
           >
-            <Icon className="treat-icon action-icon" name="medkit" size="big" />
+            <Icon className="treat-icon action-icon" name="medkit" size="large" />
             <div className="treat-text action-text">Treat</div>
           </Button>
         }
@@ -58,7 +58,8 @@ export const mapStateToProps = (state) => {
     actionsRemaining: getActionsRemaining(state),
     nextTurn: getNextTurn(state),
     currentTurn: getCurrentTurn(state),
-    tooManyCards: tooManyCards(state)
+    tooManyCards: tooManyCards(state),
+    dispatching: getDispatching(state)
   };
 };
 

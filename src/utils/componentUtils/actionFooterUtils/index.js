@@ -134,17 +134,22 @@ export const infectCity = async (gameRef, color, id, visited) => {
   }
 };
 
-export const getOnClick = (actionsRemaining, currentTurn, onClick, tooManyCards) => {
-  return actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards
+export const getOnClick = (actionsRemaining, currentTurn, onClick, tooManyCards, action) => {
+  return !action && actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards
     ? onClick
     : () => {
       if (!actionsRemaining) {
         alert('No actions remaining!');
       } else if (!isCurrentTurn(currentTurn)) {
         alert('Not your turn!');
-      } else {
+      } else if (action) {
+        alert('Still doing something!');
+      } else if (tooManyCards) {
         alert('You need to discard cards!');
+      } else {
+        alert('Nope.');
       }
+      return false;
     };
 };
 
@@ -158,3 +163,4 @@ export * from './share';
 export * from './cure';
 export * from './treat';
 export * from './discard';
+export * from './dispatch';

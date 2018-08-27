@@ -83,6 +83,8 @@ const addPlayers = async (game, numPlayers) => {
       hasOESpecial = true;
     } else if (gameRoles[index] === 'Medic') {
       game.update({ medicCurrentCity: 'Atlanta'});
+    } else if (gameRoles[index] === 'Dispatcher') {
+      game.update({ dispatchTarget: null });
     }
     return playersCollection.doc(`${index + 1}`).set({
       ...player,

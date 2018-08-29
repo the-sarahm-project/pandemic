@@ -1,10 +1,10 @@
 import { differenceWith, isEqual } from 'lodash';
-import { getPlayerRef } from '../../index';
-import { updateActionsRemaining } from './index';
-import { getGameSnapshot } from '../../getFirestoreData';
+import { updateActionsRemaining, trashPlayerCards } from './index';
+import { getGame, getGameRef, getUnusedCityCard, getPlayer } from '../../getFirestoreData';
 import { checkCured } from '../endGameConditions';
+import store from '../../../store';
 
-export const cureDisease = async (self, actionsRemaining, nextTurn, cardsToRemove) => {
+export const cureDisease = async (self, unusedCityCards, actionsRemaining, nextTurn, cardsToRemove) => {
   const ownId = self.id;
   console.log('Curing Disease!');
   const enoughCards = self.role === 'Scientist' ? 4 : 5;
@@ -14,14 +14,15 @@ export const cureDisease = async (self, actionsRemaining, nextTurn, cardsToRemov
     return false;
   }
   try {
-    const gameSnapshot = await getGameSnapshot();
-    const gameRef = gameSnapshot.ref;
-    const playerRef = await getPlayerRef(ownId, gameRef);
-    const playerSnapshot = await playerRef.get();
-    const cardSnapshot = await cardsToRemove[0].get(); // to get the color of the city cards
-    await updateCurrentHand(playerSnapshot, cardsToRemove);
-    await setCureMarker(gameRef, cardSnapshot.data().color);
-    checkCured(gameSnapshot);
+    const state = await store.getState();
+    const game = getGame(state);
+    const gameRef = await getGameRef();
+    const player = getPlayer(state, ownId);
+    const card = getUnusedCityCard(state, cardsToRemove[0].id); // to get the color of the city cards
+    await trashPlayerCards(cardsToRemove);
+    await updateCurrentHand(player, cardsToRemove);
+    await setCureMarker(gameRef, card.color);
+    checkCured(game);
     //remove cards from unusedCityCards
     await removeCards(cardsToRemove);
     await updateActionsRemaining(actionsRemaining, nextTurn);

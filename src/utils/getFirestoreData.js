@@ -29,9 +29,24 @@ export const getCities = state => {
   return game && game.cities;
 };
 
+export const getTrashedInfectionCards = state => {
+  const game = getGame(state);
+  return game && game.trashedInfectionCards;
+};
+
+export const getCity = (state, cityId) => {
+  const cities = getCities(state);
+  return cities && cities[cityId];
+};
+
 export const getPlayers = state => {
   const game = getGame(state);
   return game && game.players;
+};
+
+export const getPlayer = (state, playerId) => {
+  const players = getPlayers(state);
+  return players && players[playerId];
 };
 
 export const getNextTurn = state => {
@@ -106,6 +121,12 @@ export const getUnusedCityCards = state => {
   const game = getGame(state);
   return game && game.unusedCityCards;
 };
+
+export const getUnusedCityCard = (state, cityId) => {
+  const unusedCityCards = getUnusedCityCards(state);
+  return unusedCityCards && unusedCityCards[cityId];
+};
+
 
 export const getUnusedEventCards = state => {
   const game = getGame(state);

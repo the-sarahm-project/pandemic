@@ -1,9 +1,8 @@
 import { getPlayerRef, getUnusedCityCardRef } from '../../index';
-import { updateActionsRemaining } from './index';
+import { updateActionsRemaining, trashPlayerCards } from './index';
 import { getGameRef, getGameSnapshot } from '../../getFirestoreData';
 
 export const movePlayer = async (currentTurn, isMoving) => {
-  console.log('Moving!');
   const gameRef = await getGameRef();
   const playerRef = await getPlayerRef(currentTurn, gameRef);
   await playerRef.update({ isMoving: !isMoving });
@@ -56,5 +55,6 @@ export const removeCityCard = async(playerId, currentHand, newCity) => {
     : await getPlayerRef(playerId, gameRef);
   await playerRef.update({currentHand: newHand});
   const unusedCityCardRef = await getUnusedCityCardRef(newCity, gameRef);
+  await trashPlayerCards([unusedCityCardRef]);
   await unusedCityCardRef.delete();
 };

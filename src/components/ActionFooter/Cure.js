@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChooseCardModal } from '../index';
-import { cureDisease, getCurrentTurn, getCureDisabled, getSelf, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, isCurrentTurn, getOnClick, tooManyCards, getDispatching } from '../../utils';
+import { cureDisease, getCurrentTurn, getCureDisabled, getSelf, getMaxSameColorCityCards, getActionsRemaining, getNextTurn, isCurrentTurn, getOnClick, tooManyCards, getDispatching, getUnusedCityCards } from '../../utils';
 
-export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, actionsRemaining, nextTurn, tooManyCards, dispatching }) => {
+export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, actionsRemaining, nextTurn, tooManyCards, dispatching, unusedCityCards }) => {
   maxSameColorCityCards = maxSameColorCityCards[1]; // 0 is color
-  const cure = () => cureDisease(self, actionsRemaining, nextTurn, maxSameColorCityCards);
+  const cure = () => cureDisease(self, unusedCityCards, actionsRemaining, nextTurn, maxSameColorCityCards);
   return (
     maxSameColorCityCards.length === 5 || (self.role === 'Scientist' && maxSameColorCityCards.length === 4) ?
     <Button
@@ -49,7 +49,8 @@ export const mapStateToProps = (state) => {
     nextTurn: getNextTurn(state),
     self: getSelf(state),
     tooManyCards: tooManyCards(state),
-    dispatching: getDispatching(state)
+    dispatching: getDispatching(state),
+    unusedCityCards: getUnusedCityCards(state)
   };
 };
 

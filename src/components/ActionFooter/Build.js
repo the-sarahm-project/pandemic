@@ -3,10 +3,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { buildResearchStation, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, tooManyCards, getSelf, getDispatching } from '../../utils';
+import { buildResearchStation, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, tooManyCards, getSelf, getDispatching, getUnusedCityCards } from '../../utils';
 
-export const Build = ({ buildButtonDisabled, actionsRemaining, nextTurn, checkClicked, currentTurn, tooManyCards, self, dispatching }) => {
-  const build = () => buildResearchStation(self, actionsRemaining, nextTurn);
+export const Build = ({ buildButtonDisabled, actionsRemaining, nextTurn, checkClicked, currentTurn, tooManyCards, self, dispatching, unusedCityCards }) => {
+  const build = () => buildResearchStation(self, unusedCityCards, actionsRemaining, nextTurn);
   return (
     <Button
       className="action-button build-button"
@@ -27,7 +27,8 @@ export const mapStateToProps = (state) => {
     currentTurn: getCurrentTurn(state),
     tooManyCards: tooManyCards(state),
     self: getSelf(state),
-    dispatching: getDispatching(state)
+    dispatching: getDispatching(state),
+    unusedCityCards: getUnusedCityCards(state)
   };
 };
 

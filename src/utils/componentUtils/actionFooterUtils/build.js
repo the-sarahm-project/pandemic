@@ -1,6 +1,6 @@
 import { getGameRef, getCityRef, getPlayerRef } from '../../index';
 import { removeCards, updateCurrentHand } from './cure';
-import { updateActionsRemaining } from './index';
+import { updateActionsRemaining, trashPlayerCards } from './index';
 
 export const buildResearchStation = async (self, actionsRemaining, nextTurn) => {
   try {
@@ -19,6 +19,7 @@ export const buildResearchStation = async (self, actionsRemaining, nextTurn) => 
       const playerRef = await getPlayerRef(ownId, gameRef);
       const currentPlayerSnapshot = await playerRef.get();
       const cardToRemove = currentPlayerSnapshot.data().currentHand.filter(card => card.id === ownCityId);
+      await trashPlayerCards(cardToRemove);
       // remove card from current hand
       await updateCurrentHand(currentPlayerSnapshot, cardToRemove);
       //remove card from unusedCityCards

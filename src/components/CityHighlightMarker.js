@@ -36,7 +36,7 @@ const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextT
   const isOperationsExpertSpecial = isOperationsExpert && self.hasOESpecial && cities[self.currentCity].researchStation;
 
   // Dispatcher - also highlight cities with players in them.
-  const playerCity = Object.keys(playerCities).includes(city.id);
+  const playerCity = self.role === 'Dispatcher' && Object.keys(playerCities).includes(city.id);
   // whether to display highlight.
   const isHighlighted = self.isMoving && isNotSelf &&
     (isCityInHand || isCurrentCityInHand || isResearchStation || isNeighbor || isOperationsExpertSpecial || playerCity);

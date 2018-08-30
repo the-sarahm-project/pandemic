@@ -3,14 +3,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
-import { buildResearchStation, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, tooManyCards, getSelf, getDispatching, getUnusedCityCards } from '../../utils';
+import { buildResearchStation, getBuildDisabled, getCurrentTurn, getActionsRemaining, getNextTurn, getOnClick, tooManyCards, getSelf, getDispatching, getUnusedCityCards, isCurrentTurn } from '../../utils';
 
 export const Build = ({ buildButtonDisabled, actionsRemaining, nextTurn, checkClicked, currentTurn, tooManyCards, self, dispatching, unusedCityCards }) => {
   const build = () => buildResearchStation(self, unusedCityCards, actionsRemaining, nextTurn);
   return (
     <Button
       className="action-button build-button"
-      disabled={buildButtonDisabled}
+      disabled={!isCurrentTurn(currentTurn) || buildButtonDisabled}
       onClick={() => checkClicked(getOnClick(actionsRemaining, currentTurn, build, tooManyCards, dispatching))}
     >
       <Icon className="build-icon action-icon" name="building" size="large" />

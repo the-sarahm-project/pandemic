@@ -25,8 +25,6 @@ class ChoosePlayerModal extends React.Component {
     let onClick;
     if (!disabled && clickable && actionsRemaining) {
       onClick = this.handleOpen;
-    } else if (!disabled && actionsRemaining) {
-      onClick = () => alert('Not your turn, or discard cards');
     } else {
       onClick = () => {};
     }

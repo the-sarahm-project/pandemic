@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react';
 import { ChoosePlayerModal } from '../index';
-import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getOwnCity, getActionsRemaining, getNextTurn, getOwnId, tooManyCards, getDispatching, getOnClick } from '../../utils';
+import { shareKnowledge, getCurrentTurn, getShareKnowledgeDisabled, getShareKnowledgePlayers, getOwnCity, getActionsRemaining, getNextTurn, getOwnId, tooManyCards, getDispatching, isCurrentTurn } from '../../utils';
 
 export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlayers, ownCity, ownId, actionsRemaining, nextTurn, tooManyCards, dispatching }) => {
   return (
@@ -12,7 +12,7 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
       ModalTrigger={(
         <Button
           className="action-button share-button"
-          disabled={shareKnowledgeDisabled}
+          disabled={!isCurrentTurn(currentTurn) || shareKnowledgeDisabled}
         >
           <Icon className="share-icon action-icon" name="gift" size="large" />
           <div className="share-text action-text">Share</div>
@@ -22,7 +22,7 @@ export const Share = ({ currentTurn, shareKnowledgeDisabled, shareKnowledgePlaye
       disabled={shareKnowledgeDisabled}
       players={shareKnowledgePlayers}
       action={shareKnowledge.bind(this, ownId, ownCity, actionsRemaining, nextTurn)}
-      clickable={getOnClick(actionsRemaining, currentTurn, true, tooManyCards, dispatching)}
+      clickable={actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards && !dispatching}
     />
   );
 };

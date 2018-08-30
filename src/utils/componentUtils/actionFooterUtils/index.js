@@ -18,7 +18,8 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
     const playerRef = await getPlayerRef(currentTurn, gameRef);
     await drawCards(gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef);
     await infectCities(gameRef, trashedInfectionCardsRef, unusedInfectionCardsRef);
-    await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4, isMoving: false });
+    await playerRef.update({ isMoving: false });
+    await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4});
     console.log(`Player ${nextTurn}'s Turn!`);
   }
 };
@@ -179,3 +180,4 @@ export * from './cure';
 export * from './treat';
 export * from './discard';
 export * from './dispatch';
+export * from './cpaction';

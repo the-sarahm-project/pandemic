@@ -17,7 +17,11 @@ class ChooseCardModal extends React.Component {
   }
 
   handleOpen(event) {
-    this.setState({ city: event.target.options.id, modalOpen: true });
+    if (event.target.options) {
+      this.setState({ city: event.target.options.id, modalOpen: true });
+    } else {
+      this.setState({ modalOpen: true });
+    }
   }
 
   handleClose() {
@@ -35,8 +39,6 @@ class ChooseCardModal extends React.Component {
     let onClick;
     if (!disabled && clickable && actionsRemaining) {
       onClick = (event) => this.handleOpen(event);
-    } else if (!disabled && actionsRemaining) {
-      onClick = () => alert('Not your turn, or discard cards');
     } else {
       onClick = () => {};
     }

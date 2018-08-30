@@ -13,7 +13,7 @@ export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, a
     maxSameColorCityCards.length === 5 || (self.role === 'Scientist' && maxSameColorCityCards.length === 4) ?
     <Button
       className="action-button cure-button"
-      disabled={cureDisabled}
+      disabled={!isCurrentTurn(currentTurn) || cureDisabled}
       style={{height: '100%'}}
       onClick={getOnClick(actionsRemaining, currentTurn, cure, tooManyCards, dispatching)}
     >
@@ -35,7 +35,7 @@ export const Cure = ({ currentTurn, cureDisabled, self, maxSameColorCityCards, a
       disabled={cureDisabled}
       cards={maxSameColorCityCards}
       action={cureDisease.bind(this, self, actionsRemaining, nextTurn)}
-      clickable={isCurrentTurn(currentTurn)}
+      clickable={actionsRemaining && isCurrentTurn(currentTurn) && !tooManyCards && !dispatching}
     />
   );
 };

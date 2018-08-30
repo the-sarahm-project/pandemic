@@ -125,7 +125,7 @@ export const getUnusedCityCards = state => {
 export const getUnusedCityCard = (state, cityId) => {
   const unusedCityCards = getUnusedCityCards(state);
   return unusedCityCards && unusedCityCards[cityId];
-};
+}
 
 
 export const getUnusedEventCards = state => {
@@ -222,6 +222,11 @@ export const tooManyCards = state => {
   return false;
 };
 
+export const getTrashedPlayerCards = state => {
+  const game = getGame(state);
+  return game && game.trashedPlayerCards;
+};
+
 // in the process of choosing player to dispatch.
 export const getIsDispatching = state => {
   const game = getGame(state);
@@ -313,6 +318,10 @@ export const getCityRef = async (cityId, game) => {
 
 export const getPlayerRef = async (playerId, game) => {
   return await game.collection('players').doc(`${playerId}`);
+};
+
+export const getTrashedPlayerCardRef = async (playerCardId, game) => {
+  return await game.collection('trashedPlayerCards').doc(`${playerCardId}`);
 };
 
 /* Firestore Snapshots */

@@ -11,6 +11,7 @@ import Share from './Share';
 import DisplayActionsRemaining from '../DisplayActionsRemaining';
 import DiscardCards from './DiscardCards';
 import Dispatch from './Dispatch';
+import CPAction from './CPAction';
 import { getRole } from '../../utils';
 
 class ActionFooter extends React.Component {
@@ -51,6 +52,7 @@ class ActionFooter extends React.Component {
           <Cure />
           <DiscardCards />
           {this.props.role === 'Dispatcher' && <Dispatch />}
+          {this.props.role === 'Contingency Planner' && <CPAction />}
         </div>
       </Sidebar>
     );

@@ -19,6 +19,7 @@ const ModalActions = ({ action, handleClose, selected, cancelDisabled, city }) =
           const completed = action(selected, city);
           if (completed) handleClose();
         }}
+        disabled={!selected || !selected.length}
       >
         <Icon name='checkmark' /> Select
       </Button>

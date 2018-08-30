@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Header, Modal, Icon, Button } from 'semantic-ui-react';
 import { ModalActions } from '../index';
 import { TreatModalContent } from './index';
-import { treatDisease, getSelf, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards, getDispatching } from '../../utils';
+import { treatDisease, getSelf, getActionsRemaining, getNextTurn, getCurrentTurn, getOnClick, tooManyCards, getDispatching, isCurrentTurn } from '../../utils';
 
 export class TreatModal extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export class TreatModal extends React.Component {
         trigger={
           <Button
             className="action-button treat-button"
-            disabled={!diseases.length}
+            disabled={!isCurrentTurn(currentTurn) || !diseases.length}
             onClick={onClick}
           >
             <Icon className="treat-icon action-icon" name="medkit" size="large" />

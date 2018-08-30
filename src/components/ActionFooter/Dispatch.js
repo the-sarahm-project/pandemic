@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { Icon, Button } from 'semantic-ui-react/dist/commonjs';
-import { dispatch, getCurrentTurn, getActionsRemaining, getOnClick, getIsDispatching, tooManyCards, getDispatchTarget, getIsMoving } from '../../utils';
+import { dispatch, getCurrentTurn, getActionsRemaining, getOnClick, getIsDispatching, tooManyCards, getDispatchTarget, getIsMoving, isCurrentTurn } from '../../utils';
 
 export const Dispatch = ({ actionsRemaining, currentTurn, isDispatching, tooManyCards, dispatchTarget, isMoving }) => {
   const setDispatching = () => dispatch(dispatchTarget, isDispatching);
@@ -12,6 +12,7 @@ export const Dispatch = ({ actionsRemaining, currentTurn, isDispatching, tooMany
       className="action-button dispatch-button"
       onClick={getOnClick(actionsRemaining, currentTurn, setDispatching, tooManyCards, isMoving)}
       positive={isDispatching || Boolean(dispatchTarget)}
+      disabled={!isCurrentTurn(currentTurn)}
     >
       <Icon className="dispatch-icon action-icon" name="travel" size="large" />
       <div className="dispatch-text action-text">Dispatch</div>

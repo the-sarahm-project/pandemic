@@ -35,6 +35,10 @@ class Game extends React.Component {
 
 export default withRouter(compose(
   firestoreConnect(() => [
+    {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'epidemicCards' }]},
+    {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'trashedPlayerCards' }]},
+    {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'trashedInfectionCards' }]},
+    {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'unusedInfectionCards' }]},
     {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'players' }]},
     {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'unusedEventCards' }]},
     {collection: 'games', doc: history.location.pathname.slice(1), subcollections: [{ collection: 'unusedCityCards' }]},

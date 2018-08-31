@@ -9,40 +9,45 @@ class ChooseCardModal extends React.Component {
     this.state = {
       active: {},
       selected: [],
-      modalOpen: false
+      modalOpen: false,
+      city: ''
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  componentDidMount() {
-    if (!this.props.ModalTrigger) {
-      this.handleOpen();
+  handleOpen(event) {
+    if (event.target.options) {
+      this.setState({ city: event.target.options.id, modalOpen: true });
+    } else {
+      this.setState({ modalOpen: true });
     }
   }
 
-  handleOpen() {
-    this.setState({ modalOpen: true });
-  }
-
   handleClose() {
-    this.setState({ modalOpen: false });
+    this.setState({ selected: [], active: {}, city: '', modalOpen: false });
   }
 
   render() {
-    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick=true, closeOnEscape=true, cancelDisabled } = this.props;
+    const { ModalTrigger, cards, action, disabled, clickable=true, header, closeOnDimmerClick=true, closeOnEscape=true, cancelDisabled, actionsRemaining } = this.props;
     let trigger;
     // handle trigger on Marker.
     if (ModalTrigger) {
       trigger = {...ModalTrigger};
-      trigger.props = {...trigger.props, onClick: () => !disabled && clickable && this.handleOpen()};
+      trigger.props = {...trigger.props, onClick: (event) => !disabled && clickable && this.handleOpen(event)};
+    }
+    let onClick;
+    if (!disabled && clickable && actionsRemaining) {
+      onClick = (event) => this.handleOpen(event);
+    } else {
+      onClick = () => {};
     }
     return (
       <Modal
         closeOnDimmerClick={closeOnDimmerClick}
         closeOnEscape={closeOnEscape}
         onClose={this.handleClose}
-        trigger={trigger && <div className="choose-card-modal" onClick={() => !disabled && clickable && this.handleOpen()}>{trigger}</div>}
+        trigger={trigger && <div className="choose-card-modal" onClick={onClick}>{trigger}</div>}
         open={this.state.modalOpen}
       >
         <Header icon='users' content={header || 'Choose Cards'} />
@@ -51,12 +56,15 @@ class ChooseCardModal extends React.Component {
           active={this.state.active}
           setSelectedAndActive={setSelectedAndActive.bind(this)}
         />
-        <ModalActions
-          action={action}
-          handleClose={this.handleClose}
-          selected={this.state.selected}
-          cancelDisabled={cancelDisabled}
-        />
+        <Modal.Actions>
+          <ModalActions
+            action={action}
+            handleClose={this.props.handleClose || this.handleClose}
+            selected={this.state.selected}
+            cancelDisabled={cancelDisabled}
+            city={this.state.city}
+          />
+        </Modal.Actions>
       </Modal>
     );
   }

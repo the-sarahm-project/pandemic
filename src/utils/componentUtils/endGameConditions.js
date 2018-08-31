@@ -4,15 +4,15 @@ export const checkPlayerCards = (playerCards) => {
   }
 };
 
-export const checkOutbreaks = (gameSnapshot) => {
-  const numOutbreaks = gameSnapshot.data().numOutbreaks;
+export const checkOutbreaks = gameSnapshot => {
+  const numOutbreaks = gameSnapshot.numOutbreaks;
   if (numOutbreaks >= 8) {
     alert('Too many outbreaks! You lose!');
   }
 };
 
-export const checkDiseaseCubes = (gameSnapshot) => {
-  const { redDiseaseCubes, blueDiseaseCubes, yellowDiseaseCubes, blackDiseaseCubes } = gameSnapshot.data();
+export const checkDiseaseCubes = game => {
+  const { redDiseaseCubes, blueDiseaseCubes, yellowDiseaseCubes, blackDiseaseCubes } = game;
   if (redDiseaseCubes <= 0) {
     alert(`No more red disease cubes! You lose!`);
   }
@@ -27,8 +27,8 @@ export const checkDiseaseCubes = (gameSnapshot) => {
   }
 };
 
-export const checkCured = (gameSnapshot) => {
-  const { redCureMarker, blueCureMarker, yellowCureMarker, blackCureMarker } = gameSnapshot.data();
+export const checkCured = game => {
+  const { redCureMarker, blueCureMarker, yellowCureMarker, blackCureMarker } = game;
   if (redCureMarker && blueCureMarker && yellowCureMarker && blackCureMarker) {
     alert('All diseases cured! You win!');
   }

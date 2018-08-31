@@ -2,6 +2,7 @@ import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import { CityLines, PlayerHand, GameHeader, CityMarkers, PlayerMarkers } from './index';
 import { darkTiles } from '../utils';
+import PlayerHighLightMarkers from './PlayerHighLightMarkers';
 
 const Board = () => {
   const center = [0, 0];
@@ -21,6 +22,7 @@ const Board = () => {
       <PlayerHand />
       <TileLayer url={darkTiles} />
       <PlayerMarkers />
+      <PlayerHighLightMarkers />
       <CityMarkers />
       <CityLines />
     </Map>

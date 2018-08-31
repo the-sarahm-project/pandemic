@@ -29,9 +29,24 @@ export const getCities = state => {
   return game && game.cities;
 };
 
+export const getTrashedInfectionCards = state => {
+  const game = getGame(state);
+  return game && game.trashedInfectionCards;
+};
+
+export const getCity = (state, cityId) => {
+  const cities = getCities(state);
+  return cities && cities[cityId];
+};
+
 export const getPlayers = state => {
   const game = getGame(state);
   return game && game.players;
+};
+
+export const getPlayer = (state, playerId) => {
+  const players = getPlayers(state);
+  return players && players[playerId];
 };
 
 export const getNextTurn = state => {
@@ -72,7 +87,7 @@ export const getOwnCityId = state => {
 
 export const getPlayersInSameCity = state => {
   const players = getPlayers(state);
-  const currentCityId = getCurrentCityId(state);
+  const currentCityId = getOwnCityId(state);
   const ownId = firebase.auth().currentUser.id;
   return players && Object.values(players).reduce((totalPlayers, player) => {
     if (player.id !== ownId && player.currentCity === currentCityId ) {
@@ -107,6 +122,12 @@ export const getUnusedCityCards = state => {
   return game && game.unusedCityCards;
 };
 
+export const getUnusedCityCard = (state, cityId) => {
+  const unusedCityCards = getUnusedCityCards(state);
+  return unusedCityCards && unusedCityCards[cityId];
+}
+
+
 export const getUnusedEventCards = state => {
   const game = getGame(state);
   return game && game.unusedEventCards;
@@ -130,6 +151,7 @@ export const getActionsRemaining = state => {
 };
 
 export const getMaxSameColorCityCards = state => {
+  const self = getSelf(state);
   const ownHand = getOwnHand(state);
   const unusedCityCards = getUnusedCityCards(state);
   const eventCards = getEventCards(state);
@@ -140,8 +162,9 @@ export const getMaxSameColorCityCards = state => {
     const card = unusedCityCards[cardRef.id];
     colorCount[card.color] = colorCount[card.color] ? colorCount[card.color].concat(cardRef) : [cardRef];
   }
+  const maxCards = self.role === 'Scientist' ? 4 : 5;
   for (const [color, cards] of Object.entries(colorCount)) {
-    if (cards.length >= 5) {
+    if (cards.length >= maxCards) {
       return [color, cards];
     }
   }
@@ -184,6 +207,11 @@ export const getIsMoving = state => {
   return currentPlayer && currentPlayer.isMoving;
 };
 
+export const getRole = state => {
+  const self = getSelf(state);
+  return self.role;
+};
+
 export const tooManyCards = state => {
   const players = getPlayers(state);
   for (const player of Object.values(players)) {
@@ -194,12 +222,45 @@ export const tooManyCards = state => {
   return false;
 };
 
+export const getTrashedPlayerCards = state => {
+  const game = getGame(state);
+  return game && game.trashedPlayerCards;
+};
+
+// in the process of choosing player to dispatch.
+export const getIsDispatching = state => {
+  const game = getGame(state);
+  return game.isDispatching;
+};
+
+// getting the chosen player.
+export const getDispatchTarget = state => {
+  const game = getGame(state);
+  return game.dispatchTarget;
+};
+
+// either choosing player or in the process of moving a player.
+export const getDispatching = state => {
+  return getIsDispatching(state) || getDispatchTarget(state);
+};
+
+export const getPlayerCities = state => {
+  const players = getPlayers(state);
+  const playerCities = {};
+  for (const player of Object.values(players)) {
+    const currentCity = player.currentCity;
+    playerCities[currentCity] = playerCities[currentCity] ? playerCities[currentCity].concat(player) : [player];
+  }
+  return playerCities;
+};
+
 // Build
 export const getBuildDisabled = state => {
+  const role = getRole(state);
   const ownCity = getOwnCity(state);
   const ownHand = getOwnHand(state);
   const remainingResearchStations = getRemainingResearchStations(state);
-  return buildButtonDisabled(remainingResearchStations, ownHand, ownCity);
+  return buildButtonDisabled(remainingResearchStations, ownHand, ownCity, role);
 };
 
 // Cure
@@ -215,7 +276,13 @@ export const getShareKnowledgePlayers = state => {
   const playersInSameCity = getPlayersInSameCity(state);
   const ownCityId = getOwnCityId(state);
   const self = getSelf(state);
-  return shareKnowledgePlayers(playersInSameCity, ownCityId, self);
+  if (self.role === 'Researcher' && !self.currentHand.length) {
+    return [];
+  } else if (self.role === 'Researcher') {
+    return playersInSameCity;
+  } else {
+    return shareKnowledgePlayers(playersInSameCity, ownCityId, self);
+  }
 };
 
 export const getShareKnowledgeDisabled = state => {
@@ -253,6 +320,10 @@ export const getPlayerRef = async (playerId, game) => {
   return await game.collection('players').doc(`${playerId}`);
 };
 
+export const getTrashedPlayerCardRef = async (playerCardId, game) => {
+  return await game.collection('trashedPlayerCards').doc(`${playerCardId}`);
+};
+
 /* Firestore Snapshots */
 export const getGameSnapshot = async () => {
   const doc = history.location.pathname.slice(1);
@@ -262,6 +333,11 @@ export const getGameSnapshot = async () => {
 export const getPlayerSnapshot = async (playerId, gameRef) => {
   const playerRef = await getPlayerRef(playerId, gameRef);
   return await playerRef.get();
+};
+
+export const getUnusedCityCardSnapshot = async (cityId, gameRef) => {
+  const cityRef = await getUnusedCityCardRef(cityId, gameRef);
+  return await cityRef.get();
 };
 
 export const getUnusedCityCardsSnapshot = async gameRef => {
@@ -278,4 +354,3 @@ export const getTrashedInfectionCardsSnapshot = async gameRef => {
   const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
   return await trashedInfectionCardsRef.get();
 };
-

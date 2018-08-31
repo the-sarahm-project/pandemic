@@ -1,5 +1,8 @@
 import React from 'react';
 import { Sidebar } from 'semantic-ui-react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import Build from './Build';
 import Cure from './Cure';
 import Move from './Move';
@@ -7,6 +10,9 @@ import Treat from './Treat';
 import Share from './Share';
 import DisplayActionsRemaining from '../DisplayActionsRemaining';
 import DiscardCards from './DiscardCards';
+import Dispatch from './Dispatch';
+import CPAction from './CPAction';
+import { getRole } from '../../utils';
 
 class ActionFooter extends React.Component {
   constructor(props) {
@@ -45,13 +51,24 @@ class ActionFooter extends React.Component {
           <Treat checkClicked={this.checkClicked} />
           <Cure />
           <DiscardCards />
+          {this.props.role === 'Dispatcher' && <Dispatch />}
+          {this.props.role === 'Contingency Planner' && <CPAction />}
         </div>
       </Sidebar>
     );
   }
 }
 
-export default ActionFooter;
+export const mapStateToProps = (state) => {
+  return {
+    role: getRole(state)
+  };
+};
+
+export default compose(
+  firestoreConnect(),
+  connect(mapStateToProps)
+)(ActionFooter);
 
 export { default as Build } from './Build';
 export { default as Cure } from './Cure';
@@ -63,3 +80,4 @@ export { default as TreatModal } from './TreatModal';
 export { default as TreatModalContent } from './TreatModalContent';
 export { default as DiseaseButton } from './DiseaseButton';
 export { default as DiscardCards } from './DiscardCards';
+export { default as Dispatch } from './Dispatch';

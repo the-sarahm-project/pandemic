@@ -15,3 +15,4 @@ export const playerIconContainer = {
   Researcher: new PlayerIcon({ iconUrl: 'assets/images/researcher.png' }),
   Scientist: new PlayerIcon({ iconUrl: 'assets/images/scientist.png' }),
 };
+

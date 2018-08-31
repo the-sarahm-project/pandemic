@@ -1,9 +1,9 @@
 import React from 'react';
-import { Modal, Button, Icon } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 
-const ModalActions = ({ action, handleClose, selected, cancelDisabled }) => {
+const ModalActions = ({ action, handleClose, selected, cancelDisabled, city }) => {
   return (
-    <Modal.Actions>
+    <div>
       <Button
         color='red'
         inverted
@@ -16,13 +16,14 @@ const ModalActions = ({ action, handleClose, selected, cancelDisabled }) => {
         color='green'
         inverted
         onClick={async () => {
-          const completed = await action(selected);
+          const completed = action(selected, city);
           if (completed) handleClose();
         }}
+        disabled={!selected || !selected.length}
       >
         <Icon name='checkmark' /> Select
       </Button>
-    </Modal.Actions>
+    </div>
   );
 };
 

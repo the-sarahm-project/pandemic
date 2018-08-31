@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import CurrentHandMenu from './CurrentHandMenu';
-import { playerColors, getCurrentTurn } from '../utils';
+import { playerColors, getCurrentTurn, getSelf } from '../utils';
 
 //this is each player's information on the sidebar
-const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, currentTurn }) => {
+const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, currentTurn, self }) => {
   const player = players[playerKey];
   const roleColor = player.active ? 'white' : 'red';
   return (
@@ -36,6 +36,7 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, cur
             <CurrentHandMenu key={cardRef.id} name={name} color={color} />
           );
         })}
+        {self.cpEventCard && <CurrentHandMenu key={self.cpEventCard} name={self.cpEventCard} color='orange' />}
       </Menu.Item>
     </Menu>
   );
@@ -43,7 +44,8 @@ const PlayerMenu = ({ players, unusedCityCards, unusedEventCards, playerKey, cur
 
 const mapStateToProps = (state) => {
   return {
-    currentTurn: getCurrentTurn(state)
+    currentTurn: getCurrentTurn(state),
+    self: getSelf(state)
   };
 };
 

@@ -11,7 +11,7 @@ export const movePlayer = async (currentTurn, isMoving) => {
 // update the current city (move)
 export const changeCurrentCity = async (playerId, newCity, actionsRemaining, nextTurn, usedOESpecial, gameSnapshot) => {
   console.log(`Changing Cities to ${newCity}!`);
-  gameSnapshot = gameSnapshot ? gameSnapshot : await getGameSnapshot();
+  gameSnapshot = gameSnapshot ? gameSnapshot : await getGameSnapshot(); // only get if needed.
   const gameRef = gameSnapshot.ref;
   await gameRef.update({ dispatchTarget: null });
   const playerRef = await getPlayerRef(playerId, gameRef);

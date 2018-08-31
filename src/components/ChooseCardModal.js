@@ -25,7 +25,7 @@ class ChooseCardModal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ modalOpen: false });
+    this.setState({ selected: [], active: {}, city: '', modalOpen: false });
   }
 
   render() {

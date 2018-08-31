@@ -85,6 +85,8 @@ const addPlayers = async (game, numPlayers) => {
       game.update({ medicCurrentCity: 'Atlanta'});
     } else if (gameRoles[index] === 'Dispatcher') {
       game.update({ dispatchTarget: null });
+    } else if (gameRoles[index] === 'Quarantine Specialist') {
+      game.update({ quarantineCities: { Atlanta: true, Washington: true, Chicago: true, Miami: true }});
     }
     return playersCollection.doc(`${index + 1}`).set({
       ...player,

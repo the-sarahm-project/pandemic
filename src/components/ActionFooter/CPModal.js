@@ -15,7 +15,7 @@ export class CPModal extends React.Component {
       modalOpen: false
     };
     this.handleOpen = () => this.setState({ modalOpen: true });
-    this.handleClose = () => this.setState({ modalOpen: false });
+    this.handleClose = () => this.setState({ selected: '', modalOpen: false });
   }
 
   render() {

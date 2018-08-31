@@ -1,6 +1,6 @@
 import { shuffle } from 'lodash';
 import store from '../../../store';
-import { getPlayerRef, getGameRef, getUnusedInfectionCardsRef, getTrashedInfectionCardsRef, getCityRef, getCurrentTurn, getPlayerDeck, getPlayer, getCity, getGame, getUnusedCityCards } from '../../getFirestoreData';
+import { getPlayerRef, getGameRef, getUnusedInfectionCardsRef, getTrashedInfectionCardsRef, getCityRef, getCurrentTurn, getPlayerDeck, getPlayer, getCity, getGame, getUnusedCityCards, getCities, getPlayers, getUnusedEventCards } from '../../getFirestoreData';
 import { checkOutbreaks, checkDiseaseCubes, checkPlayerCards } from '../endGameConditions';
 
 export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
@@ -11,17 +11,33 @@ export const updateActionsRemaining = async (actionsRemaining, nextTurn) => {
   if (!remainingActions) {
     console.log('Ending Turn!');
     const state = await store.getState();
+    const game = getGame(state);
+    const cities = getCities(state);
+    const players = getPlayers(state);
     const unusedInfectionCardsRef = await getUnusedInfectionCardsRef(gameRef);
     const trashedInfectionCardsRef = await getTrashedInfectionCardsRef(gameRef);
     const currentTurn = getCurrentTurn(state);
     const playerDeck = getPlayerDeck(state);
     const playerRef = await getPlayerRef(currentTurn, gameRef);
+    if (game.quarantineCities) {
+      await updateQuarantineCities(gameRef, cities, players);
+    }
     await drawCards(gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef);
     await infectCities(gameRef, trashedInfectionCardsRef, unusedInfectionCardsRef);
     await playerRef.update({ isMoving: false });
     await gameRef.update({ currentTurn: nextTurn, actionsRemaining: 4});
     console.log(`Player ${nextTurn}'s Turn!`);
   }
+};
+
+export const updateQuarantineCities = async (gameRef, cities, players) => {
+  const quarantineSpecialist = Object.values(players).find(player => player.role === 'Quarantine Specialist');
+  const city = quarantineSpecialist.currentCity;
+  const quarantineCities = [city, ...cities[city].neighbors].reduce((cities, quarantineCity) => {
+    cities[quarantineCity] = true;
+    return cities;
+  }, {});
+  await gameRef.update({ quarantineCities });
 };
 
 export const drawCards = async (gameRef, playerRef, playerDeck, unusedInfectionCardsRef, trashedInfectionCardsRef) => {
@@ -51,7 +67,6 @@ export const epidemic = async (gameRef, unusedInfectionCardsRef, trashedInfectio
   const infectionCard = infectionCardQuery.docs[0];
   // get disease
   const { color, id } = infectionCard.data();
-  console.log(`Infecting ${id} from Bottom of Infection Deck!`);
   // add disease cubes
   let state = await store.getState();
   const cityRef = await getCityRef(id, gameRef);
@@ -61,7 +76,8 @@ export const epidemic = async (gameRef, unusedInfectionCardsRef, trashedInfectio
   // ignore city if medic is there and the disease is cured.
   const medicCurrentCity = game.medicCurrentCity;
   const cured = game[`${color}CureMarker`];
-  if (medicCurrentCity !== id && !cured) {
+  if (medicCurrentCity !== id && !game.quarantineCities[id] && !cured) {
+    console.log(`Infecting ${id} from Bottom of Infection Deck!`);
     if (!diseaseCubes) {
       await cityRef.update({ [color]: 3 });
       await gameRef.update({ [`${color}DiseaseCubes`]: game[`${color}DiseaseCubes`] - (3 - diseaseCubes) });
@@ -70,6 +86,8 @@ export const epidemic = async (gameRef, unusedInfectionCardsRef, trashedInfectio
       await cityRef.update({ [color]: 3 });
       await infectCity(gameRef, color, id, {});
     }
+  } else {
+    console.log(`Attempted to infect ${id} from Bottom of Infection Deck!`);
   }
   // shuffle trashed
   console.log('Shuffling Trashed Infection Cards!');
@@ -118,8 +136,8 @@ export const infectCity = async (gameRef, color, id, visited) => {
   const city = getCity(state, id);
   const medicCurrentCity = game.medicCurrentCity;
   const cured = game[`${color}CureMarker`];
-  console.log(`Infecting ${id}!`);
-  if (medicCurrentCity !== id && !cured) {
+  if (medicCurrentCity !== id && !game.quarantineCities[id] && !cured) {
+    console.log(`Infecting ${id}!`);
     if (city[color] === 3) {
       console.log(`Outbreak at ${id}!`);
       await gameRef.update({ numOutbreaks: game.numOutbreaks + 1 });
@@ -137,6 +155,8 @@ export const infectCity = async (gameRef, color, id, visited) => {
       await gameRef.update({ [`${color}DiseaseCubes`]: game[`${color}DiseaseCubes`] - 1 });
       checkDiseaseCubes(game);
     }
+  } else {
+    console.log(`Attempted to Infect ${id}!`);
   }
 };
 
@@ -168,8 +188,10 @@ export const trashPlayerCards = async cardsToRemove => {
   const gameRef = await getGameRef();
   const state = await store.getState();
   const unusedCityCards = getUnusedCityCards(state);
+  const unusedEventCards = getUnusedEventCards(state);
   await Promise.all(cardsToRemove.map(card => {
-    return gameRef.collection('trashedPlayerCards').doc(card.id).set(unusedCityCards[card.id]);
+    const cardToRemove = unusedCityCards[card.id] ? unusedCityCards[card.id] : unusedEventCards[card.id];
+    return gameRef.collection('trashedPlayerCards').doc(card.id).set(cardToRemove);
   }));
 };
 

@@ -321,8 +321,12 @@ export const getPlayerRef = async (playerId, game) => {
 };
 
 export const getTrashedPlayerCardRef = async (playerCardId, game) => {
-  return await game.collection('trashedPlayerCards').doc(`${playerCardId}`);
+  return await game.collection('trashedPlayerCards').doc(playerCardId);
 };
+
+export const getUnusedEventCardRef = async(eventCardId, game) => {
+  return await game.collection('unusedEventCards').doc(eventCardId);
+}
 
 /* Firestore Snapshots */
 export const getGameSnapshot = async () => {

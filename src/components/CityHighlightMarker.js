@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Marker } from 'react-leaflet';
 import { iconContainer, getCities, getSelf, changeCurrentCity, getActionsRemaining, getNextTurn, getOwnHand, shuttleFlight, charterFlight, isCurrentTurn, getCurrentTurn, getGameRef, getCityRef, getGame, getDispatchTarget, getPlayerCities } from '../utils';
 import ChooseCardModal from './ChooseCardModal';
+import { governmentGrant } from '../utils/componentUtils/playerHand';
 
 const checkMedic = async (self, city, game, cities) => {
   if (self.role === 'Medic') {
@@ -63,31 +64,43 @@ const CityHighlightMarker = ({ game, city, cities, self, actionsRemaining, nextT
   // just change cities or remove cards.
   const getMoveFunc = (isResearchStation || isNeighbor || playerCity) ? changeCity : changeHandCity;
   const cards = isOperationsExpert && isCurrentCityResearchStation ? ownHand : ownHand.filter(card => card.id === city.id || card.id === self.currentCity);
-  return (
+  if (self.isMoving) {
     // If a user can both shuttleFlight or charterFlight, let user choose which card to discard.
-    isHighlighted && (!isNeighbor && ((isOperationsExpert && isCurrentCityResearchStation) || (isCityInHand && isCurrentCityInHand)) ?
-    <ChooseCardModal
-      ModalTrigger={(
-        <Marker
-          id={city.id}
-          position={city.coords}
-          icon={iconContainer.highlight}
-          zIndexOffset={1001}
-        />
-      )}
-      disabled={false}
-      cards={cards}
-      action={changeHandCity}
-      clickable={isCurrentTurn(currentTurn)}
-    /> :
-    <Marker
+    return isHighlighted && (!isNeighbor && ((isOperationsExpert && isCurrentCityResearchStation) || (isCityInHand && isCurrentCityInHand)) ?
+      <ChooseCardModal
+        ModalTrigger={(
+          <Marker
+            id={city.id}
+            position={city.coords}
+            icon={iconContainer.highlight}
+            zIndexOffset={1001}
+          />
+        )}
+        disabled={false}
+        cards={cards}
+        action={changeHandCity}
+        clickable={isCurrentTurn(currentTurn)}
+      /> :
+      <Marker
+        id={city.id}
+        position={city.coords}
+        icon={iconContainer.highlight}
+        zIndexOffset={1001}
+        onClick={getMoveFunc}
+      />);
+  } else if (game.governmentGrant) {
+    return (<Marker
       id={city.id}
       position={city.coords}
       icon={iconContainer.highlight}
       zIndexOffset={1001}
-      onClick={getMoveFunc}
-    />)
-  );
+      onClick={async () => {
+        await governmentGrant(city, game.cpaction);
+      }}
+    />);
+  } else {
+    return [];
+  }
 };
 
 const mapStateToProps = (state) => {

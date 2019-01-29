@@ -2,8 +2,6 @@ import { getPlayerRef, getGameRef } from "../../getFirestoreData";
 import { trashPlayerCards } from ".";
 
 export const removeCardFromHand = async (id, playerHand, cardsToRemove) => {
-  console.log(playerHand.length);
-  console.log(cardsToRemove.length);
   if (playerHand.length - cardsToRemove.length !== 7) {
     alert(`You need to discard ${playerHand.length - 7} cards!`);
     return false;

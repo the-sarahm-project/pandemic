@@ -42,6 +42,10 @@ const setGameFields = async (game, numPlayers, difficultyLevel) => {
     blueCureMarker: false,
     yellowCureMarker: false,
     blackCureMarker: false,
+    governmentGrant: false,
+    cpaction: false,
+    quarantineCities: {},
+    resilientPopulationModal: false
   });
 };
 

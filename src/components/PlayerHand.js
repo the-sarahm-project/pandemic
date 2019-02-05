@@ -3,33 +3,41 @@ import { Image, Container, Modal, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getOwnHand } from '../utils';
+import { getOwnHand, getGame, getGameRef } from '../utils';
 import { eventAction } from '../utils/componentUtils/playerHand';
 import ModalCardContent from './ModalCardContent';
 import ModalActions from './ModalActions';
 
-
-class PlayerHand extends React.Component {
+export class PlayerHand extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalCards: [],
       modalOpen: false,
       selected: null,
-      action: null
+      action: null,
+      cpaction: false
     };
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleClose() {
-    this.setState({ modalCards: [], selected: '', action: null, modalOpen: false });
+    this.setState({ modalCards: [], selected: '', action: null, modalOpen: false, cpaction: false });
+  }
+
+  async componentDidUpdate() {
+    if (this.props.game.resilientPopulationModal) {
+      const gameRef = await getGameRef();
+      await gameRef.update({ resilientPopulationModal: false });
+      await eventAction.call(this, 'ResilientPopulation');
+    }
   }
 
   render() {
     const { playerHand } = this.props;
-    const { modalCards, modalOpen, action, selected } = this.state;
+    const { modalCards, modalOpen, action, selected, cpaction } = this.state;
     return (
-      <div>
+      <div className='ui container cards-container'>
         {this.state.modalCards.length &&
           <Modal
             open={modalOpen}
@@ -46,6 +54,7 @@ class PlayerHand extends React.Component {
                 action={action}
                 handleClose={this.handleClose}
                 selected={selected}
+                cpaction={cpaction}
               />
             </Modal.Actions>
           </Modal>
@@ -66,7 +75,8 @@ class PlayerHand extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    playerHand: getOwnHand(state)
+    playerHand: getOwnHand(state),
+    game: getGame(state)
   };
 };
 

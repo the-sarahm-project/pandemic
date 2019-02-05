@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 
-const ModalActions = ({ action, handleClose, selected, cancelDisabled, city }) => {
+const ModalActions = ({ action, handleClose, selected, cancelDisabled, city, cpaction }) => {
   return (
     <div>
       <Button
@@ -16,7 +16,7 @@ const ModalActions = ({ action, handleClose, selected, cancelDisabled, city }) =
         color='green'
         inverted
         onClick={async () => {
-          const completed = action(selected, city);
+          const completed = action(selected, city, cpaction);
           if (completed) handleClose();
         }}
         disabled={!selected || (Array.isArray(selected) && !selected.length)}

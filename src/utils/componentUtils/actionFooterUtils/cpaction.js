@@ -25,6 +25,7 @@ export const useContingencyCard = async self => {
   const playerRef = await getPlayerRef(self.id, gameRef);
   const trashedEventCard = await getTrashedPlayerCardRef(self.cpEventCard, gameRef);
   await Promise.all([
+    gameRef.update({ resilientPopulationModal: true }),
     trashedEventCard.delete(),
     playerRef.update({ cpEventCard: null }),
   ]);
